@@ -1,0 +1,8 @@
+app:
+    package: ceramicsample.apptpl
+    name: apptpl
+    displayName: App
+    author: Ceramic Engine
+    version: '1.0'
+
+    libs: []

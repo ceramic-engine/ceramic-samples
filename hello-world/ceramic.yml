@@ -1,0 +1,8 @@
+app:
+    package: ceramicsample.helloworld
+    name: helloworld
+    displayName: Hello World
+    author: Ceramic Engine
+    version: '1.0'
+
+    libs: []

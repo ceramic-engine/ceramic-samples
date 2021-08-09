@@ -1,0 +1,8 @@
+app:
+    package: mycompany.quad-drag
+    name: quad-drag
+    displayName: quad-drag
+    author: My Company
+    version: '1.0'
+
+    libs: []
