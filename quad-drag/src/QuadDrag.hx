@@ -2,7 +2,6 @@ package;
 
 import ceramic.TouchInfo;
 import ceramic.Color;
-import ceramic.Text;
 import ceramic.Quad;
 import ceramic.Scene;
 
