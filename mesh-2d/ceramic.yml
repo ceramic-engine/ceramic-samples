@@ -1,0 +1,8 @@
+app:
+    package: mycompany.mesh-2d
+    name: mesh-2d
+    displayName: mesh-2d
+    author: My Company
+    version: '1.0'
+
+    libs: []
