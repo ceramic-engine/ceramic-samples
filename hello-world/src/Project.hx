@@ -12,6 +12,7 @@ class Project extends Entity {
 
         super();
 
+        settings.title = 'Hello World';
         settings.antialiasing = 4;
         settings.background = Color.BLACK;
         settings.targetWidth = 640;
