@@ -1,0 +1,31 @@
+app:
+    package: mycompany.spine-raptor
+    name: spine-raptor
+    displayName: spine-raptor
+    author: My Company
+    version: '1.0'
+
+    plugins:
+        - spine
+    
+    # Not needed to run spine, but used to add some debug UI to select animation
+    # imgui plugin is only available with clay backend so we only enable it in that case
+    if clay:
+        +plugins:
+            - imgui
+
+    libs:
+        - spine-hx
+
+    # To export spine assets from the original project,
+    # run: `ceramic spine export`
+    # It will generate assets for all spine projects referenced here
+    spine:
+        export:
+            - path: resources/raptor/raptor-pro.spine
+              config: spine-config.json
+            # You can reference more spine projects
+            # - path: resources/some/other-project.spine
+            #   config: spine-config.json
+            # ...
+
