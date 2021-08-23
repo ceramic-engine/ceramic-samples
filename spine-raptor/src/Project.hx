@@ -1,7 +1,7 @@
 package;
 
-import ceramic.Entity;
 import ceramic.Color;
+import ceramic.Entity;
 import ceramic.InitSettings;
 
 class Project extends Entity {

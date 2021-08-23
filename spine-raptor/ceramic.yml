@@ -7,12 +7,8 @@ app:
 
     plugins:
         - spine
-    
-    # Not needed to run spine, but used to add some debug UI to select animation
-    # imgui plugin is only available with clay backend so we only enable it in that case
-    if clay:
-        +plugins:
-            - imgui
+        - ui            # Needed for debug UI
+        - elements      # Needed for debug UI
 
     libs:
         - spine-hx

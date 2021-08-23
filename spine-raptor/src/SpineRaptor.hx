@@ -1,12 +1,8 @@
 package;
 
-import ceramic.Spine;
 import ceramic.Scene;
-
-#if plugin_imgui
-import imgui.ImGui;
-import imgui.Helpers.*;
-#end
+import ceramic.Spine;
+import elements.Im;
 
 using ceramic.SpinePlugin;
 
@@ -14,18 +10,23 @@ class SpineRaptor extends Scene {
 
     var spine:Spine;
 
+    var animationList:Array<String>;
+
+    // Just a mapping to know which animation should loop
     var shouldLoop:Map<String,Bool> = [
         Spines.RAPTOR_PRO.WALK => true
     ];
-    
+
     override function preload() {
-        
+
+        // Load spine asset
         assets.add(Spines.RAPTOR_PRO);
 
     }
 
     override function create() {
 
+        // Create spine object to display animation
         spine = new Spine();
         spine.spineData = assets.spine(Spines.RAPTOR_PRO);
         spine.pos(screen.width * 0.5, screen.height * 0.85);
@@ -34,33 +35,26 @@ class SpineRaptor extends Scene {
         spine.skeletonScale = 0.33;
         add(spine);
 
+        // Create animation list (for debug menu)
+        animationList = [];
+        for (anim in spine.spineData.skeletonData.animations)
+            animationList.push(anim.name);
+        animationList.sort(Reflect.compare);
+
     }
 
     override function update(delta:Float) {
-        
-        #if plugin_imgui
 
-        ImGui.begin('Spine');
-        ImGui.setWindowSize(ImVec2.create(0, 0));
+        // Some debug UI to choose animation
 
-        if (ImGui.beginCombo('Animation', spine.animation)) {
-            for (anim in spine.spineData.skeletonData.animations) {
-                var isSelected = (spine.animation == anim.name);
-                if (ImGui.selectable(anim.name, isSelected)) {
-                    spine.animation = anim.name;
-                    spine.loop = shouldLoop.exists(spine.animation);
-                }
-                if (isSelected) {
-                    ImGui.setItemDefaultFocus();
-                }
-            }
-            ImGui.endCombo();
+        Im.begin('Spine', 200);
+
+        if (Im.select('Animation', Im.string(spine.animation), animationList)) {
+            spine.loop = shouldLoop.exists(spine.animation);
         }
 
-        ImGui.end();
-
-        #end
+        Im.end();
 
     }
-    
+
 }
