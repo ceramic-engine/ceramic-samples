@@ -7,8 +7,10 @@ app:
 
     plugins:
         - spine
-        - ui            # Needed for debug UI
-        - elements      # Needed for debug UI
+
+        # Needed for debug UI
+        - ui
+        - elements
 
     libs:
         - spine-hx
@@ -17,6 +19,7 @@ app:
     # run: `ceramic spine export`
     # It will generate assets for all spine projects referenced here
     spine:
+        version: 4.0.26
         export:
             - path: resources/raptor/raptor-pro.spine
               config: spine-config.json
