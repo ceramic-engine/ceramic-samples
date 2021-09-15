@@ -1,0 +1,14 @@
+app:
+    package: mycompany.lines
+    name: lines
+    displayName: Lines
+    author: My Company
+    version: '1.0'
+
+    plugins:
+        # Needed for debug UI
+        - ui
+        - elements
+
+    defines:
+        - ceramic_no_skip
