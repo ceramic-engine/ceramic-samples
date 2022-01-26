@@ -17,7 +17,6 @@ class Project extends Entity {
         settings.targetHeight = 480;
         settings.scaling = FIT;
         settings.resizable = true;
-        settings.targetDensity = 1;
 
         app.onceReady(this, ready);
 

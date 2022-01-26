@@ -9,6 +9,3 @@ app:
         # Needed for debug UI
         - ui
         - elements
-
-    defines:
-        - ceramic_no_skip
