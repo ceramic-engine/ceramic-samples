@@ -1,0 +1,11 @@
+app:
+    package: mycompany.elements
+    name: elements
+    displayName: Elements
+    author: My Company
+    version: '1.0'
+
+    plugins:
+        # Needed for debug UI
+        - ui
+        - elements
