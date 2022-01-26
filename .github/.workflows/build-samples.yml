@@ -1,0 +1,72 @@
+name: Build samples
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+
+  build-samples:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      - name: Checkout submodules
+        run: git submodule update --init --recursive
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '10.16.3'
+      - name: Install packages
+        working-directory: .
+        run: |
+          npm install
+      - name: Download Ceramic
+        working-directory: .
+        run: |
+          node download-ceramic.js
+      - name: Setup Haxe
+        working-directory: .
+        run: |
+          export NEKOPATH=$PWD'/ceramic/git/haxe-binary/linux/neko'
+          export HAXEPATH=$PWD'/ceramic/git/haxe-binary/linux/haxe'
+          echo 'neko path: '$NEKOPATH
+          echo 'haxe path: '$HAXEPATH
+          sudo mkdir -p /usr/local/bin
+          sudo mkdir -p /usr/local/lib
+          sudo mkdir -p /usr/local/share/haxe
+          sudo ln -s $HAXEPATH/haxe                 /usr/local/bin/haxe
+          sudo ln -s $HAXEPATH/haxelib              /usr/local/bin/haxelib
+          sudo ln -s $HAXEPATH/std                  /usr/local/share/haxe/std
+          sudo ln -s $NEKOPATH/neko                 /usr/local/bin/neko
+          sudo ln -s $NEKOPATH/nekoc                /usr/local/bin/nekoc
+          sudo ln -s $NEKOPATH/nekoml               /usr/local/bin/nekoml
+          sudo ln -s $NEKOPATH/nekotools            /usr/local/bin/nekotools
+          sudo ln -s $NEKOPATH                      /usr/local/lib/neko
+          sudo ln -s $NEKOPATH/libneko.so           /usr/local/lib/libneko.so
+          sudo ln -s $NEKOPATH/libneko.so.2.3.0     /usr/local/lib/libneko.so.2.3.0
+          sudo ln -s $NEKOPATH/libneko.so.2         /usr/local/lib/libneko.so.2
+          sudo ldconfig
+          sudo ldconfig /usr/local/lib
+          echo 'neko: '$(neko -version)
+          echo 'haxe: '$(haxe --version)
+          echo 'haxelib: '$(haxelib version)
+      - name: Install Ceramic
+        working-directory: ceramic/tools
+        run: |
+          ./ceramic link
+      - name: Build samples
+        working-directory: .
+        run: |
+          node build-samples.js
+      - name: Add .nojekyll
+        working-directory: .
+        run: |
+          touch _export/.nojekyll
+      - name: Deploy to Github Pages
+        uses: ceramic-engine/actions-gh-pages@v1.1.0
+        env:
+          PUBLISH_DIR: _export
+          PUBLISH_BRANCH: gh-pages
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
