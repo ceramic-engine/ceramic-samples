@@ -4,6 +4,9 @@ const childProcess = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
+// Keep this info for later
+var prevDotHaxelibPath = null;
+
 // Retrieve samples lists
 const samplesList = [];
 for (item of fs.readFileSync(path.join(__dirname, 'samples.txt'), 'utf8').split('\n')) {
@@ -37,6 +40,18 @@ function build(sample) {
     console.log(' --- build sample: ' + sample + ' ---');
     console.log('');
 
+    // Recycle local haxelib directory to prevent having to redownload libs for each sample
+    var dotHaxelibPath = path.join(__dirname, sample, '.haxelib');
+    if (prevDotHaxelibPath != null) {
+        if (!fs.existsSync(dotHaxelibPath)) {
+            command('mv', [
+                prevDotHaxelibPath,
+                dotHaxelibPath
+            ]);
+        }
+    }
+    prevDotHaxelibPath = dotHaxelibPath;
+
     command(
         'ceramic',
         ['clay', 'build', 'web', '--setup', '--assets', '-D', 'ceramic_web_minify', '-D', 'ceramic_no_skip'],
@@ -49,6 +64,11 @@ function build(sample) {
         path.join(__dirname, sample, 'project', 'web'),
         path.join(__dirname, '_export', sample)
     ]);
+
+    var gitignorePath = path.join(__dirname, '_export', sample, '.gitignore');
+    if (fs.existsSync(gitignorePath)) {
+        fs.unlinkSync(gitignorePath);
+    }
 
 }
 
