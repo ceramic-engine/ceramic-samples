@@ -2,8 +2,6 @@ package;
 
 import ceramic.Scene;
 import ceramic.Spine;
-import ceramic.Timer;
-import ceramic.Utils;
 import elements.Im;
 
 using ceramic.SpinePlugin;
@@ -18,14 +16,6 @@ class SpineRaptor extends Scene {
     var shouldLoop:Map<String,Bool> = [
         Spines.RAPTOR_PRO.WALK => true
     ];
-
-    var someText:String = 'Hello World';
-
-    var someText2:String = 'Youpi World';
-
-    var animationList2:Array<String>;
-
-    var animation2:String;
 
     override function preload() {
 
@@ -51,9 +41,6 @@ class SpineRaptor extends Scene {
             animationList.push(anim.name);
         animationList.sort(Reflect.compare);
 
-        animationList2 = ['youpi', 'bref'];
-        animation2 = 'bref';
-
     }
 
     override function update(delta:Float) {
@@ -65,12 +52,6 @@ class SpineRaptor extends Scene {
         if (Im.select('Animation', Im.string(spine.animation), animationList)) {
             spine.loop = shouldLoop.exists(spine.animation);
         }
-
-        Im.select('Animation', Im.string(animation2), animationList2);
-
-        // Im.editText(Im.string(someText));
-
-        // Im.editText(Im.string(someText2));
 
         Im.end();
 
