@@ -81,3 +81,26 @@ command('mkdir', ['_export']);
 for (sample of samplesList) {
     build(sample);
 }
+
+// Generate index
+//
+var sampleLinks = [];
+for (sample of samplesList) {
+    sampleLinks.push('<li><a href="' + sample + '">' + sample + '</a></li>');
+}
+
+var indexHtml = `
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Ceramic Samples</title>
+    </head>
+    <body>
+        <ul>
+            ${sampleLinks.join('\n            ')}
+        </ul>
+    </body>
+</html>
+`.trim();
+
+fs.writeFileSync(path.join(__dirname, '_export', 'index.html'), indexHtml);
