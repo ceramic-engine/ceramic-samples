@@ -3,6 +3,7 @@
 const childProcess = require('child_process');
 const fs = require('fs');
 const path = require('path');
+const sharp = require('sharp');
 
 // Keep this info for later
 var prevDotHaxelibPath = null;
@@ -34,7 +35,7 @@ function command(cmd, args, options) {
 /**
  * Build the given sample
  */
-function build(sample) {
+function build(sample, done) {
 
     console.log('');
     console.log(' --- build sample: ' + sample + ' ---');
@@ -70,6 +71,25 @@ function build(sample) {
         fs.unlinkSync(gitignorePath);
     }
 
+    var screenshotPath = path.join(__dirname, sample, 'screenshot.png');
+    var exportScreenshotPath = path.join(__dirname, '_export', sample, 'screenshot.png');
+    var exportScreenshot400Path = path.join(__dirname, '_export', sample, 'thumbnail.png');
+    if (fs.existsSync(screenshotPath)) {
+        command('cp', [
+            screenshotPath,
+            exportScreenshotPath
+        ]);
+        sharp(screenshotPath)
+            .resize({ width: 320 })
+            .toFile(exportScreenshot400Path)
+            .then(function() {
+                done();
+            });
+    }
+    else {
+        done();
+    }
+
 }
 
 // Reset _export directory
@@ -77,30 +97,39 @@ if (fs.existsSync('_export'))
     command('rm', ['-rf', '_export']);
 command('mkdir', ['_export']);
 
+function buildNext() {
+    if (samplesList.length > 0) {
+        build(samplesList.shift(), buildNext);
+    }
+    else {
+        allBuilt();
+    }
+}
+
+function allBuilt() {
+    // Generate index
+    //
+    var sampleLinks = [];
+    for (sample of samplesList) {
+        sampleLinks.push('<li><a href="' + sample + '">' + sample + '</a></li>');
+    }
+
+    var indexHtml = `
+    <!DOCTYPE html>
+    <html>
+        <head>
+            <title>Ceramic Samples</title>
+        </head>
+        <body>
+            <ul>
+                ${sampleLinks.join('\n            ')}
+            </ul>
+        </body>
+    </html>
+    `.trim();
+
+    fs.writeFileSync(path.join(__dirname, '_export', 'index.html'), indexHtml);
+}
+
 // Start building
-for (sample of samplesList) {
-    build(sample);
-}
-
-// Generate index
-//
-var sampleLinks = [];
-for (sample of samplesList) {
-    sampleLinks.push('<li><a href="' + sample + '">' + sample + '</a></li>');
-}
-
-var indexHtml = `
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Ceramic Samples</title>
-    </head>
-    <body>
-        <ul>
-            ${sampleLinks.join('\n            ')}
-        </ul>
-    </body>
-</html>
-`.trim();
-
-fs.writeFileSync(path.join(__dirname, '_export', 'index.html'), indexHtml);
+buildNext();
