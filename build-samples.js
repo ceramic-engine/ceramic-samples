@@ -98,9 +98,10 @@ if (fs.existsSync('_export'))
     command('rm', ['-rf', '_export']);
 command('mkdir', ['_export']);
 
+var remainingSamples = [].concat(samplesList);
 function buildNext() {
-    if (samplesList.length > 0) {
-        build(samplesList.shift(), buildNext);
+    if (remainingSamples.length > 0) {
+        build(remainingSamples.shift(), buildNext);
     }
     else {
         allBuilt();
