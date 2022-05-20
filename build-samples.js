@@ -75,6 +75,7 @@ function build(sample, done) {
     var exportScreenshotPath = path.join(__dirname, '_export', sample, 'screenshot.png');
     var exportScreenshot400Path = path.join(__dirname, '_export', sample, 'thumbnail.png');
     if (fs.existsSync(screenshotPath)) {
+        console.log('Copy screenshot');
         command('cp', [
             screenshotPath,
             exportScreenshotPath
