@@ -1,10 +1,10 @@
 package;
 
-import ceramic.Timer;
 import ceramic.AlphaColor;
 import ceramic.Color;
 import ceramic.Mesh;
 import ceramic.Scene;
+import ceramic.Timer;
 
 class Mesh2D extends Scene {
 
@@ -14,16 +14,17 @@ class Mesh2D extends Scene {
     var mesh:Mesh;
 
     override function create() {
-        
-        // Create and display a 2d mesh
-        //
+
+        // Create a new Mesh object
         mesh = new Mesh();
 
+        // Mesh position
         mesh.pos(
             screen.width * 0.5 - 100,
             screen.height * 0.5 - 100
         );
 
+        // Mesh vertices
         mesh.vertices = [
             0, 0,
             200, 0,
@@ -37,7 +38,7 @@ class Mesh2D extends Scene {
             0, 2, 3
         ];
 
-        // Mesh colors
+        // Mesh (random) colors
         mesh.colorMapping = VERTICES;
         mesh.colors = [
             new AlphaColor(Color.random()),
