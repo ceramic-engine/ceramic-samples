@@ -1,0 +1,8 @@
+app:
+    package: ceramic-sample.keyboard-input
+    name: apptpl
+    displayName: App
+    author: Ceramic Engine
+    version: '1.0'
+
+    libs: []
