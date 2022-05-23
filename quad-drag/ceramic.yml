@@ -1,5 +1,5 @@
 app:
-    package: mycompany.quad-drag
+    package: ceramic-samples.quad-drag
     name: quad-drag
     displayName: quad-drag
     author: My Company

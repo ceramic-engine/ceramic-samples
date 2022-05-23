@@ -1,5 +1,5 @@
 app:
-    package: mycompany.spine-raptor
+    package: ceramic-samples.spine-raptor
     name: spine-raptor
     displayName: spine-raptor
     author: My Company

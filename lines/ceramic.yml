@@ -1,5 +1,5 @@
 app:
-    package: mycompany.lines
+    package: ceramic-samples.lines
     name: lines
     displayName: Lines
     author: My Company

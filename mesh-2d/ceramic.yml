@@ -1,5 +1,5 @@
 app:
-    package: mycompany.mesh-2d
+    package: ceramic-samples.mesh-2d
     name: mesh-2d
     displayName: mesh-2d
     author: My Company
