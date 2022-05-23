@@ -69,7 +69,12 @@ class MainScene extends Scene {
             for (i in 0...pressedKeyCodes.length) {
                 var keyCode = pressedKeyCodes[i];
                 var scanCode = pressedScanCodes[i];
-                content.push(KeyCode.name(keyCode) + ' (key code)          ' + ScanCode.name(scanCode) + ' (scan code)');
+                content.push(
+                    KeyCode.name(keyCode) +
+                    ' (key code)          ' +
+                    ScanCode.name(scanCode) +
+                    ' (scan code)'
+                );
             }
             text.content = content.join('\n');
         }
