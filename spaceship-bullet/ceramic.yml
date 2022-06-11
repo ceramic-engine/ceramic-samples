@@ -1,0 +1,8 @@
+app:
+    package: ceramic-samples.spaceship-bullet
+    name: spaceship-bullet
+    displayName: App
+    author: Ceramic Engine
+    version: '1.0'
+
+    libs: []
