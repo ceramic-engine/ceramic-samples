@@ -2,5 +2,7 @@ hello-world
 lines
 mesh-2d
 keyboard-input
+gamepad-input
+spaceship-bullet
 quad-drag
 spine-raptor
