@@ -1,5 +1,5 @@
 app:
-    package: ceramicsample.helloworld
+    package: ceramic-samples.helloworld
     name: helloworld
     displayName: Hello World
     author: Ceramic Engine

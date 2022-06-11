@@ -1,6 +1,6 @@
 app:
-    package: ceramic-sample.keyboard-input
-    name: apptpl
+    package: ceramic-samples.keyboard-input
+    name: keyboard-input
     displayName: App
     author: Ceramic Engine
     version: '1.0'

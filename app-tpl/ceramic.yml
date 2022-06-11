@@ -1,5 +1,5 @@
 app:
-    package: ceramicsample.apptpl
+    package: ceramic-samples.apptpl
     name: apptpl
     displayName: App
     author: Ceramic Engine
