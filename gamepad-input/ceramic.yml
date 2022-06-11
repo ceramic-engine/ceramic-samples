@@ -1,0 +1,8 @@
+app:
+    package: ceramic-samples.gamepad-input
+    name: gamepad-input
+    displayName: App
+    author: Ceramic Engine
+    version: '1.0'
+
+    libs: []
