@@ -26,7 +26,7 @@ class MainScene extends Scene {
 
     static final TURN_SPEED:Float = 240.0;
 
-    static final RECYCLE_DISTANCE:Float = 500.0;
+    static final RECYCLE_DISTANCE:Float = 600.0;
 
     static var _direction = new Point();
 
