@@ -17,7 +17,11 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: '10.16.3'
+          node-version: '14.19.1'
+      - name: Setup NPM
+        working-directory: .
+        run: |
+          sudo npm install -g npm@8.12.1
       - name: Install packages
         working-directory: .
         run: |
