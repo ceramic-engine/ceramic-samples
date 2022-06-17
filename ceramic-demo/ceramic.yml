@@ -1,0 +1,6 @@
+app:
+    package: ceramic-samples.ceramic-demo
+    name: ceramic-demo
+    displayName: Ceramic Demo
+    author: Jeremy Faivre
+    version: '1.0'

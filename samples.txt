@@ -6,3 +6,4 @@ gamepad-input
 spaceship-bullet
 quad-drag
 spine-raptor
+ceramic-demo
