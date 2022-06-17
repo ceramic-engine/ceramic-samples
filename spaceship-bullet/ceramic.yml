@@ -1,7 +1,7 @@
 app:
     package: ceramic-samples.spaceship-bullet
     name: spaceship-bullet
-    displayName: App
+    displayName: Spaceship Bullet
     author: Ceramic Engine
     version: '1.0'
 

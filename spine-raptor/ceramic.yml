@@ -1,7 +1,7 @@
 app:
     package: ceramic-samples.spine-raptor
     name: spine-raptor
-    displayName: spine-raptor
+    displayName: Spine Raptor
     author: My Company
     version: '1.0'
 

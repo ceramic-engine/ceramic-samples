@@ -1,7 +1,7 @@
 app:
     package: ceramic-samples.keyboard-input
     name: keyboard-input
-    displayName: App
+    displayName: Keyboard Input
     author: Ceramic Engine
     version: '1.0'
 

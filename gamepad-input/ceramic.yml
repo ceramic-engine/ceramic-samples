@@ -1,7 +1,7 @@
 app:
     package: ceramic-samples.gamepad-input
     name: gamepad-input
-    displayName: App
+    displayName: Gamepad Input
     author: Ceramic Engine
     version: '1.0'
 
