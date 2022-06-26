@@ -1,10 +1,6 @@
 package;
 
-import ceramic.GamepadAxis;
 import ceramic.GamepadButton;
-import ceramic.Key;
-import ceramic.KeyCode;
-import ceramic.ScanCode;
 import ceramic.Scene;
 import ceramic.Text;
 import ceramic.Utils;
