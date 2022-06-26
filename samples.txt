@@ -8,3 +8,4 @@ quad-drag
 spine-raptor
 ceramic-demo
 tilemap-pixelart
+auto-tiling

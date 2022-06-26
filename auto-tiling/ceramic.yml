@@ -1,0 +1,9 @@
+app:
+    package: ceramic-samples.auto-tiling
+    name: auto-tiling
+    displayName: Auto-Tiling
+    author: Ceramic Engine
+    version: '1.0'
+
+    plugins:
+        - tilemap
