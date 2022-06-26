@@ -1,0 +1,11 @@
+app:
+    package: ceramic-samples.tilemap
+    name: tilemap
+    displayName: Tilemap
+    author: Ceramic Engine
+    version: '1.0'
+
+    plugins:
+        - ui
+        - elements
+        - tilemap
