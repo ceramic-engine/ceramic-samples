@@ -11,7 +11,7 @@ class Project extends Entity {
         super();
 
         settings.antialiasing = 2;
-        settings.background = Color.interpolate(Color.BLUE, Color.PURPLE, 0.2);
+        settings.background = 0x00A6FF;
         settings.targetWidth = 160;
         settings.targetHeight = 120;
         settings.windowWidth = 800;
