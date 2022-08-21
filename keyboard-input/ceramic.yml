@@ -2,7 +2,7 @@ app:
     package: ceramic-samples.keyboard-input
     name: keyboard-input
     displayName: Keyboard Input
-    author: Ceramic Engine
+    author: Jeremy Faivre
     version: '1.0'
 
     libs: []

@@ -9,3 +9,4 @@ spine-raptor
 ceramic-demo
 tilemap-pixelart
 auto-tiling
+nine-slice

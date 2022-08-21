@@ -2,7 +2,7 @@ app:
     package: ceramic-samples.mesh-2d
     name: mesh-2d
     displayName: Mesh 2D
-    author: My Company
+    author: Jeremy Faivre
     version: '1.0'
 
     libs: []

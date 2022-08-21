@@ -1,0 +1,8 @@
+app:
+    package: ceramic-samples.nine-slice
+    name: nine-slice
+    displayName: Nine Slice
+    author: Jeremy Faivre
+    version: '1.0'
+
+    libs: []

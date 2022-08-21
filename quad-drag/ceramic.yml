@@ -2,7 +2,7 @@ app:
     package: ceramic-samples.quad-drag
     name: quad-drag
     displayName: Quad Drag
-    author: My Company
+    author: Jeremy Faivre
     version: '1.0'
 
     libs: []

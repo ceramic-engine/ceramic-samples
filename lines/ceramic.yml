@@ -2,7 +2,7 @@ app:
     package: ceramic-samples.lines
     name: lines
     displayName: Lines
-    author: My Company
+    author: Jeremy Faivre
     version: '1.0'
 
     plugins:

@@ -2,7 +2,7 @@ app:
     package: ceramic-samples.spaceship-bullet
     name: spaceship-bullet
     displayName: Spaceship Bullet
-    author: Ceramic Engine
+    author: Jeremy Faivre
     version: '1.0'
 
     libs: []
