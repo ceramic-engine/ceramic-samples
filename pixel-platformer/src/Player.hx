@@ -184,9 +184,9 @@ class Player extends Sprite {
         // We use scan code for these so that it
         // will work with non-qwerty layouts as well
         inputMap.bindScanCode(RIGHT, KEY_D);
-        inputMap.bindScanCode(LEFT, KEY_W);
+        inputMap.bindScanCode(LEFT, KEY_A);
         inputMap.bindScanCode(DOWN, KEY_S);
-        inputMap.bindScanCode(UP, KEY_A);
+        inputMap.bindScanCode(UP, KEY_W);
 
         // Bind gamepad
         //
