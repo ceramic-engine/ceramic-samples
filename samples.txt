@@ -10,3 +10,4 @@ ceramic-demo
 tilemap-pixelart
 auto-tiling
 nine-slice
+pixel-platformer

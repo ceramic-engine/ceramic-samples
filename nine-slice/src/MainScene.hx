@@ -27,6 +27,7 @@ class MainScene extends Scene {
         pixelArt = new PixelArt();
         pixelArt.size(width, height);
         app.scenes.filter = pixelArt;
+
         assets.texture(Images.YELLOW_BUTTON).filter = NEAREST;
 
         // Create nine slice

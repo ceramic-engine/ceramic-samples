@@ -1,0 +1,11 @@
+app:
+    package: ceramic-samples.pixel-platformer
+    name: pixel-platformer
+    displayName: Pixel Platformer
+    author: Jeremy Faivre
+    version: '1.0'
+
+    plugins:
+        - tilemap
+        - sprite
+        - arcade
