@@ -249,14 +249,14 @@ class Player extends Sprite {
         var canMoveLeftRight = (!isBottomOnLadder || (!inputMap.pressed(UP) && !inputMap.pressed(DOWN)));
 
         if (inputMap.pressed(RIGHT) && canMoveLeftRight) {
-            velocityX = 100;
+            velocityX = 120;
             if (machine.state == DEFAULT) {
                 animation = blockedDown || isBottomOnLadder ? 'walk' : 'jump';
             }
             scaleX = -1;
         }
         else if (inputMap.pressed(LEFT) && canMoveLeftRight) {
-            velocityX = -100;
+            velocityX = -120;
             if (machine.state == DEFAULT) {
                 animation = blockedDown || isBottomOnLadder ? 'walk' : 'jump';
             }
