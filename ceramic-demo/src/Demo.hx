@@ -471,11 +471,6 @@ class Demo extends Scene {
         text.pointSize = 16;
         container.add(text);
 
-        var container1 = new Visual();
-        var container2 = new Visual();
-        container.add(container1);
-        container.add(container2);
-
         var clipper1 = new Quad();
         clipper1.size(w * 0.4, w * 0.1);
         clipper1.pos(w * 0.5, h * 0.5);
@@ -496,7 +491,7 @@ class Demo extends Scene {
         image1.anchor(0.5, 0.5);
         image1.pos(w * 0.5, h * 0.5);
         image1.depth = 20;
-        container1.add(image1);
+        container.add(image1);
 
         var image2 = new Quad();
         image2.texture = assets.texture(Images.CERAMIC);
@@ -504,10 +499,10 @@ class Demo extends Scene {
         image2.anchor(0.5, 0.5);
         image2.pos(w * 0.5, h * 0.5);
         image2.depth = 21;
-        container2.add(image2);
+        container.add(image2);
 
-        container1.clip = clipper1;
-        container2.clip = clipper2;
+        image1.clip = clipper1;
+        image2.clip = clipper2;
 
         app.onUpdate(this, function(delta) {
 
