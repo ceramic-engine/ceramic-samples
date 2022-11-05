@@ -1,0 +1,13 @@
+app:
+    package: ceramic-samples.text
+    name: text
+    displayName: Text
+    author: Ceramic Engine
+    version: '1.0'
+
+    plugins:
+        - ui
+        - elements
+
+    defines:
+        - ceramic_no_skip
