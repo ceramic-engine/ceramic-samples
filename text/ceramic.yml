@@ -8,6 +8,3 @@ app:
     plugins:
         - ui
         - elements
-
-    defines:
-        - ceramic_no_skip
