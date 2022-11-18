@@ -1,0 +1,8 @@
+app:
+    package: ceramic-samples.visual-component
+    name: visual-component
+    displayName: Visual Component
+    author: Jeremy Faivre
+    version: '1.0'
+
+    libs: []
