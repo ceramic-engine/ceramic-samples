@@ -93,7 +93,7 @@ function build(sample, done) {
         if (fs.existsSync(screenshotGifPath)) {
             console.log('Copy screenshot (gif)');
             command('cp', [
-                screenshotPath,
+                screenshotGifPath,
                 exportScreenshotGifPath
             ]);
             done();
