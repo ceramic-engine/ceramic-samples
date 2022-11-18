@@ -88,7 +88,19 @@ function build(sample, done) {
             });
     }
     else {
-        done();
+        var screenshotGifPath = path.join(__dirname, sample, 'screenshot.gif');
+        var exportScreenshotGifPath = path.join(__dirname, '_export', sample, 'screenshot.gif');
+        if (fs.existsSync(screenshotGifPath)) {
+            console.log('Copy screenshot (gif)');
+            command('cp', [
+                screenshotPath,
+                exportScreenshotGifPath
+            ]);
+            done();
+        }
+        else {
+            done();
+        }
     }
 
 }
