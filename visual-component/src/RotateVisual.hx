@@ -19,12 +19,12 @@ class RotateVisual extends Entity implements Component {
     /**
      * The duration of each rotation
      */
-    var duration:Float;
+    public var duration:Float;
 
     /**
      * The pause between each rotation
      */
-    var pause:Float;
+    public var pause:Float;
 
     public function new(duration:Float = 2.0, pause:Float = 1.0) {
 
