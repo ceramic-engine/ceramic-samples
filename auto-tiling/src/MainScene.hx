@@ -65,11 +65,10 @@ class MainScene extends Scene {
         ];
 
         // Enable auto-tiling
-        layerData.component(new AutoTiler([
-            EXPANDED_48 // The kind of auto-tiling to use
-        ], [
-            1 // The corresponding "first gid" to apply auto-tiling on
-        ]));
+        layerData.component(new AutoTiler([{
+            kind: EXPANDED_47, // The kind of auto-tiling to use
+            gid: 1 // The corresponding "first gid" to apply auto-tiling on
+        }]));
 
         // Create the tilemap data holding our tile layer
         var tilemapData = new TilemapData();
