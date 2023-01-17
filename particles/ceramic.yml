@@ -1,0 +1,7 @@
+app:
+    package: ceramic-samples.particles
+    name: particles
+    displayName: Particles
+    author: Jeremy Faivre
+    version: '1.0'
+    libs: []

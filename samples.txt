@@ -13,3 +13,4 @@ nine-slice
 pixel-platformer
 text
 visual-component
+particles
