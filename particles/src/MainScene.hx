@@ -1,6 +1,5 @@
 package;
 
-import ceramic.GifCapture;
 import ceramic.Particles;
 import ceramic.Quad;
 import ceramic.Scene;
