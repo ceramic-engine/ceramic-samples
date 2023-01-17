@@ -28,8 +28,8 @@ class CeramicEmitter extends ParticleEmitter {
         // Edit emitter settings to change how particles are thrown
         // (look at ParticleEmitter API docs: https://ceramic-engine.com/api-docs/ceramic/ParticleEmitter.html)
 
-        // Scale from 0 to 1
-        scaleStart(0, 0);
+        // Scale from 0.0001 to 1
+        scaleStart(0.0001, 0.0001);
         scaleEnd(1, 1);
 
         // Launch toward the top
