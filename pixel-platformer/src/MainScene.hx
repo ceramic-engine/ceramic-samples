@@ -180,8 +180,8 @@ class MainScene extends Scene {
         // Tell the camera what is the size and position of the content
         camera.contentX = 0;
         camera.contentY = 0;
-        camera.contentWidth = tilemap.tilemapData.width * tilemap.tilemapData.tileWidth;
-        camera.contentHeight = tilemap.tilemapData.height * tilemap.tilemapData.tileHeight;
+        camera.contentWidth = tilemap.tilemapData.width;
+        camera.contentHeight = tilemap.tilemapData.height;
 
         // Tell the camera what position to target (the player's position)
         camera.followTarget = true;
@@ -202,8 +202,8 @@ class MainScene extends Scene {
         tilemap.clipTiles(
             Math.floor(camera.x - camera.viewportWidth * 0.5),
             Math.floor(camera.y - camera.viewportHeight * 0.5),
-            Math.ceil(camera.viewportWidth) + tilemap.tilemapData.tileWidth,
-            Math.ceil(camera.viewportHeight) + tilemap.tilemapData.tileHeight
+            Math.ceil(camera.viewportWidth) + tilemap.tilemapData.maxTileWidth,
+            Math.ceil(camera.viewportHeight) + tilemap.tilemapData.maxTileHeight
         );
 
     }

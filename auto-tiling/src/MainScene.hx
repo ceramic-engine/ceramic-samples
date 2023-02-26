@@ -44,7 +44,8 @@ class MainScene extends Scene {
         // Create our tile layer
         var layerData = new TilemapLayerData();
         layerData.name = 'main';
-        layerData.size(20, 16);
+        layerData.tileSize(8, 8);
+        layerData.grid(20, 16);
         layerData.tiles = [
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -72,8 +73,10 @@ class MainScene extends Scene {
 
         // Create the tilemap data holding our tile layer
         var tilemapData = new TilemapData();
-        tilemapData.tileSize(8, 8);
-        tilemapData.size(layerData.width, layerData.height);
+        tilemapData.size(
+            layerData.columns * tileset.tileWidth,
+            layerData.rows * tileset.tileHeight
+        );
         tilemapData.tilesets = [tileset];
         tilemapData.layers = [layerData];
 

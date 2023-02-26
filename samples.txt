@@ -14,3 +14,4 @@ pixel-platformer
 text
 visual-component
 particles
+http-image

@@ -1,0 +1,9 @@
+app:
+    package: ceramic-samples.http-image
+    name: http-image
+    displayName: HTTP Image
+    author: Jeremy Faivre
+    version: '1.0'
+
+    plugins:
+        - http
