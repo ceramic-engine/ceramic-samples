@@ -1,0 +1,12 @@
+app:
+    package: ceramic-samples.ldtk-level
+    name: ldtk-level
+    displayName: LDtk Level
+    author: Jeremy Faivre
+    version: '1.0'
+
+    plugins:
+        - tilemap
+        - ldtk
+        - ase
+

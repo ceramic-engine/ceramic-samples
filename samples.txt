@@ -16,3 +16,4 @@ visual-component
 particles
 http-image
 image-repeat
+ldtk-level
