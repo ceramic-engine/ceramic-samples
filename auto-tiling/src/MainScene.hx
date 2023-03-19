@@ -1,7 +1,6 @@
 package;
 
 import ceramic.AutoTiler;
-import ceramic.PixelArt;
 import ceramic.Scene;
 import ceramic.Tilemap;
 import ceramic.TilemapData;
@@ -11,8 +10,6 @@ import ceramic.Tileset;
 
 class MainScene extends Scene {
 
-    var pixelArt:PixelArt;
-
     override function preload() {
 
         assets.add(Images.AUTOTILE_GRASS);
@@ -20,11 +17,6 @@ class MainScene extends Scene {
     }
 
     override function create() {
-
-        // Render as low resolution / pixel art
-        pixelArt = new PixelArt();
-        pixelArt.size(width, height);
-        app.scenes.filter = pixelArt;
 
         createTilemap();
 

@@ -1,15 +1,12 @@
 package;
 
 import ceramic.NineSlice;
-import ceramic.PixelArt;
 import ceramic.Quad;
 import ceramic.Scene;
 import ceramic.Timer;
 import ceramic.Utils;
 
 class MainScene extends Scene {
-
-    var pixelArt:PixelArt;
 
     var nineSlice:NineSlice;
 
@@ -22,11 +19,6 @@ class MainScene extends Scene {
     }
 
     override function create() {
-
-        // Render as low resolution / pixel art
-        pixelArt = new PixelArt();
-        pixelArt.size(width, height);
-        app.scenes.filter = pixelArt;
 
         assets.texture(Images.YELLOW_BUTTON).filter = NEAREST;
 

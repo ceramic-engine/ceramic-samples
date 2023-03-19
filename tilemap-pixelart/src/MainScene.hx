@@ -23,10 +23,8 @@ class MainScene extends Scene {
 
     override function create() {
 
-        // Render as low resolution / pixel art
-        pixelArt = new PixelArt();
-        pixelArt.size(width, height);
-        app.scenes.filter = pixelArt;
+        // Getting pixel art filter back (created in `Project.hx`)
+        pixelArt = cast app.scenes.filter;
 
         createTilemap();
 

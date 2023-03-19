@@ -2,7 +2,6 @@ package;
 
 import ceramic.Camera;
 import ceramic.Group;
-import ceramic.PixelArt;
 import ceramic.Scene;
 import ceramic.Tilemap;
 import ceramic.Timer;
@@ -12,12 +11,6 @@ import format.tmx.Data.TmxMap;
 using ceramic.TilemapPlugin;
 
 class MainScene extends Scene {
-
-    /**
-     * The pixel art filter used to render
-     * pixel perfect low resolution visuals
-     */
-    var pixelArt:PixelArt;
 
     /**
      * The loaded tilemap in ceramic format
@@ -55,21 +48,12 @@ class MainScene extends Scene {
 
     override function create() {
 
-        // Set background color
-        color = 0x00A6FF;
-        transparent = false;
-
         // Keep the TMX data around
         tmxMap = assets.tilemapAsset(Tilemaps.TILEMAP).tmxMap;
 
         // Use NEAREST filtering
         assets.texture(Images.TILES).filter = NEAREST;
         assets.texture(Images.CHARACTERS).filter = NEAREST;
-
-        // Render as low resolution / pixel art
-        pixelArt = new PixelArt();
-        pixelArt.size(width, height);
-        app.scenes.filter = pixelArt;
 
         initTilemap();
         initPlayer();

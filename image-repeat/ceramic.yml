@@ -1,0 +1,14 @@
+app:
+    package: ceramic-samples.image-repeat
+    name: image-repeat
+    displayName: Image Repeat
+    author: Jeremy Faivre
+    version: '1.0'
+    libs: []
+
+    defines:
+        - ceramic_no_skip
+
+    plugins:
+        - ui
+        - elements

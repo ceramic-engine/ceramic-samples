@@ -1,9 +1,8 @@
 package;
 
-import ceramic.Color;
 import ceramic.Entity;
+import ceramic.Color;
 import ceramic.InitSettings;
-import ceramic.PixelArt;
 
 class Project extends Entity {
 
@@ -13,10 +12,8 @@ class Project extends Entity {
 
         settings.antialiasing = 2;
         settings.background = Color.BLACK;
-        settings.targetWidth = Std.int(160 * 2);
-        settings.targetHeight = Std.int(120 * 2);
-        settings.windowWidth = 800;
-        settings.windowHeight = 600;
+        settings.targetWidth = 640;
+        settings.targetHeight = 480;
         settings.scaling = FIT;
         settings.resizable = true;
 
@@ -25,11 +22,6 @@ class Project extends Entity {
     }
 
     function ready() {
-
-        // Render as low resolution / pixel art
-        var pixelArt = new PixelArt();
-        pixelArt.bindToScreenSize();
-        app.scenes.filter = pixelArt;
 
         // Set MainScene as the current scene (see MainScene.hx)
         app.scenes.main = new MainScene();
