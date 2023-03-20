@@ -1,6 +1,7 @@
 package;
 
 import arcade.Body;
+import arcade.Direction;
 import ceramic.ArcadeWorld;
 import ceramic.Assets;
 import ceramic.Group;
@@ -46,6 +47,14 @@ enum abstract PlayerInput(Int) {
 }
 
 class Player extends Sprite {
+
+    var ladderSpeed:Float = 50;
+
+    var tileWidth:Int = 18;
+
+    var tileHeight:Int = 18;
+
+    var tilemap:Tilemap = null;
 
     /**
      * A state machine plugged as a `Component` to `Player` using `PlayerState`
@@ -124,6 +133,9 @@ class Player extends Sprite {
     }
 
     public function updatePhysics(delta:Float, world:ArcadeWorld, tilemap:Tilemap, boxes:Group<Box>) {
+
+        // Keep tilemap up to date
+        this.tilemap = tilemap;
 
         // Update dot body
         updateDotBodies();
@@ -276,6 +288,7 @@ class Player extends Sprite {
         }
 
         if (isBottomOnLadder) {
+            /*
             if (inputMap.pressed(DOWN) || inputMap.pressed(UP)) {
                 var betterX = Math.floor(x / 18) * 18 + 9;
                 if (betterX > x + 1.5) {
@@ -298,6 +311,77 @@ class Player extends Sprite {
                 velocityY = -50;
                 if (machine.state == DEFAULT) {
                     animation = 'walk';
+                }
+            }
+            */
+            if (inputMap.pressed(DOWN) || inputMap.pressed(UP)) {
+                var betterX = Math.floor(x / tileWidth) * tileWidth + tileWidth * 0.5;
+                if (betterX > x + 1.5) {
+                    x += Math.min(betterX - x, 1) * delta * 60;
+                }
+                else if (betterX < x - 1.5) {
+                    x -= Math.min(x - betterX, 1) * delta * 60;
+                }
+                else {
+                    x = betterX;
+                }
+            }
+            if (inputMap.pressed(DOWN)) {
+                velocityY = ladderSpeed;
+                if (machine.state == DEFAULT) {
+                    animation = 'walk';
+                }
+            }
+            else if (inputMap.pressed(UP)) {
+                velocityY = -ladderSpeed;
+                if (machine.state == DEFAULT) {
+                    animation = 'walk';
+                }
+            }
+            else if ((inputMap.pressed(RIGHT) && body.blockedRight) || (inputMap.pressed(LEFT) && body.blockedLeft)) {
+
+                var playerCenterY = (y - height * 0.4);
+                var betterTileY = Math.floor(playerCenterY / tileHeight);
+                var betterTileX = Math.floor(x / tileWidth);
+                if (inputMap.pressed(RIGHT))
+                    betterTileX++;
+                else
+                    betterTileX--;
+
+                var betterTileY2 = if ((betterTileY + 0.5) * tileHeight < playerCenterY) {
+                    betterTileY + 1;
+                }
+                else {
+                    betterTileY - 1;
+                }
+
+                var direction:Direction = inputMap.pressed(RIGHT) ? RIGHT : LEFT;
+                var testX = (betterTileX + 0.5) * tileWidth;
+                var testY = (betterTileY + 0.5) * tileHeight;
+                var testY2 = (betterTileY2 + 0.5) * tileHeight;
+                var isWall = tilemap.shouldCollideAtPosition(testX, testY, direction);
+                var isWall2 = tilemap.shouldCollideAtPosition(testX, testY2, direction);
+
+                if (isWall && !isWall2) {
+                    var betterTileTmp = betterTileY;
+                    betterTileY = betterTileY2;
+                    betterTileY2 = betterTileTmp;
+                    isWall = false;
+                    isWall2 = true;
+                }
+
+                if (!isWall && isWall2) {
+
+                    var betterY = (betterTileY + 0.5) * tileHeight + y - playerCenterY;
+                    if (betterY > y - 1.5) {
+                        y += Math.min(betterY - y, 1) * delta * ladderSpeed;
+                    }
+                    else if (betterY < y + 1.5) {
+                        y -= Math.min(y - betterY, 1) * delta * ladderSpeed;
+                    }
+                    else {
+                        y = betterY;
+                    }
                 }
             }
         }
