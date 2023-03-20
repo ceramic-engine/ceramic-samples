@@ -79,6 +79,9 @@ class Player extends Sprite {
 
         super();
 
+        // We'll set size ourself
+        autoComputeSize = false;
+
         // Ensure physics are enabled
         initArcadePhysics();
 
