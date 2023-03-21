@@ -66,6 +66,7 @@ class MainScene extends Scene {
     function initTilemap() {
 
         tilemap = new Tilemap();
+        tilemap.roundTilesTranslation = 1;
         tilemap.tilemapData = assets.tilemap(Tilemaps.TILEMAP);
         tilemap.depth = 1;
         add(tilemap);
@@ -106,7 +107,7 @@ class MainScene extends Scene {
     function initPhysics() {
 
         // We don't want Ceramic to update world bounds from screen.
-        // Instead, if set world bounds to match tilemap size
+        // Instead, we set world bounds to match tilemap size
         app.arcade.autoUpdateWorldBounds = false;
         app.arcade.world.setBounds(
             0, 0, tilemap.width, tilemap.height
@@ -140,10 +141,10 @@ class MainScene extends Scene {
 
         // We tweak some camera settings to make it work
         // better with our low-res pixel art display
-        camera.movementThreshold = 0.5;
-        camera.trackSpeedX = 40;
-        camera.trackCurve = 1;
-        camera.brakeNearBounds(0, 0);
+        // camera.movementThreshold = 0.5;
+        camera.trackSpeedX = 80;
+        camera.trackCurve = 0.3;
+        // camera.brakeNearBounds(0, 0);
 
         // We update the camera after everything else has been updated
         // so that we are sure it won't be based on some intermediate state

@@ -11,7 +11,7 @@ class Project extends Entity {
 
         super();
 
-        settings.antialiasing = 2;
+        settings.antialiasing = 0;
         settings.background = Color.BLACK;
         settings.targetWidth = 320;
         settings.targetHeight = 240;
@@ -26,13 +26,35 @@ class Project extends Entity {
 
     function ready() {
 
-        // Render as low resolution / pixel art
-        var pixelArt = new PixelArt();
-        pixelArt.bindToScreenSize();
-        app.scenes.filter = pixelArt;
+        setupResolution();
 
         // Set MainScene as the current scene (see MainScene.hx)
         app.scenes.main = new MainScene();
+
+    }
+
+    function setupResolution() {
+
+        // Render as low resolution / pixel art,
+        // But with a larger grid so that we get smoother scroll
+        var pixelArt = new PixelArt();
+        pixelArt.sharpness = 1.0;
+        function pixelArtLayout() {
+            var scale:Float = Math.floor(Math.min(
+                Math.min(
+                    screen.nativeWidth * screen.nativeDensity / screen.width,
+                    screen.nativeHeight * screen.nativeDensity / screen.height
+                ),
+                4.0
+            ));
+            pixelArt.size(
+                Math.round(screen.width * scale),
+                Math.round(screen.height * scale)
+            );
+        }
+        screen.onResize(this, pixelArtLayout);
+        pixelArtLayout();
+        app.scenes.filter = pixelArt;
 
     }
 
