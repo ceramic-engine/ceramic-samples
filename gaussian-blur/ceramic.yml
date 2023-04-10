@@ -1,0 +1,10 @@
+app:
+    package: ceramic-samples.gaussian-blur
+    name: gaussian-blur
+    displayName: Gaussian Blur
+    author: Jeremy Faivre
+    version: '1.0'
+
+    plugins:
+        - ui
+        - elements

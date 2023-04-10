@@ -1,0 +1,14 @@
+app:
+    package: ceramic-samples.immediate-gui
+    name: immediate-gui
+    displayName: Immediate GUI
+    author: Jeremy Faivre
+    version: '1.0'
+
+    plugins:
+        - ui
+        - elements
+        - electron
+
+    defines:
+        - ceramic_no_skip

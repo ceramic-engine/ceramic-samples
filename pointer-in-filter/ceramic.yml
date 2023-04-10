@@ -1,0 +1,6 @@
+app:
+    package: ceramic-samples.pointer-in-filter
+    name: pointer-in-filter
+    displayName: Pointer in Filter
+    author: Jeremy Faivre
+    version: '1.0'
