@@ -55,7 +55,7 @@ function build(sample, done) {
 
     command(
         'ceramic',
-        ['clay', 'build', 'web', '--setup', '--assets', '-D', 'ceramic_web_minify', '-D', 'ceramic_no_skip', '-D', 'clay_allow_default_mouse_wheel', '-D', 'clay_allow_default_touches'],
+        ['clay', 'build', 'web', '--setup', '--assets', '-D', 'ceramic_web_minify', '-D', 'ceramic_no_skip', '-D', 'ceramic_allow_default_mouse_wheel', '-D', 'ceramic_allow_default_touches'],
         {
             cwd: path.join(__dirname, sample)
         }
