@@ -122,7 +122,7 @@ class Player extends Sprite {
 
         // Actual size used by physics
         size(18, 22);
-        quad.anchor(0.5, 1);
+        frameOffset(-3, -2);
 
         // Init input
         bindInput();
