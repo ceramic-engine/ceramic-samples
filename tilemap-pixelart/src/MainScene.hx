@@ -95,6 +95,12 @@ class MainScene extends Scene {
             pixelArt.transform.translate(8, 8);
         }
 
+        Im.slideFloat('Grid thickness', Im.float(pixelArt.gridThickness), 0, 1);
+
+        Im.slideFloat('Grid alpha', Im.float(pixelArt.gridAlpha), 0, 1);
+
+        Im.editColor('Grid color', Im.color(pixelArt.gridColor));
+
         Im.end();
 
     }
