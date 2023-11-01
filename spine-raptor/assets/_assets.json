@@ -1,0 +1,94 @@
+{
+    "assets": [
+        {
+            "name": "bloom.frag"
+        },
+        {
+            "name": "bloom.vert"
+        },
+        {
+            "name": "blur.frag"
+        },
+        {
+            "name": "blur.vert"
+        },
+        {
+            "name": "entypo.fnt"
+        },
+        {
+            "name": "entypo.png"
+        },
+        {
+            "name": "fxaa.frag"
+        },
+        {
+            "name": "fxaa.vert"
+        },
+        {
+            "name": "gaussianBlur.frag"
+        },
+        {
+            "name": "glow.frag"
+        },
+        {
+            "name": "glow.vert"
+        },
+        {
+            "name": "innerLight.frag"
+        },
+        {
+            "name": "msdf.frag"
+        },
+        {
+            "name": "msdf.vert"
+        },
+        {
+            "name": "outline.frag"
+        },
+        {
+            "name": "outline.vert"
+        },
+        {
+            "name": "pixelArt.frag"
+        },
+        {
+            "name": "pixelArt.vert"
+        },
+        {
+            "name": "raptor-pro.spine/raptor-pro.atlas"
+        },
+        {
+            "name": "raptor-pro.spine/raptor-pro.json"
+        },
+        {
+            "name": "raptor-pro.spine/raptor-pro.png"
+        },
+        {
+            "name": "raptor-pro.spine/raptor-pro@2x.atlas"
+        },
+        {
+            "name": "raptor-pro.spine/raptor-pro@2x.png"
+        },
+        {
+            "name": "RobotoMedium.fnt"
+        },
+        {
+            "name": "RobotoMedium.png"
+        },
+        {
+            "name": "textured.frag"
+        },
+        {
+            "name": "textured.vert"
+        },
+        {
+            "name": "tintBlack.frag"
+        },
+        {
+            "name": "tintBlack.vert"
+        },
+        {
+            "name": "white.png"
+        }
+    ]
+}
