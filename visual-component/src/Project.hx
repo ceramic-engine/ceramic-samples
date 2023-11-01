@@ -1,7 +1,7 @@
 package;
 
-import ceramic.Entity;
 import ceramic.Color;
+import ceramic.Entity;
 import ceramic.InitSettings;
 
 class Project extends Entity {
@@ -18,8 +18,7 @@ class Project extends Entity {
         settings.resizable = true;
 
         app.onceReady(this, ready);
-
-    }
+	}
 
     function ready() {
 
