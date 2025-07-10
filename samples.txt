@@ -20,3 +20,5 @@ ldtk-level
 gaussian-blur
 pointer-in-filter
 immediate-gui
+logo-mesh
+bunnymark

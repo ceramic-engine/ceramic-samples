@@ -1,0 +1,13 @@
+app:
+    package: ceramic-samples.logo-mesh
+    name: logo-mesh
+    displayName: Logo Mesh
+    author: Jeremy Faivre
+    version: '1.0'
+
+    plugins:
+        - ui
+        - elements
+
+    defines:
+        - ceramic_wireframe

@@ -1,0 +1,8 @@
+app:
+    package: ceramic-samples.bunnymark
+    name: bunnymark
+    displayName: BunnyMark
+    author: Jeremy Faivre
+    version: '1.0'
+
+    defines:
