@@ -7,7 +7,26 @@ const axios = require('axios');
 
 process.chdir(__dirname);
 
+// Determine platform and architecture
 const platform = process.platform == 'darwin' ? 'mac' : 'linux';
+const arch = process.arch;
+
+// Construct the asset name based on platform and architecture
+function getAssetName() {
+    if (platform === 'mac') {
+        return 'ceramic-mac.zip';
+    } else if (platform === 'linux') {
+        // Map Node.js arch values to the expected file naming
+        const archMap = {
+            'x64': 'x86_64',
+            'arm64': 'arm64'
+        };
+        const mappedArch = archMap[arch] || arch;
+        return `ceramic-linux-${mappedArch}.zip`;
+    }
+}
+
+const assetName = getAssetName();
 
 function fail(message) {
     console.error(message);
@@ -24,14 +43,14 @@ async function resolveLatestRelease() {
         if (release.assets != null) {
             var assets = release.assets;
             for (var asset of assets) {
-                if (asset.name == 'ceramic-'+platform+'.zip') {
+                if (asset.name == assetName) {
                     return release;
                 }
             }
         }
     }
 
-    fail('Failed to resolve latest ceramic version! Try again later?');
+    fail(`Failed to resolve latest ceramic version! Looking for ${assetName}. Try again later?`);
     return null;
 
 }
@@ -51,11 +70,11 @@ cleanup();
 
 (async () => {
 
-    console.log('Resolve latest Ceramic release');
+    console.log(`Resolve latest Ceramic release for ${platform} (${arch})`);
     var releaseInfo = await resolveLatestRelease();
     var targetTag = releaseInfo.tag_name;
     var ceramicZipPath = 'ceramic.zip';
-    var ceramicArchiveUrl = 'https://github.com/ceramic-engine/ceramic/releases/download/'+targetTag+'/ceramic-'+platform+'.zip';
+    var ceramicArchiveUrl = `https://github.com/ceramic-engine/ceramic/releases/download/${targetTag}/${assetName}`;
 
     console.log('Download ceramic archive: ' + ceramicArchiveUrl);
     fs.writeFileSync(ceramicZipPath, await download(ceramicArchiveUrl));
