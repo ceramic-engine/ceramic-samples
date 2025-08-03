@@ -1,0 +1,79 @@
+{
+    "assets": [
+        {
+            "name": "bloom.frag"
+        },
+        {
+            "name": "bloom.vert"
+        },
+        {
+            "name": "blur.frag"
+        },
+        {
+            "name": "blur.vert"
+        },
+        {
+            "name": "fxaa.frag"
+        },
+        {
+            "name": "fxaa.vert"
+        },
+        {
+            "name": "gaussianBlur.frag"
+        },
+        {
+            "name": "glow.frag"
+        },
+        {
+            "name": "glow.vert"
+        },
+        {
+            "name": "innerLight.frag"
+        },
+        {
+            "name": "msdf.frag"
+        },
+        {
+            "name": "msdf.vert"
+        },
+        {
+            "name": "outline.frag"
+        },
+        {
+            "name": "outline.vert"
+        },
+        {
+            "name": "pixelArt.frag"
+        },
+        {
+            "name": "pixelArt.vert"
+        },
+        {
+            "name": "RobotoMedium.fnt"
+        },
+        {
+            "name": "RobotoMedium.png"
+        },
+        {
+            "name": "spaceship.png"
+        },
+        {
+            "name": "spaceship@2x.png"
+        },
+        {
+            "name": "textured.frag"
+        },
+        {
+            "name": "textured.vert"
+        },
+        {
+            "name": "tintBlack.frag"
+        },
+        {
+            "name": "tintBlack.vert"
+        },
+        {
+            "name": "white.png"
+        }
+    ]
+}
