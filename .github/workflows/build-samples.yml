@@ -7,7 +7,7 @@ on:
 jobs:
 
   build-samples:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-22.04-arm
     steps:
       - uses: actions/checkout@v2
         with:
@@ -29,8 +29,8 @@ jobs:
       - name: Setup Haxe
         working-directory: .
         run: |
-          export NEKOPATH=$PWD'/ceramic/git/haxe-binary/linux/neko'
-          export HAXEPATH=$PWD'/ceramic/git/haxe-binary/linux/haxe'
+          export NEKOPATH=$PWD'/ceramic/git/haxe-binary/linux-arm64/neko'
+          export HAXEPATH=$PWD'/ceramic/git/haxe-binary/linux-arm64/haxe'
           echo 'neko path: '$NEKOPATH
           echo 'haxe path: '$HAXEPATH
           sudo mkdir -p /usr/local/bin
