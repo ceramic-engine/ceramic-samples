@@ -22,3 +22,4 @@ pointer-in-filter
 immediate-gui
 logo-mesh
 bunnymark
+graphics

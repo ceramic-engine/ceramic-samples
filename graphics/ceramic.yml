@@ -1,0 +1,11 @@
+app:
+    package: ceramic-samples.graphics
+    name: graphics
+    displayName: Graphics API
+    author: Jeremy Faivre
+    version: '1.0'
+
+    plugins:
+        # Needed for debug UI
+        - ui
+        - elements

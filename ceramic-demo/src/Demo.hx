@@ -24,14 +24,9 @@ class Demo extends Scene {
 
         assets.add(Images.CERAMIC);
 
-        assets.add(Shaders.GLOW);
-        assets.add(Shaders.BLUR);
-
-        assets.add(Shaders.TINT_BLACK, {
-            customAttributes: [
-                { size: 4, name: 'vertexDarkColor' }
-            ]
-        });
+        assets.add(shaders.Glow);
+        assets.add(shaders.Blur);
+        assets.add(shaders.TintBlack);
 
     }
 
@@ -231,7 +226,7 @@ class Demo extends Scene {
         var image1 = new Mesh();
         image1.texture = assets.texture(Images.CERAMIC);
         image1.color = Color.WHITE;
-        image1.shader = assets.shader(Shaders.TINT_BLACK);
+        image1.shader = assets.shader(shaders.TintBlack);
         image1.createQuad(s, s);
         image1.anchor(0.5, 0.5);
         image1.pos(w * 0.75, h * 0.39);
@@ -250,7 +245,7 @@ class Demo extends Scene {
         var image2 = new Mesh();
         image2.texture = assets.texture(Images.CERAMIC);
         image2.color = Color.WHITE;
-        image2.shader = assets.shader(Shaders.TINT_BLACK);
+        image2.shader = assets.shader(shaders.TintBlack);
         image2.createQuad(s, s);
         image2.anchor(0.5, 0.5);
         image2.pos(w * 0.5, h * 0.75);
@@ -382,8 +377,8 @@ class Demo extends Scene {
         quad3.pos(filter1.width * 0.5, filter1.height * 0.5);
         filter1.content.add(quad3);
 
-        var shader1 = assets.shader(Shaders.BLUR).clone();
-        shader1.setVec2('resolution',
+        var shader1 = assets.shader(shaders.Blur);
+        shader1.resolution(
             source.renderTarget.width * source.renderTarget.density,
             source.renderTarget.height * source.renderTarget.density
         );
@@ -419,7 +414,7 @@ class Demo extends Scene {
         quad4.pos(filter2.width * 0.5, filter2.height * 0.5);
         filter2.content.add(quad4);
 
-        var shader2 = assets.shader(Shaders.GLOW).clone();
+        var shader2 = assets.shader(shaders.Glow).clone();
         shader2.setVec2('resolution',
             source.renderTarget.width * source.renderTarget.density,
             source.renderTarget.height * source.renderTarget.density

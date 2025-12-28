@@ -26,7 +26,7 @@ class Project extends Entity {
 
     function loadAssets(assets:Assets) {
 
-        assets.add(Shaders.GAUSSIAN_BLUR);
+        assets.add(shaders.GaussianBlur);
 
     }
 
@@ -38,7 +38,7 @@ class Project extends Entity {
         app.scenes.filter = filter;
 
         // Assign a gaussian blur shader
-        var blur = app.assets.shader(Shaders.GAUSSIAN_BLUR).clone();
+        var blur = app.assets.shader(shaders.GaussianBlur).clone();
         blur.setVec2('resolution', filter.width, filter.height);
         blur.setVec2('blurSize', 8.0, 8.0);
         filter.shader = blur;
