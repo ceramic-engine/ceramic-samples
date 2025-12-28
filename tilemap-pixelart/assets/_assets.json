@@ -1,0 +1,22 @@
+{
+    "assets": [
+        {
+            "name": "entypo.fnt"
+        },
+        {
+            "name": "entypo.png"
+        },
+        {
+            "name": "RobotoMedium.fnt"
+        },
+        {
+            "name": "RobotoMedium.png"
+        },
+        {
+            "name": "single-tile.png"
+        },
+        {
+            "name": "white.png"
+        }
+    ]
+}

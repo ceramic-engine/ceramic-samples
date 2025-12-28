@@ -1,0 +1,19 @@
+{
+    "assets": [
+        {
+            "name": "RobotoMedium.fnt"
+        },
+        {
+            "name": "RobotoMedium.png"
+        },
+        {
+            "name": "spaceship.png"
+        },
+        {
+            "name": "spaceship@2x.png"
+        },
+        {
+            "name": "white.png"
+        }
+    ]
+}

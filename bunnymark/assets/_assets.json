@@ -1,0 +1,28 @@
+{
+    "assets": [
+        {
+            "name": "bunny_1.png"
+        },
+        {
+            "name": "bunny_2.png"
+        },
+        {
+            "name": "bunny_3.png"
+        },
+        {
+            "name": "bunny_4.png"
+        },
+        {
+            "name": "bunny_5.png"
+        },
+        {
+            "name": "RobotoMedium.fnt"
+        },
+        {
+            "name": "RobotoMedium.png"
+        },
+        {
+            "name": "white.png"
+        }
+    ]
+}

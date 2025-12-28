@@ -1,0 +1,25 @@
+{
+    "assets": [
+        {
+            "name": "characters.png"
+        },
+        {
+            "name": "RobotoMedium.fnt"
+        },
+        {
+            "name": "RobotoMedium.png"
+        },
+        {
+            "name": "tilemap.tmx"
+        },
+        {
+            "name": "tiles.png"
+        },
+        {
+            "name": "tileset.tsx"
+        },
+        {
+            "name": "white.png"
+        }
+    ]
+}

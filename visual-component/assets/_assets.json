@@ -1,0 +1,19 @@
+{
+    "assets": [
+        {
+            "name": "ceramic.png"
+        },
+        {
+            "name": "ceramic@2x.png"
+        },
+        {
+            "name": "RobotoMedium.fnt"
+        },
+        {
+            "name": "RobotoMedium.png"
+        },
+        {
+            "name": "white.png"
+        }
+    ]
+}
