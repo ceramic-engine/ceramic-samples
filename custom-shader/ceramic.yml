@@ -1,0 +1,8 @@
+app:
+    package: ceramic-samples.custom-shader
+    name: custom-shader
+    displayName: Custom Shader
+    author: Ceramic Engine
+    version: '1.0'
+
+    libs: []

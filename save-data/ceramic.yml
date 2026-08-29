@@ -1,0 +1,8 @@
+app:
+    package: ceramic-samples.save-data
+    name: save-data
+    displayName: Save Data
+    author: Ceramic Engine
+    version: '1.0'
+
+    libs: []

@@ -9,3 +9,8 @@ app:
         # Needed for debug UI
         - ui
         - elements
+
+    defines:
+    #     - HXCPP_DEBUG_LINK
+    #     - clipper_int64_as_float64
+    #     - clipper_debug_int64

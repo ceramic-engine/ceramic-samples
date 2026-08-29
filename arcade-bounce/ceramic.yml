@@ -1,0 +1,9 @@
+app:
+    package: ceramic-samples.arcade-bounce
+    name: arcade-bounce
+    displayName: Arcade Bounce
+    author: Ceramic Engine
+    version: '1.0'
+
+    plugins:
+        - arcade

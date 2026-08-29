@@ -1,0 +1,8 @@
+app:
+    package: ceramic-samples.audio-filters
+    name: audio-filters
+    displayName: Audio Filters
+    author: Ceramic Engine
+    version: '1.0'
+
+    libs: []

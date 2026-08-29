@@ -1,0 +1,9 @@
+app:
+    package: ceramic-samples.nape-physics
+    name: nape-physics
+    displayName: Nape Physics
+    author: Ceramic Engine
+    version: '1.0'
+
+    plugins:
+        - nape

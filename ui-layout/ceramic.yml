@@ -1,0 +1,9 @@
+app:
+    package: ceramic-samples.ui-layout
+    name: ui-layout
+    displayName: UI Layout
+    author: Ceramic Engine
+    version: '1.0'
+
+    plugins:
+        - ui

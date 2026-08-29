@@ -1,0 +1,8 @@
+app:
+    package: ceramic-samples.brush-to-texture
+    name: brush-to-texture
+    displayName: Brush to Texture
+    author: Ceramic Engine
+    version: '1.0'
+
+    libs: []

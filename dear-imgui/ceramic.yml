@@ -1,0 +1,12 @@
+app:
+    package: ceramic-samples.dear-imgui
+    name: dear-imgui
+    displayName: Dear ImGui
+    author: Ceramic Engine
+    version: '1.0'
+
+    plugins:
+        - imgui
+
+    defines:
+        - ceramic_no_skip

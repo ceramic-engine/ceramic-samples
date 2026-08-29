@@ -1,0 +1,8 @@
+app:
+    package: ceramic-samples.scene-transitions
+    name: scene-transitions
+    displayName: Scene Transitions
+    author: Ceramic Engine
+    version: '1.0'
+
+    libs: []

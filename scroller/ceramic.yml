@@ -1,0 +1,8 @@
+app:
+    package: ceramic-samples.scroller
+    name: scroller
+    displayName: Scroller
+    author: Ceramic Engine
+    version: '1.0'
+
+    libs: []

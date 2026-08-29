@@ -1,0 +1,9 @@
+app:
+    package: ceramic-samples.sprite-animation
+    name: sprite-animation
+    displayName: Sprite Animation
+    author: Ceramic Engine
+    version: '1.0'
+
+    plugins:
+        - sprite

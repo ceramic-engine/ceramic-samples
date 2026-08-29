@@ -21,14 +21,69 @@ class GraphicsDemo extends Scene {
 
     }
 
+    var didDraw = false;
+
     override function update(delta:Float) {
         super.update(delta);
 
         time += delta;
 
-        // Clear and redraw every frame (tests pooling efficiency)
-        graphics.clear();
-        drawFrame();
+        //if (!didDraw) {
+            // Clear and redraw every frame (tests pooling efficiency)
+            graphics.clear();
+            drawFrame();
+            //didDraw = true;
+        //}
+        //testFoldBack();
+    }
+
+    function testFoldBack() {
+        // Animated fold-back test case - same as original drawFrame test
+        var foldX = 250.0;
+        var foldY = 200.0;
+        var foldLen = 60.0;
+        var narrowAngle = Math.sin(time) * 0.15 + 0.1; // Oscillates between ~5° and ~25°
+
+        // MITER join with narrow angle
+        graphics.lineStyle(6, Color.fromRGB(255, 200, 100), 1.0, MITER, BUTT);
+        graphics.moveTo(foldX, foldY);
+        graphics.lineTo(foldX + foldLen, foldY);
+        graphics.lineTo(foldX + foldLen - Math.cos(narrowAngle) * foldLen, foldY - Math.sin(narrowAngle) * foldLen);
+        graphics.drawPath();
+
+        // BEVEL join with narrow angle
+        graphics.lineStyle(6, Color.fromRGB(100, 255, 200), 1.0, BEVEL, BUTT);
+        graphics.moveTo(foldX, foldY + 25);
+        graphics.lineTo(foldX + foldLen, foldY + 25);
+        graphics.lineTo(foldX + foldLen - Math.cos(narrowAngle) * foldLen, foldY + 25 - Math.sin(narrowAngle) * foldLen);
+        graphics.drawPath();
+
+        // ROUND join with narrow angle
+        graphics.lineStyle(6, Color.fromRGB(200, 100, 255), 1.0, ROUND, BUTT);
+        graphics.moveTo(foldX, foldY + 50);
+        graphics.lineTo(foldX + foldLen, foldY + 50);
+        graphics.lineTo(foldX + foldLen - Math.cos(narrowAngle) * foldLen, foldY + 50 - Math.sin(narrowAngle) * foldLen);
+        graphics.drawPath();
+
+        // Near-180° fold-back test (almost going back on itself)
+        var foldBack = Math.PI - 0.1; // ~170° turn
+        graphics.lineStyle(8, Color.fromRGB(255, 100, 100), 1.0, MITER, BUTT);
+        graphics.moveTo(foldX + 150, foldY);
+        graphics.lineTo(foldX + 150 + 40, foldY);
+        graphics.lineTo(foldX + 150 + 40 - Math.cos(foldBack) * 40, foldY - Math.sin(foldBack) * 40);
+        graphics.drawPath();
+
+        graphics.lineStyle(8, Color.fromRGB(100, 255, 100), 1.0, BEVEL, BUTT);
+        graphics.moveTo(foldX + 150, foldY + 30);
+        graphics.lineTo(foldX + 150 + 40, foldY + 30);
+        graphics.lineTo(foldX + 150 + 40 - Math.cos(foldBack) * 40, foldY + 30 - Math.sin(foldBack) * 40);
+        graphics.drawPath();
+
+        graphics.lineStyle(8, Color.fromRGB(100, 100, 255), 1.0, ROUND, BUTT);
+        graphics.moveTo(foldX + 150, foldY + 60);
+        graphics.lineTo(foldX + 150 + 40, foldY + 60);
+        graphics.lineTo(foldX + 150 + 40 - Math.cos(foldBack) * 40, foldY + 60 - Math.sin(foldBack) * 40);
+        graphics.drawPath();
     }
 
     function drawFrame() {
@@ -122,7 +177,7 @@ class GraphicsDemo extends Scene {
         graphics.drawPath();
 
         // Closed path triangle
-        graphics.lineStyle(2, Color.CYAN);
+        graphics.lineStyle(2, Color.CYAN, 1.0, ROUND, BUTT);
         graphics.moveTo(500, 500);
         graphics.lineTo(550, 480);
         graphics.lineTo(570, 520);
@@ -156,9 +211,21 @@ class GraphicsDemo extends Scene {
             }
         }
 
+        // === COMBINED FILL+STROKE CIRCLE (previously required two calls) ===
+
+        var circleX = 650;
+        var circleY = 480;
+        var circleR = 30 + Math.sin(time * 2.8) * 5;
+
+        // Now uses combined fill+stroke in a single operation
+        graphics.beginFill(Color.fromRGB(200, 100, 250), 0.5);
+        graphics.lineStyle(2, Color.fromRGB(250, 150, 200));
+        graphics.drawCircle(circleX, circleY, circleR);
+        graphics.endFill();
+
         // === MULTIPLE LINES ===
 
-        graphics.lineStyle(1, Color.fromRGB(255, 150, 100));
+        graphics.lineStyle(3, Color.fromRGB(255, 150, 100), 1, null, ROUND);
         var lineCount = 8;
         for (i in 0...lineCount) {
             var y = 350 + i * 8;
@@ -171,17 +238,6 @@ class GraphicsDemo extends Scene {
             );
         }
 
-        // === COMBINED FILL+STROKE CIRCLE (previously required two calls) ===
-
-        var circleX = 650;
-        var circleY = 480;
-        var circleR = 30 + Math.sin(time * 2.8) * 5;
-
-        // Now uses combined fill+stroke in a single operation
-        graphics.beginFill(Color.fromRGB(200, 100, 250), 0.5);
-        graphics.lineStyle(2, Color.fromRGB(250, 150, 200));
-        graphics.drawCircle(circleX, circleY, circleR);
-        graphics.endFill();
     }
 
     override function destroy() {
