@@ -52,10 +52,14 @@ class MainScene extends Scene {
         musicSound = Synth.music();
 
         // Audio filters process a whole bus. Here, the music plays on
-        // bus 1 and the low-pass filter is (temporarily) added to that
-        // same bus, so the blip sound effect (played on the default
-        // bus 0) always stays unfiltered.
+        // bus 1 and the low-pass filter is added to that same bus, so the
+        // blip sound effect (played on the default bus 0) always stays
+        // unfiltered. The filter is added ONCE and stays on the bus: when
+        // not engaged, its params are simply set to neutral values (see
+        // resetFilter() below), which make it transparent.
         lowPass = new LowPassFilter();
+        resetFilter();
+        audio.addFilter(lowPass, 1);
 
         bg = new Quad();
         bg.size(width, height);
@@ -132,7 +136,6 @@ class MainScene extends Scene {
 
         // Engage the filter while the pointer is held down
         filterEngaged = true;
-        audio.addFilter(lowPass, 1);
         applyFilterFromPointer(info.x, info.y);
 
     }
@@ -149,10 +152,22 @@ class MainScene extends Scene {
 
         if (filterEngaged) {
             filterEngaged = false;
-            audio.removeFilter(lowPass);
+            resetFilter();
             bg.color = BG_OPEN;
             updateStatus();
         }
+
+    }
+
+    /**
+     * Reset the filter to neutral values: with its cutoff frequency well
+     * above the audible range and no resonance, it lets the sound through
+     * unchanged.
+     */
+    function resetFilter() {
+
+        lowPass.cutoffFrequency = 20000;
+        lowPass.resonance = 0.707;
 
     }
 
