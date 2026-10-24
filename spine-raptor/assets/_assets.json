@@ -1,0 +1,34 @@
+{
+    "assets": [
+        {
+            "name": "entypo.fnt"
+        },
+        {
+            "name": "entypo.png"
+        },
+        {
+            "name": "raptor-pro.spine/raptor-pro.atlas"
+        },
+        {
+            "name": "raptor-pro.spine/raptor-pro.json"
+        },
+        {
+            "name": "raptor-pro.spine/raptor-pro.png"
+        },
+        {
+            "name": "raptor-pro.spine/raptor-pro@2x.atlas"
+        },
+        {
+            "name": "raptor-pro.spine/raptor-pro@2x.png"
+        },
+        {
+            "name": "RobotoMedium.fnt"
+        },
+        {
+            "name": "RobotoMedium.png"
+        },
+        {
+            "name": "white.png"
+        }
+    ]
+}

@@ -1,0 +1,19 @@
+{
+    "assets": [
+        {
+            "name": "atlas/SunnyLand_by_Ansimuz-extended.png"
+        },
+        {
+            "name": "RobotoMedium.fnt"
+        },
+        {
+            "name": "RobotoMedium.png"
+        },
+        {
+            "name": "white.png"
+        },
+        {
+            "name": "WorldMap_GridVania_layout.ldtk"
+        }
+    ]
+}
