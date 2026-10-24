@@ -55,12 +55,11 @@ class MainScene extends Scene {
 
         // The brush: a small group of round quads, stamped into
         // the render texture at every stroke point. It is not added
-        // to the scene and stays invisible: stamp() makes it visible
-        // just long enough to render into the texture. Without this,
-        // a parentless visual is still drawn on screen, so the last
-        // stamped dots would linger over the canvas.
+        // to the scene, so it is never displayed by itself: stamp()
+        // only renders it into the texture. It stays inactive while
+        // it is not being stamped.
         brush = new Visual();
-        brush.visible = false;
+        brush.active = false;
         for (i in 0...16) {
             var dot = new Quad();
             dot.texture = brushTexture;
@@ -189,8 +188,13 @@ class MainScene extends Scene {
         pendingPoints.splice(0, count);
 
         stamping = true;
+        brush.active = true;
         renderTexture.stamp(brush, () -> {
             stamping = false;
+            brush.active = false;
+            for (dot in brushDots) {
+                dot.active = false;
+            }
         });
 
     }

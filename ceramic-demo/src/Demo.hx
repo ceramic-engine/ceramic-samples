@@ -309,8 +309,9 @@ class Demo extends Scene {
         source.texture = assets.texture(Images.CERAMIC);
         source.size(w * 0.2, w * 0.2);
         source.anchor(0.5, 0.5);
-        source.renderTarget = new RenderTexture(Std.int(w * 0.2), Std.int(w * 0.2));
-        source.pos(source.renderTarget.width * 0.5, source.renderTarget.height * 0.5);
+        var sourceTexture = new RenderTexture(Std.int(w * 0.2), Std.int(w * 0.2));
+        sourceTexture.add(source);
+        source.pos(sourceTexture.width * 0.5, sourceTexture.height * 0.5);
         app.onUpdate(source, function(delta) {
             source.rotation = (Utils.sinRatio(Timer.now) - 0.5) * 33;
             source.scaleX = 0.4 + Tween.ease(QUAD_EASE_IN_OUT, Utils.sinRatio(Timer.now * 0.25)) * 0.6;
@@ -318,7 +319,7 @@ class Demo extends Scene {
 
         // Display original
         var quad1 = new Quad();
-        quad1.texture = source.renderTarget;
+        quad1.texture = sourceTexture;
         quad1.size(w * 0.2, w * 0.2);
         quad1.anchor(0.5, 0.5);
         quad1.pos(w * 0.28, h * 0.35);
@@ -340,7 +341,7 @@ class Demo extends Scene {
         quad2A.color = Color.interpolate(0xAE5FB9, Color.WHITE, 0.5);
         container.add(quad2A);
         var quad2B = new Quad();
-        quad2B.texture = source.renderTarget;
+        quad2B.texture = sourceTexture;
         quad2B.anchor(0.5, 0.5);
         quad2B.pos(w * 0.72, h * 0.35);
         quad2B.depth = 2;
@@ -379,8 +380,8 @@ class Demo extends Scene {
 
         var shader1 = assets.shader(shaders.Blur);
         shader1.resolution(
-            source.renderTarget.width * source.renderTarget.density,
-            source.renderTarget.height * source.renderTarget.density
+            sourceTexture.width * sourceTexture.density,
+            sourceTexture.height * sourceTexture.density
         );
         filter1.shader = shader1;
 
@@ -416,8 +417,8 @@ class Demo extends Scene {
 
         var shader2 = assets.shader(shaders.Glow).clone();
         shader2.setVec2('resolution',
-            source.renderTarget.width * source.renderTarget.density,
-            source.renderTarget.height * source.renderTarget.density
+            sourceTexture.width * sourceTexture.density,
+            sourceTexture.height * sourceTexture.density
         );
         filter2.shader = shader2;
 

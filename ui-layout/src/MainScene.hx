@@ -10,29 +10,29 @@ import ceramic.ViewSize;
 
 class MainScene extends Scene {
 
-    var root:ColumnLayout;
+    var mainLayout:ColumnLayout;
 
     override function create() {
 
         // A column layout that fills the whole scene:
         // header on top, then a row of panels, then a footer.
         // Resize the window to see everything reflow.
-        root = new ColumnLayout();
-        root.size(width, height);
-        root.padding(12);
-        root.itemSpacing = 12;
-        add(root);
+        mainLayout = new ColumnLayout();
+        mainLayout.size(width, height);
+        mainLayout.padding(12);
+        mainLayout.itemSpacing = 12;
+        add(mainLayout);
 
         // Header: full width, fixed height
         var header = panel('header', 0x3185FC);
         header.viewSize(ViewSize.fill(), 60);
-        root.add(header);
+        mainLayout.add(header);
 
         // Middle row: fills the remaining vertical space
         var row = new RowLayout();
         row.viewSize(ViewSize.fill(), ViewSize.fill());
         row.itemSpacing = 12;
-        root.add(row);
+        mainLayout.add(row);
 
         // Sidebar: 25% of the row's width
         var sidebar = panel('sidebar\n25%', 0x9B5DE5);
@@ -52,7 +52,7 @@ class MainScene extends Scene {
         // Footer: full width, fixed height
         var footer = panel('footer', 0xE84855);
         footer.viewSize(ViewSize.fill(), 40);
-        root.add(footer);
+        mainLayout.add(footer);
 
     }
 
@@ -76,8 +76,8 @@ class MainScene extends Scene {
 
     override function resize(width:Float, height:Float) {
 
-        // The layout system recomputes everything when the root size changes
-        if (root != null) root.size(width, height);
+        // The layout system recomputes everything when the main layout size changes
+        if (mainLayout != null) mainLayout.size(width, height);
 
     }
 
