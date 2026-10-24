@@ -1,0 +1,13 @@
+app:
+    package: ceramic-samples.ldtk-live-rules
+    name: ldtk-live-rules
+    displayName: LDtk Live Rules
+    author: Jeremy Faivre
+    version: '1.0'
+
+    plugins:
+        - tilemap
+        - ldtk
+        - ase
+        - ui
+        - elements

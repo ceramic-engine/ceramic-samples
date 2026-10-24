@@ -17,6 +17,7 @@ particles
 http-image
 image-repeat
 ldtk-level
+ldtk-live-rules
 gaussian-blur
 pointer-in-filter
 immediate-gui
