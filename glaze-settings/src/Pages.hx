@@ -56,7 +56,7 @@ class GeneralPage extends Component {
                     .value(settings.theme)
                     .onChange(v -> {
                         settings.theme = v;
-                        Theme.change(v == 'light' ? ThemeMode.Light : ThemeMode.Dark, null, Glaze.app);
+                        Theme.setMode(v == 'light' ? ThemeMode.Light : ThemeMode.Dark);
                     }))))
             .child(LabeledRow.component().label('Autosave').hint('Save documents while you type')
                 .child(Switch.component('autosave')
