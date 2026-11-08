@@ -1,0 +1,9 @@
+app:
+    package: ceramic-samples.glaze-settings
+    name: glaze-settings
+    displayName: Glaze Settings
+    author: Ceramic Engine
+    version: '1.0'
+
+    plugins:
+        - glaze

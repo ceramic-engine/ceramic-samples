@@ -39,3 +39,4 @@ scene-transitions
 brush-to-texture
 custom-shader
 dear-imgui
+glaze-settings
