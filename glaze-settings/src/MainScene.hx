@@ -3,7 +3,7 @@ package;
 import ceramic.Scene;
 import glaze.Glaze;
 import glaze.kit.IconName;
-import glaze.kit.base.Root;
+import glaze.kit.Kit;
 import glaze.kit.theme.Theme;
 import glaze.kit.theme.ThemeMode;
 
@@ -36,10 +36,14 @@ class MainScene extends Scene {
         // The kit's icons are SVG files: preload them (the web has no
         // synchronous file access), then open the window.
         IconName.preload(_ -> {
-            // `Root` is the kit's root view: it applies the theme to the window.
+            // `Kit.window(view)` wraps the view in the kit's window root
+            // (`Root`): theme on the window body, dialogs, sheets,
+            // notifications, tooltips, text selection. It creates no window
+            // itself; `new Glaze(...)` carries the GPUI window.
+            // `Root.component().child(view)` is the explicit equivalent.
             // `X.component()` places a component in the tree; its chained
             // setters are its props.
-            ui = new Glaze(Root.builder(SettingsWindow.component().settings(settings)));
+            ui = new Glaze(Kit.window(SettingsWindow.component().settings(settings)));
             ui.size(width, height);
             add(ui);
         });
