@@ -39,7 +39,7 @@ class SettingsWindow extends Component {
             .child(vFlex().gap4().px8().pt8().pb4()
                 .child(div().textXl().fontSemibold().child('Settings'))
                 // In a loop, every call has the same position in the code: `.at(key)`
-                // tells the instances apart (it also names the component's root element)
+                // tells the instances apart (and isolates the element ids inside each one)
                 .child(hFlex().gap1().p1().roundedLg().bg(theme.secondary).wFull()
                     .children([for (i => name in TABS)
                         TabButton.component().at(name)
@@ -97,7 +97,8 @@ class TabButton extends Component {
 
     function render(window:Window, cx:App):IntoElement {
         final theme = Theme.global(cx);
-        return div().flex1().py1p5().roundedMd().textSm().textCenter().cursorPointer()
+        // Click listeners need an element id: without `.id(...)`, `onClick` is ignored
+        return div().id('tab').flex1().py1p5().roundedMd().textSm().textCenter().cursorPointer()
             .bg(selected ? theme.tabActive : theme.transparent)
             .textColor(selected ? theme.tabActiveForeground : theme.mutedForeground)
             .hover(s -> selected ? s : s.textColor(theme.foreground))
