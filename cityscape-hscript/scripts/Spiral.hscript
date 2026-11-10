@@ -1,0 +1,39 @@
+// A rainbow spiral drawn by the turtle.
+// Press Run (or Cmd+Enter) to see it on the canvas.
+
+// #region settings
+var steps = 120;
+var growth = 2.6;
+var colors = {start: 200, spread: 300};
+// #endregion
+
+/**
+ * The color of a step: a hue that turns along the spiral.
+ */
+function rainbow(step) {
+    var hue = colors.start + step / steps * colors.spread;
+    return hsl(hue % 360, 0.85, 0.6);
+}
+
+/**
+ * Draws the spiral: each segment a bit longer than the previous one,
+ * turned by `angle` degrees.
+ */
+function spiral(angle) {
+    turtle.penSize(3);
+    for (i in 0...steps) {
+        turtle.penColor(rainbow(i));
+        turtle.forward(i * growth / 2);
+        turtle.turn(angle);
+    }
+}
+
+function main() {
+    clear(rgb(24, 24, 32));
+    spiral(89);
+    print("Drew " + steps + " segments");
+    print("The turtle stopped at " + Math.round(turtle.x) + ", " + Math.round(turtle.y));
+    turtle.home();
+}
+
+main();

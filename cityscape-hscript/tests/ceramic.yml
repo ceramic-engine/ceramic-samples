@@ -1,0 +1,19 @@
+app:
+    package: ceramic-samples.cityscape-hscript-tests
+    name: tests
+    displayName: Cityscape hscript tests
+    author: Ceramic Engine
+    version: '1.0'
+
+    # The language server alone (lib/hscriptls): it only needs hscript,
+    # with positions in its syntax tree (hscriptPos)
+    libs:
+        - hscript
+
+    paths:
+        - ../lib
+
+    defines:
+        - hscriptPos
+        # Native runs use a hidden SDL window (no window on screen)
+        - clay_sdl_headless

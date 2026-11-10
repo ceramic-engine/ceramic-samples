@@ -1,0 +1,36 @@
+// A night sky: random stars, a moon, and a few constellations.
+
+clear(0x0b1026);
+
+var stars = [];
+for (i in 0...140) {
+    var star = {x: random(0, WIDTH), y: random(0, HEIGHT), size: random(0.5, 2.2)};
+    stars.push(star);
+    circle(star.x, star.y, star.size, hsl(randomInt(190, 240), 0.5, 0.85));
+}
+
+// The moon, with a shadow to make a crescent
+circle(310, 80, 34, rgb(250, 240, 200));
+circle(296, 70, 30, 0x0b1026);
+
+/**
+ * Links random stars with thin lines.
+ */
+function constellation(count, color) {
+    var first = stars[randomInt(0, stars.length - 1)];
+    var previous = first;
+    for (k in 0...count) {
+        var next = stars[randomInt(0, stars.length - 1)];
+        line(previous.x, previous.y, next.x, next.y, color, 1);
+        previous = next;
+    }
+    return first;
+}
+
+var names = ["Draco" => 0x7fd4ff, "Lyra" => 0xffd27f, "Orion" => 0xff8fb1];
+for (name in names.keys()) {
+    var start = constellation(4, names.get(name));
+    print(name + " starts at " + Std.int(start.x) + ", " + Std.int(start.y));
+}
+
+print(stars.length + " stars");

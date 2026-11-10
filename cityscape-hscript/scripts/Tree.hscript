@@ -1,0 +1,34 @@
+// A fractal tree: a recursive function draws each branch,
+// then two smaller branches at its end.
+
+var depthColors = [0x8b5a2b, 0x8b5a2b, 0x6b8e23, 0x7cb342, 0x9ccc65, 0xc5e1a5, 0xf8bbd0];
+
+function branch(length, depth) {
+    if (depth == 0 || length < 4) {
+        return;
+    }
+    turtle.penSize(depth * 1.2);
+    turtle.penColor(depthColors[depthColors.length - depth]);
+    turtle.forward(length);
+    var spread = random(18, 32);
+    turtle.turn(-spread);
+    branch(length * 0.72, depth - 1);
+    turtle.turn(spread * 2);
+    branch(length * 0.72, depth - 1);
+    turtle.turn(-spread);
+    turtle.penUp();
+    turtle.back(length);
+    turtle.penDown();
+}
+
+function grow() {
+    clear(rgb(235, 244, 250));
+    rect(0, 360, WIDTH, 40, rgb(120, 170, 90));
+    turtle.penUp();
+    turtle.goTo(200, 370);
+    turtle.penDown();
+    branch(80, 7);
+}
+
+grow();
+print("Run it again: the tree is different every time.");

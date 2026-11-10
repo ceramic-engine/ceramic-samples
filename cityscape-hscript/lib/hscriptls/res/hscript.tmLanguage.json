@@ -1,0 +1,675 @@
+{
+  "$comment": "TextMate grammar of hscript (the scripting subset of Haxe run by hscript's Interp). Derived from the Haxe grammar of vshaxe/haxe-TmLanguage (MIT, Copyright (c) 2017 vshaxe contributors), as bundled with Glaze, trimmed to what hscript parses: no packages, imports, classes or type declarations; var, function, arrow functions, if/else, for/in, while, do, switch/case/default, try/catch, throw, return, break, continue, new, arrays, maps, objects, metadata, #if preprocessor lines and comments. Strings have no interpolation in hscript.",
+  "name": "hscript",
+  "scopeName": "source.hscript",
+  "fileTypes": [
+    "hscript",
+    "hxs"
+  ],
+  "patterns": [
+    {
+      "include": "#statements"
+    }
+  ],
+  "repository": {
+    "statements": {
+      "patterns": [
+        {
+          "include": "#comments"
+        },
+        {
+          "include": "#preprocessor"
+        },
+        {
+          "include": "#strings"
+        },
+        {
+          "include": "#metadata"
+        },
+        {
+          "include": "#function-declaration"
+        },
+        {
+          "include": "#arrow-function"
+        },
+        {
+          "include": "#variable-declaration"
+        },
+        {
+          "include": "#for-loop"
+        },
+        {
+          "include": "#catch-clause"
+        },
+        {
+          "include": "#case-clause"
+        },
+        {
+          "include": "#new-expression"
+        },
+        {
+          "include": "#keywords"
+        },
+        {
+          "include": "#constants"
+        },
+        {
+          "include": "#numbers"
+        },
+        {
+          "include": "#object-key"
+        },
+        {
+          "include": "#function-call"
+        },
+        {
+          "include": "#member-access"
+        },
+        {
+          "include": "#operators"
+        },
+        {
+          "include": "#punctuation"
+        },
+        {
+          "include": "#type-annotation"
+        },
+        {
+          "include": "#identifiers"
+        }
+      ]
+    },
+    "comments": {
+      "patterns": [
+        {
+          "begin": "/\\*\\*(?!/)",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.comment.hscript"
+            }
+          },
+          "end": "\\*/",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.comment.hscript"
+            }
+          },
+          "name": "comment.block.documentation.hscript",
+          "patterns": [
+            {
+              "include": "#doc-tags"
+            }
+          ]
+        },
+        {
+          "begin": "/\\*",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.comment.hscript"
+            }
+          },
+          "end": "\\*/",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.comment.hscript"
+            }
+          },
+          "name": "comment.block.hscript"
+        },
+        {
+          "match": "(//).*$\\n?",
+          "captures": {
+            "1": {
+              "name": "punctuation.definition.comment.hscript"
+            }
+          },
+          "name": "comment.line.double-slash.hscript"
+        }
+      ]
+    },
+    "doc-tags": {
+      "patterns": [
+        {
+          "match": "(@param)\\s+([A-Za-z_][A-Za-z0-9_]*)\\b",
+          "captures": {
+            "1": {
+              "name": "storage.type.class.jsdoc"
+            },
+            "2": {
+              "name": "variable.other.jsdoc"
+            }
+          }
+        },
+        {
+          "match": "@(?:return|returns|see|since|deprecated)\\b",
+          "name": "storage.type.class.jsdoc"
+        }
+      ]
+    },
+    "preprocessor": {
+      "patterns": [
+        {
+          "match": "^\\s*(#(?:if|elseif))\\b\\s*(.*)$",
+          "captures": {
+            "1": {
+              "name": "keyword.control.directive.conditional.hscript"
+            },
+            "2": {
+              "name": "entity.name.function.preprocessor.hscript"
+            }
+          },
+          "name": "meta.preprocessor.hscript"
+        },
+        {
+          "match": "^\\s*(#(?:else|end))\\b",
+          "captures": {
+            "1": {
+              "name": "keyword.control.directive.conditional.hscript"
+            }
+          },
+          "name": "meta.preprocessor.hscript"
+        }
+      ]
+    },
+    "strings": {
+      "patterns": [
+        {
+          "begin": "\"",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.string.begin.hscript"
+            }
+          },
+          "end": "\"",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.string.end.hscript"
+            }
+          },
+          "name": "string.quoted.double.hscript",
+          "patterns": [
+            {
+              "include": "#escapes"
+            }
+          ]
+        },
+        {
+          "begin": "'",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.string.begin.hscript"
+            }
+          },
+          "end": "'",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.string.end.hscript"
+            }
+          },
+          "name": "string.quoted.single.hscript",
+          "patterns": [
+            {
+              "include": "#escapes"
+            }
+          ]
+        }
+      ]
+    },
+    "escapes": {
+      "patterns": [
+        {
+          "match": "\\\\u[0-9A-Fa-f]{4}",
+          "name": "constant.character.escape.hscript"
+        },
+        {
+          "match": "\\\\[\\\"'\\\\nrt/]",
+          "name": "constant.character.escape.hscript"
+        },
+        {
+          "match": "\\\\.",
+          "name": "invalid.illegal.escape.hscript"
+        }
+      ]
+    },
+    "metadata": {
+      "patterns": [
+        {
+          "begin": "(@)(:?[A-Za-z_][A-Za-z0-9_]*)\\s*(\\()",
+          "beginCaptures": {
+            "1": {
+              "name": "punctuation.definition.annotation.hscript"
+            },
+            "2": {
+              "name": "storage.type.annotation.hscript"
+            },
+            "3": {
+              "name": "meta.brace.round.hscript"
+            }
+          },
+          "end": "\\)",
+          "endCaptures": {
+            "0": {
+              "name": "meta.brace.round.hscript"
+            }
+          },
+          "name": "meta.metadata.hscript",
+          "patterns": [
+            {
+              "include": "#statements"
+            }
+          ]
+        },
+        {
+          "match": "(@)(:?[A-Za-z_][A-Za-z0-9_]*)",
+          "captures": {
+            "1": {
+              "name": "punctuation.definition.annotation.hscript"
+            },
+            "2": {
+              "name": "storage.type.annotation.hscript"
+            }
+          },
+          "name": "meta.metadata.hscript"
+        }
+      ]
+    },
+    "function-declaration": {
+      "begin": "\\b(?:(inline)\\s+)?(function)\\b(?:\\s+([A-Za-z_][A-Za-z0-9_]*))?\\s*(\\()",
+      "beginCaptures": {
+        "1": {
+          "name": "storage.modifier.hscript"
+        },
+        "2": {
+          "name": "storage.type.function.hscript"
+        },
+        "3": {
+          "name": "entity.name.function.hscript"
+        },
+        "4": {
+          "name": "punctuation.definition.parameters.begin.hscript"
+        }
+      },
+      "end": "\\)",
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.definition.parameters.end.hscript"
+        }
+      },
+      "name": "meta.function.hscript",
+      "patterns": [
+        {
+          "include": "#parameters"
+        }
+      ]
+    },
+    "parameters": {
+      "patterns": [
+        {
+          "include": "#comments"
+        },
+        {
+          "match": "(\\?)?\\s*([A-Za-z_][A-Za-z0-9_]*)",
+          "captures": {
+            "1": {
+              "name": "keyword.operator.optional.hscript"
+            },
+            "2": {
+              "name": "variable.parameter.hscript"
+            }
+          }
+        },
+        {
+          "begin": "=",
+          "beginCaptures": {
+            "0": {
+              "name": "keyword.operator.assignment.hscript"
+            }
+          },
+          "end": "(?=[,)])",
+          "patterns": [
+            {
+              "include": "#statements"
+            }
+          ]
+        },
+        {
+          "include": "#type-annotation"
+        },
+        {
+          "match": ",",
+          "name": "punctuation.separator.parameter.hscript"
+        }
+      ]
+    },
+    "arrow-function": {
+      "patterns": [
+        {
+          "begin": "(\\()(?=[^()]*\\)\\s*->)",
+          "beginCaptures": {
+            "1": {
+              "name": "punctuation.definition.parameters.begin.hscript"
+            }
+          },
+          "end": "(\\))\\s*(->)",
+          "endCaptures": {
+            "1": {
+              "name": "punctuation.definition.parameters.end.hscript"
+            },
+            "2": {
+              "name": "storage.type.function.arrow.hscript"
+            }
+          },
+          "name": "meta.function.arrow.hscript",
+          "patterns": [
+            {
+              "include": "#parameters"
+            }
+          ]
+        },
+        {
+          "match": "\\b([A-Za-z_][A-Za-z0-9_]*)\\s*(->)",
+          "captures": {
+            "1": {
+              "name": "variable.parameter.hscript"
+            },
+            "2": {
+              "name": "storage.type.function.arrow.hscript"
+            }
+          }
+        }
+      ]
+    },
+    "variable-declaration": {
+      "match": "\\b(var)\\s+([A-Za-z_][A-Za-z0-9_]*)",
+      "captures": {
+        "1": {
+          "name": "storage.type.hscript"
+        },
+        "2": {
+          "name": "variable.other.readwrite.hscript"
+        }
+      }
+    },
+    "for-loop": {
+      "match": "\\b(for)\\s*(\\()\\s*([A-Za-z_][A-Za-z0-9_]*)\\s+(in)\\b",
+      "captures": {
+        "1": {
+          "name": "keyword.control.loop.hscript"
+        },
+        "2": {
+          "name": "meta.brace.round.hscript"
+        },
+        "3": {
+          "name": "variable.other.readwrite.hscript"
+        },
+        "4": {
+          "name": "keyword.control.loop.hscript"
+        }
+      }
+    },
+    "catch-clause": {
+      "match": "\\b(catch)\\s*(\\()\\s*([A-Za-z_][A-Za-z0-9_]*)",
+      "captures": {
+        "1": {
+          "name": "keyword.control.trycatch.hscript"
+        },
+        "2": {
+          "name": "meta.brace.round.hscript"
+        },
+        "3": {
+          "name": "variable.other.readwrite.hscript"
+        }
+      }
+    },
+    "case-clause": {
+      "match": "\\b(case|default)\\b",
+      "name": "keyword.control.switch.hscript"
+    },
+    "new-expression": {
+      "match": "\\b(new)\\s+([A-Za-z_][A-Za-z0-9_]*(?:\\.[A-Za-z_][A-Za-z0-9_]*)*)",
+      "captures": {
+        "1": {
+          "name": "keyword.operator.new.hscript"
+        },
+        "2": {
+          "name": "entity.name.type.hscript"
+        }
+      }
+    },
+    "keywords": {
+      "patterns": [
+        {
+          "match": "\\b(if|else)\\b",
+          "name": "keyword.control.conditional.hscript"
+        },
+        {
+          "match": "\\b(for|while|do|break|continue)\\b",
+          "name": "keyword.control.loop.hscript"
+        },
+        {
+          "match": "\\b(switch)\\b",
+          "name": "keyword.control.switch.hscript"
+        },
+        {
+          "match": "\\b(try|catch|throw)\\b",
+          "name": "keyword.control.trycatch.hscript"
+        },
+        {
+          "match": "\\b(return)\\b",
+          "name": "keyword.control.flow.hscript"
+        },
+        {
+          "match": "\\b(in)\\b",
+          "name": "keyword.control.loop.hscript"
+        },
+        {
+          "match": "\\b(is)\\b",
+          "name": "keyword.operator.expression.is.hscript"
+        },
+        {
+          "match": "\\b(var)\\b",
+          "name": "storage.type.hscript"
+        },
+        {
+          "match": "\\b(function)\\b",
+          "name": "storage.type.function.hscript"
+        },
+        {
+          "match": "\\b(inline)\\b",
+          "name": "storage.modifier.hscript"
+        },
+        {
+          "match": "\\b(new)\\b",
+          "name": "keyword.operator.new.hscript"
+        },
+        {
+          "match": "\\b(trace)\\b",
+          "name": "support.function.hscript"
+        }
+      ]
+    },
+    "constants": {
+      "match": "\\b(true|false|null)\\b",
+      "name": "constant.language.hscript"
+    },
+    "numbers": {
+      "patterns": [
+        {
+          "match": "\\b0[xX][0-9A-Fa-f]+\\b",
+          "name": "constant.numeric.hex.hscript"
+        },
+        {
+          "match": "(?<![\\w$])(?:[0-9]+\\.[0-9]+(?:[eE][-+]?[0-9]+)?|[0-9]+[eE][-+]?[0-9]+|[0-9]+(?!\\.\\.)\\.(?![\\w.])|\\.[0-9]+|[0-9]+)\\b",
+          "name": "constant.numeric.decimal.hscript"
+        }
+      ]
+    },
+    "object-key": {
+      "match": "(?<=[{,])\\s*([A-Za-z_][A-Za-z0-9_]*|\\\"[^\\\"]*\\\")\\s*(:)(?!:)",
+      "captures": {
+        "1": {
+          "name": "meta.object-literal.key.hscript"
+        },
+        "2": {
+          "name": "punctuation.separator.key-value.hscript"
+        }
+      }
+    },
+    "function-call": {
+      "match": "\\b(?!(?:if|while|for|switch|catch|function|return|new|throw|var|else|do|try|case|default|in|is)\\b)([A-Za-z_][A-Za-z0-9_]*)\\s*(?=\\()",
+      "captures": {
+        "1": {
+          "name": "entity.name.function.hscript"
+        }
+      }
+    },
+    "member-access": {
+      "patterns": [
+        {
+          "match": "(\\?\\.|\\.)\\s*([A-Za-z_][A-Za-z0-9_]*)\\s*(?=\\()",
+          "captures": {
+            "1": {
+              "name": "punctuation.accessor.hscript"
+            },
+            "2": {
+              "name": "entity.name.function.member.hscript"
+            }
+          }
+        },
+        {
+          "match": "(\\?\\.|\\.)\\s*([A-Z][A-Z0-9_]*)\\b(?![a-z])",
+          "captures": {
+            "1": {
+              "name": "punctuation.accessor.hscript"
+            },
+            "2": {
+              "name": "variable.other.constant.property.hscript"
+            }
+          }
+        },
+        {
+          "match": "(\\?\\.|\\.)\\s*([A-Za-z_][A-Za-z0-9_]*)",
+          "captures": {
+            "1": {
+              "name": "punctuation.accessor.hscript"
+            },
+            "2": {
+              "name": "variable.other.property.hscript"
+            }
+          }
+        }
+      ]
+    },
+    "operators": {
+      "patterns": [
+        {
+          "match": "\\.\\.\\.",
+          "name": "keyword.operator.range.hscript"
+        },
+        {
+          "match": "=>",
+          "name": "keyword.operator.map.hscript"
+        },
+        {
+          "match": "->",
+          "name": "storage.type.function.arrow.hscript"
+        },
+        {
+          "match": "(?:<<|>>>|>>|[-+*/%&|^])=",
+          "name": "keyword.operator.assignment.compound.hscript"
+        },
+        {
+          "match": "&&|\\|\\||!(?!=)",
+          "name": "keyword.operator.logical.hscript"
+        },
+        {
+          "match": "==|!=|<=|>=|<(?!<)|(?<!-)>(?!>)",
+          "name": "keyword.operator.comparison.hscript"
+        },
+        {
+          "match": "<<|>>>|>>|[&|^~]",
+          "name": "keyword.operator.bitwise.hscript"
+        },
+        {
+          "match": "\\+\\+|--",
+          "name": "keyword.operator.increment.hscript"
+        },
+        {
+          "match": "[-+*/%]",
+          "name": "keyword.operator.arithmetic.hscript"
+        },
+        {
+          "match": "=",
+          "name": "keyword.operator.assignment.hscript"
+        },
+        {
+          "match": "\\?|:",
+          "name": "keyword.operator.ternary.hscript"
+        }
+      ]
+    },
+    "punctuation": {
+      "patterns": [
+        {
+          "match": ";",
+          "name": "punctuation.terminator.statement.hscript"
+        },
+        {
+          "match": ",",
+          "name": "punctuation.separator.comma.hscript"
+        },
+        {
+          "match": "\\{",
+          "name": "punctuation.definition.block.begin.hscript"
+        },
+        {
+          "match": "\\}",
+          "name": "punctuation.definition.block.end.hscript"
+        },
+        {
+          "match": "\\[",
+          "name": "meta.brace.square.hscript"
+        },
+        {
+          "match": "\\]",
+          "name": "meta.brace.square.hscript"
+        },
+        {
+          "match": "\\(",
+          "name": "meta.brace.round.hscript"
+        },
+        {
+          "match": "\\)",
+          "name": "meta.brace.round.hscript"
+        }
+      ]
+    },
+    "type-annotation": {
+      "match": "(:)\\s*(Int|Float|Bool|String|Dynamic|Void|Array|Map|Null)\\b",
+      "captures": {
+        "1": {
+          "name": "keyword.operator.type.annotation.hscript"
+        },
+        "2": {
+          "name": "support.type.primitive.hscript"
+        }
+      }
+    },
+    "identifiers": {
+      "patterns": [
+        {
+          "match": "\\b([A-Z][A-Z0-9_]*)\\b(?![a-z])",
+          "name": "variable.other.constant.hscript"
+        },
+        {
+          "match": "\\b([A-Z][A-Za-z0-9_]*)\\b",
+          "name": "entity.name.type.hscript"
+        },
+        {
+          "match": "\\b([A-Za-z_][A-Za-z0-9_]*)\\b",
+          "name": "variable.other.readwrite.hscript"
+        }
+      ]
+    }
+  }
+}

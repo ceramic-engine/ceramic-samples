@@ -1,0 +1,19 @@
+// This script has a few mistakes: hover the squiggles,
+// press Cmd+. for the quick fixes, or F8 to go through them.
+
+var radius = 40;
+var forgotten = "never used";
+
+function flower(petals, size) {
+    for (i in 0...petals) {
+        var angle = i / petals * Math.PI * 2;
+        circle(200 + Math.cos(angle) * size, 200 + Math.sin(angle) * size, radius / 2);
+    }
+    circle(200, 200, raduis / 3, 0xffd54f);
+}
+
+clear(0x1e1e1e);
+flower(8, 60);
+turtle.forwad(10);
+count = 3;
+print(count);

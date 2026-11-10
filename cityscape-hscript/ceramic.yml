@@ -1,0 +1,34 @@
+app:
+    package: ceramic-samples.cityscape-hscript
+    name: cityscape-hscript
+    displayName: Cityscape hscript
+    author: Ceramic Engine
+    version: '1.0'
+
+    # Cityscape (the code editor) is built on Glaze: a project lists both
+    plugins:
+        - glaze
+        - cityscape
+
+    # hscript: the scripts are parsed by the language server and run by the
+    # sample with hscript's Interp. `hscriptPos` keeps the positions of the
+    # syntax tree (ranges of diagnostics, runtime errors, highlights).
+    libs:
+        - hscript
+
+    defines:
+        - hscriptPos
+
+    # The language (lib/hscriptls), the runtime and the example scripts,
+    # shared with the tests
+    paths:
+        - lib
+
+    # `--variant capture`: PNG captures of the scenes of MainScene, a hidden
+    # SDL window natively; Electron reads the environment and takes the
+    # window screenshot on the web
+    if capture:
+        +plugins:
+            - electron
+        +defines:
+            - clay_sdl_headless
