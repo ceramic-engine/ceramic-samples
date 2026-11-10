@@ -18,6 +18,11 @@ import glaze.kit.theme.ThemeMode;
  * - `run` (default): Spiral run, Dark+;
  * - `light`: Tree run, Light+;
  * - `completion`: `turtle.pe` typed in a function, the suggestions open;
+ * - `suggest`: the suggestions of an empty line of a function (Ctrl+Space):
+ *   variables, functions, objects, constants of the API, each kind with its
+ *   codicon;
+ * - `codelens`: the code lenses above the functions (`$(play) Run main()`,
+ *   the references);
  * - `signature`: `circle(` typed, the parameter hints open;
  * - `hover`: the hover of `hsl`, a function of the runtime API;
  * - `quickfix`: the Mistakes example, the hover of an unknown name with its
@@ -92,6 +97,17 @@ class MainScene extends Scene {
                 editor.setPosition({lineNumber: line, column: editor.getModel().getLineMaxColumn(line)});
                 editor.trigger('keyboard', 'type', {text: '\n'});
                 typeText(editor, 'circle(200, ', () -> settle(1.5));
+            case 'suggest':
+                final line = lineOf(editor, 'turtle.penSize(3);');
+                editor.setPosition({lineNumber: line, column: editor.getModel().getLineMaxColumn(line)});
+                editor.trigger('keyboard', 'type', {text: '\n'});
+                editor.trigger('capture', 'editor.action.triggerSuggest', null);
+                settle(1.5);
+            case 'codelens':
+                final line = lineOf(editor, 'function main()');
+                editor.setPosition({lineNumber: line, column: 1});
+                editor.revealLineInCenter(line);
+                settle(1.5);
             case 'hover':
                 final line = lineOf(editor, 'return hsl(');
                 editor.setPosition({lineNumber: line, column: editor.getModel().getLineContent(line).indexOf('hsl') + 2});

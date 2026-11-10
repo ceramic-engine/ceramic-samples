@@ -1,7 +1,6 @@
 package hscriptls;
 
 import cityscape.Cityscape;
-import cityscape.base.common.Lifecycle;
 import cityscape.lsp.InProcessTransport;
 import cityscape.lsp.LspClient;
 import hscriptls.server.HscriptServer;
@@ -15,19 +14,16 @@ import hscriptls.server.HscriptServer;
  *    behind Cityscape's `LspClient` through an `InProcessTransport`: the
  *    client opens the `hscript` models of the context on the server, sends
  *    their changes, turns the published diagnostics into markers, and
- *    registers the providers of completion, hover, signature help,
- *    definition, document symbols and code actions;
- * 3. `HscriptProviders`: the providers of the other features the server
- *    declares (references, highlights, rename, folding, inlay hints, code
- *    lenses, semantic tokens), sent through the same client.
+ *    registers a provider for each feature the server declares
+ *    (completion, hover, signature help, definition, references,
+ *    highlights, document symbols, code actions, rename, folding, inlay
+ *    hints, code lenses, semantic tokens).
  */
 class HscriptClient {
 
     public final context:Cityscape;
     public final server:HscriptServer;
     public final client:LspClient;
-
-    final providers:DisposableStore = new DisposableStore();
 
     public function new(context:Cityscape, ?server:HscriptServer) {
         this.context = context;
@@ -41,11 +37,10 @@ class HscriptClient {
             clientName: 'cityscape-hscript'
         });
         client.onError = (message, error) -> ceramic.Shortcuts.log.warning('hscript-ls: $message ' + Std.string(error));
-        client.start(() -> providers.add(HscriptProviders.register(client)));
+        client.start();
     }
 
     public function dispose():Void {
-        providers.dispose();
         client.dispose();
     }
 

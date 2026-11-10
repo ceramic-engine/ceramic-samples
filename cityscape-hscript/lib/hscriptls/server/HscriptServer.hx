@@ -176,6 +176,11 @@ class HscriptServer #if plugin_cityscape implements cityscape.lsp.LspInProcessSe
                             result = LanguageFeatures.documentHighlights(a, offset);
                         case 'textDocument/prepareRename':
                             result = LanguageFeatures.prepareRename(a, offset);
+                            if (result == null) {
+                                // the client shows the message and cancels the rename
+                                onResponse({jsonrpc: '2.0', id: id, error: {code: -32803, message: 'Only the names declared in the script can be renamed.'}});
+                                return;
+                            }
                         case 'textDocument/rename':
                             final answer = LanguageFeatures.rename(a, uri, offset, params.newName);
                             if (answer.error != null) {

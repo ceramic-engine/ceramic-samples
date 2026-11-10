@@ -503,6 +503,9 @@ class AnalyzerTests {
         var error:Dynamic = null;
         server.handleMessage({jsonrpc: '2.0', id: 8, method: 'textDocument/rename', params: {textDocument: {uri: uri}, position: {line: 0, character: 2}, newName: 'y'}}, r -> error = r);
         check(error.error != null && error.error.code == -32803, 'rename of the API is refused with an error');
+        var prepare:Dynamic = null;
+        server.handleMessage({jsonrpc: '2.0', id: 10, method: 'textDocument/prepareRename', params: {textDocument: {uri: uri}, position: {line: 0, character: 2}}}, r -> prepare = r);
+        check(prepare.error != null && prepare.error.message == 'Only the names declared in the script can be renamed.', 'prepareRename of the API is refused with a message');
         var unknown:Dynamic = null;
         server.handleMessage({jsonrpc: '2.0', id: 9, method: 'workspace/symbol', params: {query: ''}}, r -> unknown = r);
         check(unknown.error != null && unknown.error.code == -32601, 'unknown methods get MethodNotFound');

@@ -32,7 +32,7 @@ open project/mac/cityscape-hscript.app
 
 ### Captures
 
-`--variant capture` builds a version that plays a scene, writes a PNG and quits (a hidden window natively; Electron takes the screenshot on the web). `CS_HSCRIPT_SCENE` is one of `run`, `light`, `completion`, `signature`, `hover`, `quickfix`, `quickfix-menu`, `error` (see `src/MainScene.hx`), `CS_HSCRIPT_OUT` the PNG path.
+`--variant capture` builds a version that plays a scene, writes a PNG and quits (a hidden window natively; Electron takes the screenshot on the web). `CS_HSCRIPT_SCENE` is one of `run`, `light`, `completion`, `suggest`, `codelens`, `signature`, `hover`, `quickfix`, `quickfix-menu`, `error` (see `src/MainScene.hx`), `CS_HSCRIPT_OUT` the PNG path.
 
 ```sh
 ceramic clay build mac --setup --assets --variant capture
@@ -58,10 +58,10 @@ Everything is in `lib/hscriptls`. Reading order:
    ```haxe
    final server = new HscriptServer();
    final client = new LspClient(context, new InProcessTransport(server), {languageIds: ['hscript'], markerOwner: 'hscript'});
-   client.start(() -> HscriptProviders.register(client));
+   client.start();
    ```
 
-   The client opens the `hscript` models of the context on the server and sends their changes, turns the diagnostics into markers, and registers the providers of the features it knows (completion, hover, definition, document symbols, code actions, signature help, formatting). **`HscriptProviders`** registers the other features the server declares (references, document highlights, rename, folding ranges, inlay hints, code lenses, semantic tokens) with the same `client.sendCancellableRequest` and conversions (`LspConversions`).
+   The client opens the `hscript` models of the context on the server and sends their changes, turns the diagnostics into markers, and registers a provider for each feature the server declares (completion, hover, signature help, definition, references, document highlights, document symbols, code actions, rename, folding ranges, inlay hints, code lenses, semantic tokens), converting the LSP answers to Monaco's types. Nothing is registered by hand: the code lens `N references` uses VS Code's `editor.action.findReferences` command with LSP arguments (a uri and a position), which the client converts for the editor, and the `$(play)` of the `Run` lens is drawn as Monaco's codicon. The suggestions show the codicon of each completion kind in its color.
 
 The app (`src/Playground.hx`) only creates models of language `hscript` in the context and shows them in a `CityscapeEditor`.
 
