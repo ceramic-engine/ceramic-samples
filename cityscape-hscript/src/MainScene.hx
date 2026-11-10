@@ -21,6 +21,8 @@ import glaze.kit.theme.ThemeMode;
  * - `suggest`: the suggestions of an empty line of a function (Ctrl+Space):
  *   variables, functions, objects, constants of the API, each kind with its
  *   codicon;
+ * - `suggest-editor`: the same with `overflowWidgetsBounds: 'editor'` (the
+ *   suggestions placed inside the editor, not the window);
  * - `codelens`: the code lenses above the functions (`$(play) Run main()`,
  *   the references);
  * - `signature`: `circle(` typed, the parameter hints open;
@@ -97,7 +99,11 @@ class MainScene extends Scene {
                 editor.setPosition({lineNumber: line, column: editor.getModel().getLineMaxColumn(line)});
                 editor.trigger('keyboard', 'type', {text: '\n'});
                 typeText(editor, 'circle(200, ', () -> settle(1.5));
-            case 'suggest':
+            case 'suggest' | 'suggest-editor':
+                if (scene == 'suggest-editor') {
+                    // the widgets kept inside the editor (Cityscape option)
+                    editor.updateOptions({overflowWidgetsBounds: 'editor'});
+                }
                 final line = lineOf(editor, 'turtle.penSize(3);');
                 editor.setPosition({lineNumber: line, column: editor.getModel().getLineMaxColumn(line)});
                 editor.trigger('keyboard', 'type', {text: '\n'});

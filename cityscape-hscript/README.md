@@ -32,7 +32,7 @@ open project/mac/cityscape-hscript.app
 
 ### Captures
 
-`--variant capture` builds a version that plays a scene, writes a PNG and quits (a hidden window natively; Electron takes the screenshot on the web). `CS_HSCRIPT_SCENE` is one of `run`, `light`, `completion`, `suggest`, `codelens`, `signature`, `hover`, `quickfix`, `quickfix-menu`, `error` (see `src/MainScene.hx`), `CS_HSCRIPT_OUT` the PNG path.
+`--variant capture` builds a version that plays a scene, writes a PNG and quits (a hidden window natively; Electron takes the screenshot on the web). `CS_HSCRIPT_SCENE` is one of `run`, `light`, `completion`, `suggest`, `suggest-editor`, `codelens`, `signature`, `hover`, `quickfix`, `quickfix-menu`, `error` (see `src/MainScene.hx`), `CS_HSCRIPT_OUT` the PNG path.
 
 ```sh
 ceramic clay build mac --setup --assets --variant capture
