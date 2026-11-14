@@ -61,6 +61,9 @@ class Playground extends Component {
     /** The marker owner of runtime errors (the server's is `hscript`). */
     public static inline final RUNTIME_OWNER = 'hscript-runtime';
 
+    /** The width of the cursor label of the status bar (room for `Ln 99999, Col 9999`). */
+    static inline final STATUS_CURSOR_WIDTH = 120;
+
     /** How long the playback of a run lasts at most, in seconds. */
     static inline final PLAYBACK_SECONDS = 1.6;
 
@@ -71,14 +74,44 @@ class Playground extends Component {
 
     @observe public var dark:Bool = true;
     @observe public var exampleIndex:Int = 0;
-    @observe var cursorLine:Int = 1;
-    @observe var cursorColumn:Int = 1;
+    /** Bumped when the run changes (started, ended): the output panel and the status bar read it. */
     @observe var revision:Int = 0;
+
+    /** Bumped when the markers change: only the status bar counts them. */
+    @observe var markersRevision:Int = 0;
+
+    /**
+     * The status bar, a component of its own (set by its `init`, null before
+     * its first render and after it left the tree). It holds the cursor
+     * position: a cursor move renders the status bar alone, not the
+     * playground.
+     */
+    var status:Null<StatusBar> = null;
 
     /** The steps of the last run shown so far. */
     @observe var shown:Int = 0;
 
     public var editor(default, null):Null<CityscapeEditor> = null;
+
+    /**
+     * The options of the editor, built once: they depend on no observable.
+     * (If they do one day: a `@compute`, so that they change only when
+     * their sources do.)
+     */
+    final editorOptions:IEditorOptions = {
+        fontSize: 14,
+        lineHeight: 21,
+        lineNumbers: 'on',
+        padding: {top: 6},
+        scrollBeyondLastLine: false,
+        showFoldingControls: 'always',
+        stickyScroll: {enabled: true},
+        guides: {indentation: true},
+        inlayHints: {enabled: 'on', padding: true},
+        codeLens: true,
+        semanticHighlighting: {enabled: true},
+        renderLineHighlight: 'all'
+    };
 
     /**
      * Called with the playground and its editor once the editor exists (the
@@ -116,7 +149,7 @@ class Playground extends Component {
             }
         });
         // the status bar counts the diagnostics
-        Cityscape.onDidChangeMarkers(_ -> revision++, context);
+        Cityscape.onDidChangeMarkers(_ -> markersRevision++, context);
         for (model in models) {
             // an edit ends the run shown in the editor
             model.onDidChangeContent(_ -> if (model == runModel) clearRunDecorations());
@@ -268,14 +301,14 @@ class Playground extends Component {
     //#region view
 
     public function render(window:Window, cx:App):IntoElement {
-        final redraw = revision; // the markers and the run change outside of the observed fields
+        final redraw = revision; // the run changes outside of the observed fields
         final c = dark ? DARK : LIGHT;
         return div().flex().flexCol().sizeFull().bg(rgb(c.bg)).textColor(rgb(c.text))
             .child(toolbar(c))
             .child(div().flex().flexRow().flex1().minH0()
                 .child(editorArea(c))
                 .child(outputPanel(c, cx)))
-            .child(statusBar(c));
+            .child(StatusBar.component(this));
     }
 
     function toolbar(c:Chrome):IntoElement {
@@ -296,25 +329,11 @@ class Playground extends Component {
     }
 
     function editorArea(c:Chrome):IntoElement {
-        final options:IEditorOptions = {
-            fontSize: 14,
-            lineHeight: 21,
-            lineNumbers: 'on',
-            padding: {top: 6},
-            scrollBeyondLastLine: false,
-            showFoldingControls: 'always',
-            stickyScroll: {enabled: true},
-            guides: {indentation: true},
-            inlayHints: {enabled: 'on', padding: true},
-            codeLens: true,
-            semanticHighlighting: {enabled: true},
-            renderLineHighlight: 'all'
-        };
         return div().flex().flex1().minW0()
             .child(CityscapeEditor.component().at('editor')
                 .model(currentModel())
                 .context(context)
-                .options(options)
+                .options(editorOptions)
                 .onCreate(created)
                 .flex1());
     }
@@ -323,9 +342,13 @@ class Playground extends Component {
         editor = e;
         e.addCommand(KeyMod.CtrlCmd | KeyCode.Enter, (_, _) -> start());
         e.onDidChangeCursorPosition(event -> {
-            cursorLine = event.position.lineNumber;
-            cursorColumn = event.position.column;
+            final s = status;
+            if (s != null) {
+                s.cursorLine = event.position.lineNumber;
+                s.cursorColumn = event.position.column;
+            }
         });
+        syncStatusCursor();
         if (onEditorReady != null) {
             onEditorReady(this, e);
         }
@@ -379,7 +402,29 @@ class Playground extends Component {
             .child(div().textColor(rgb(c.dim)).child('line ' + line));
     }
 
-    function statusBar(c:Chrome):IntoElement {
+    /**
+     * Gives the status bar the cursor position of the editor (when one was
+     * created before the other: afterwards the cursor events keep it).
+     */
+    function syncStatusCursor():Void {
+        final s = status;
+        final e = editor;
+        final position = e != null ? e.getPosition() : null;
+        if (s != null && position != null) {
+            s.cursorLine = position.lineNumber;
+            s.cursorColumn = position.column;
+        }
+    }
+
+    /**
+     * The content of the status bar, rendered by `StatusBar`: what it reads
+     * here (the theme, the markers, the run, the example) is observed by
+     * the status bar itself.
+     */
+    function statusBar(c:Chrome, cursorLine:Int, cursorColumn:Int):IntoElement {
+        // the markers and the run change outside of the observed fields;
+        // `shown` moves the line of the playback
+        final redraw = markersRevision + revision + shown;
         var errors = 0;
         var warnings = 0;
         for (m in Cityscape.getModelMarkers({resource: currentModel().uri}, context)) {
@@ -394,9 +439,13 @@ class Playground extends Component {
         final runState = r == null ? 'Not run yet'
             : (playing ? 'Running line ' + (executionLine != null ? executionLine : 1)
                 : (r.error != null ? 'Stopped with an error on line ' + r.error.line : 'Ran ' + r.steps.length + ' steps' + (runFunction != null ? ' (' + runFunction + ')' : '')));
-        return div().flex().flexRow().itemsCenter().gap4().px3().h(px(24)).flexShrink0().textXs()
+        // The bar takes the width of the window whatever it shows, and the
+        // cursor label sits in a box of fixed width: the bounds of the
+        // status bar do not change when the cursor moves (Glaze renders a
+        // view alone only while its bounds stay the same)
+        return div().flex().flexRow().itemsCenter().gap4().px3().h(px(24)).wFull().minW0().overflowHidden().flexShrink0().textXs()
             .bg(rgb(c.status)).textColor(rgb(c.statusText))
-            .child('Ln ' + cursorLine + ', Col ' + cursorColumn)
+            .child(div().w(px(STATUS_CURSOR_WIDTH)).flexShrink0().child('Ln ' + cursorLine + ', Col ' + cursorColumn))
             .child((errors == 1 ? '1 error' : errors + ' errors') + ', ' + (warnings == 1 ? '1 warning' : warnings + ' warnings'))
             .child(runState)
             .child(div().flex1())
@@ -458,5 +507,42 @@ class Playground extends Component {
     }
 
     //#endregion
+
+}
+
+/**
+ * The status bar of the playground, a persistent component of its own. It
+ * holds the cursor position, which changes at every keystroke: only this
+ * component renders then. Everything else it shows is read from the
+ * playground's observable fields in its own render, so it follows them too.
+ */
+@:access(Playground)
+class StatusBar extends Component {
+
+    @observe public var cursorLine:Int = 1;
+    @observe public var cursorColumn:Int = 1;
+
+    final playground:Playground;
+
+    public function new(playground:Playground) {
+        super();
+        this.playground = playground;
+    }
+
+    override public function init(window:Window, cx:App):Void {
+        playground.status = this;
+        playground.syncStatusCursor();
+    }
+
+    override public function destroy():Void {
+        if (playground.status == this) {
+            playground.status = null;
+        }
+    }
+
+    public function render(window:Window, cx:App):IntoElement {
+        final p = playground;
+        return p.statusBar(p.dark ? Playground.DARK : Playground.LIGHT, cursorLine, cursorColumn);
+    }
 
 }
