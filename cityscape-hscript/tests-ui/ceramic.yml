@@ -1,0 +1,29 @@
+app:
+    package: ceramic-samples.cityscape-hscript-tests-ui
+    name: testsui
+    displayName: Cityscape hscript UI tests
+    author: Ceramic Engine
+    version: '1.0'
+
+    # The playground itself (../src/Playground.hx) in a headless Glaze
+    # window: what its status bar must follow (cursor, markers, run, theme)
+    plugins:
+        - glaze
+        - cityscape
+
+    libs:
+        - hscript
+
+    # `src/Playground.hx` is a link to `../src/Playground.hx` (the sample's
+    # `src` cannot be a path here: its `Project.hx` would replace this one)
+    paths:
+        - ../lib
+
+    defines:
+        - hscriptPos
+        # Native runs use a hidden SDL window (no window on screen)
+        - clay_sdl_headless
+        # Glaze's cache check: every view reused from the cache renders for
+        # real and is compared with its cached rendering, and every frame
+        # drawn in place is compared with a full frame
+        - glaze_verify_cache

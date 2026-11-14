@@ -2,3 +2,6 @@
 /tests/out/
 /tests/project/
 /tests/gen/
+/tests-ui/out/
+/tests-ui/project/
+/tests-ui/gen/
