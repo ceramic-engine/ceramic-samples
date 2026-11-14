@@ -30,7 +30,7 @@ class Project extends Entity {
         settings.renderOnDemand = true;
         // Everything on screen is drawn by Glaze, which asks for its own renders: no
         // need to draw a frame each time a timer or a language server callback runs
-        settings.renderOnDemandCallbacks = false;
+        settings.renderAfterTimersAndInput = false;
 
         app.onceReady(this, ready);
 
