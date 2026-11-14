@@ -25,6 +25,12 @@ class Project extends Entity {
         settings.scaling = RESIZE;
         settings.resizable = true;
         settings.title = 'Cityscape hscript';
+        // A frame is drawn only when something changed: the latency of a keystroke
+        // is lower when the app was at rest (see `ceramic.Settings.renderOnDemand`)
+        settings.renderOnDemand = true;
+        // Everything on screen is drawn by Glaze, which asks for its own renders: no
+        // need to draw a frame each time a timer or a language server callback runs
+        settings.renderOnDemandCallbacks = false;
 
         app.onceReady(this, ready);
 
