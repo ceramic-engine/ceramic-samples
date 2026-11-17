@@ -1,0 +1,18 @@
+app:
+    package: ceramicsamples.spinetargetscheck
+    name: spine-targets-check
+    displayName: Spine Targets Check
+    author: Jeremy Faivre
+    version: '1.0'
+
+    plugins:
+        - spine
+
+    # Compile checks of the spine plugin on every target. A few skeletons of the
+    # spine-conformance data sets (see spine-conformance/tools/prepare-data.py).
+    if spine_legacy:
+        +assets:
+            - ../spine-conformance/data-40
+    if !spine_legacy:
+        +assets:
+            - ../spine-conformance/data-43
