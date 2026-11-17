@@ -11,7 +11,9 @@ import json
 import os
 import sys
 
-TRANSFORM_TOL = 0.1
+# The two data sets are exports of the same project for Spine 4.0 and 4.3, rounded
+# differently: transforms (coordinates of several hundred pixels) differ slightly
+TRANSFORM_TOL = 0.25
 
 
 def max_diff(x, y):
