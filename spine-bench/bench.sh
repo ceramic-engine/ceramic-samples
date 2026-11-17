@@ -43,6 +43,10 @@ cmd_build() {
     case "$label" in
         ""|*/*|.*) echo "Invalid label: $label" >&2; exit 1 ;;
     esac
+    # Extra defines, for instance SPINE_BENCH_EXTRA_DEFINES="HXCPP_DEBUG_LINK" to keep symbols for profiling
+    for extra in ${SPINE_BENCH_EXTRA_DEFINES:-}; do
+        defines+=(-D "$extra")
+    done
     "$CERAMIC" clay build mac --setup --assets "${defines[@]}"
     local app="$BENCH_DIR/project/mac/spine-bench.app"
     /usr/libexec/PlistBuddy -c "Delete :LSUIElement" "$app/Contents/Info.plist" >/dev/null 2>&1 || true

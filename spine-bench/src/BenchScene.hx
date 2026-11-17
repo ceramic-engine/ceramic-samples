@@ -295,6 +295,10 @@ class BenchScene extends Scene {
         trace('BENCH render ms: ' + stats(renderTimes));
         trace('BENCH total ms: ' + stats(totalTimes));
         trace('BENCH process cpu ms/frame: ' + r3(cpu * 1000 / n));
+        #if clay
+        // Draw calls of the last rendered frame (the counter is reset at the start of each render)
+        trace('BENCH draw calls: ' + @:privateAccess app.backend.draw.renderer.drawCalls);
+        #end
         #if cpp
         trace('BENCH alloc whole frame: ' + Std.int((allocationVolume() - allocStart) / n) + ' bytes/frame (compare with a control run)');
         trace('BENCH gc: concurrentCycles=' + Std.int(gcInfo(100) - gcCyclesStart) + ' minorPauses=' + Std.int(gcInfo(107) - minorPausesStart)
