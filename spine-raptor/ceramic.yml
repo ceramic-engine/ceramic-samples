@@ -12,8 +12,9 @@ app:
         - ui
         - elements
 
-    libs:
-        - spine-hx
+    defines:
+        # raptor-pro.spine is exported for Spine 4.0: use the legacy runtime until it is re-exported for 4.3
+        - spine_legacy
 
     # To export spine assets from the original project,
     # run: `ceramic spine export`
