@@ -79,9 +79,13 @@ cmd_run() {
                     exit 1
                 fi
                 mkdir -p "$BENCH_DIR/results/$label"
-                local log="$BENCH_DIR/results/$label/$scenario.log"
+                local name="$scenario"
+                if [ -n "${SPINE_BENCH_CLIPPING:-}" ]; then
+                    name="$scenario-${SPINE_BENCH_CLIPPING}"
+                fi
+                local log="$BENCH_DIR/results/$label/$name.log"
                 if [ "${SPINE_BENCH_CONTROL:-0}" = "1" ]; then
-                    log="$BENCH_DIR/results/$label/$scenario-control.log"
+                    log="$BENCH_DIR/results/$label/$name-control.log"
                 fi
                 echo "== $scenario / $label / run $rep"
                 echo "RUN $rep" >> "$log"

@@ -23,6 +23,8 @@ using StringTools;
  * - SPINE_BENCH_SCENARIO: scenario name (see `setupScenario()`)
  * - SPINE_BENCH_COUNT: number of spine instances (optional, scenario default otherwise)
  * - SPINE_BENCH_FRAMES: number of measured frames (default 3000)
+ * - SPINE_BENCH_CLIPPING: `stencil` or `software`, clipping mode of the spine-haxe runtime
+ *   (default: Spine.defaultClipping)
  * - SPINE_BENCH_CONTROL: when set to 1, the spines are created but never updated.
  *   The allocator volume is only increased when a thread claims a new memory range,
  *   so allocations cannot be attributed to a code section within a frame: the
@@ -70,6 +72,13 @@ class BenchScene extends Scene {
         scenario = envString('SPINE_BENCH_SCENARIO', 'mass');
         benchFrames = envInt('SPINE_BENCH_FRAMES', 3000);
         control = envInt('SPINE_BENCH_CONTROL', 0) == 1;
+        #if !spine_legacy
+        switch envString('SPINE_BENCH_CLIPPING', '') {
+            case 'stencil': Spine.defaultClipping = STENCIL;
+            case 'software': Spine.defaultClipping = SOFTWARE;
+            case _:
+        }
+        #end
 
         for (name in skeletonsForScenario(scenario)) {
             assets.addSpine(name);
@@ -83,7 +92,8 @@ class BenchScene extends Scene {
 
         var gc = #if HXCPP_GC_CONCURRENT 'CONCURRENT' #elseif HXCPP_GC_GENERATIONAL 'GENERATIONAL' #elseif cpp 'CLASSIC' #else 'NONE' #end;
         var runtime = #if spine_legacy 'legacy' #else 'spine-haxe' #end;
-        trace('BENCH CONFIG: scenario=$scenario runtime=$runtime count=${spines.length} frames=$benchFrames gc=$gc control=$control');
+        var clipping = #if spine_legacy 'STENCIL' #else '' + Spine.defaultClipping #end;
+        trace('BENCH CONFIG: scenario=$scenario runtime=$runtime count=${spines.length} frames=$benchFrames gc=$gc control=$control clipping=$clipping');
         trace('BENCH DEFINES: ' + BenchConfig.relevantDefines());
 
         for (spine in spines) {
@@ -136,6 +146,25 @@ class BenchScene extends Scene {
             case 'clipping':
                 // Clipping attachment (portal) + meshes
                 spawn('spineboy-pro', 'portal', 100);
+
+            case 'clipped-container':
+                // Same, inside a container clipped by a rectangle (scissor): clipped slots
+                // must stay inside the container
+                var container = new ceramic.Quad();
+                container.transparent = true;
+                container.size(screen.width, screen.height);
+                add(container);
+                var clipRect = new ceramic.Quad();
+                clipRect.size(screen.width - 200, screen.height - 200);
+                clipRect.pos(100, 100);
+                clipRect.visible = false;
+                add(clipRect);
+                container.clip = clipRect;
+                spawn('spineboy-pro', 'portal', 100);
+                for (spine in spines) {
+                    remove(spine);
+                    container.add(spine);
+                }
 
             case 'path':
                 // Path constraints, clipping (tank treads)
@@ -195,7 +224,7 @@ class BenchScene extends Scene {
     static function skeletonsForScenario(scenario:String):Array<String> {
 
         return switch scenario {
-            case 'mass' | 'clipping' | 'tracks': ['spineboy-pro'];
+            case 'mass' | 'clipping' | 'clipped-container' | 'tracks': ['spineboy-pro'];
             case 'raptor': ['raptor-pro'];
             case 'path': ['tank-pro'];
             case 'vine': ['vine-pro'];
