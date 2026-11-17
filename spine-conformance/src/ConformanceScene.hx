@@ -25,11 +25,18 @@ using StringTools;
  * Environment:
  * - SPINE_CONFORMANCE_OUT: output directory (required)
  * - SPINE_CONFORMANCE_ONLY: optional comma separated list of skeleton names
+ * - SPINE_CONFORMANCE_EXCLUDE: optional comma separated list of skeleton names to skip
+ * - SPINE_CONFORMANCE_FPS: optional number of fixed steps per second (default 30)
  */
 class ConformanceScene extends Scene {
 
-    /** Fixed time step used to advance animations */
-    static inline final DT:Float = 1.0 / 30.0;
+    /**
+     * Fixed time step used to advance animations: 1/30 s by default (legacy golden files),
+     * or SPINE_CONFORMANCE_FPS steps per second. Level B comparisons use 31, so that sampled
+     * times never fall exactly on keyframes (exported at 30 fps), where float rounding
+     * differences between runtimes pick a different side of the keyframe.
+     */
+    static var DT:Float = 1.0 / 30.0;
 
     /** Number of fixed steps played per animation */
     static inline final STEPS:Int = 30;
@@ -57,16 +64,27 @@ class ConformanceScene extends Scene {
             Sys.exit(1);
         }
 
+        var fpsEnv = Std.parseInt(Platform.getEnv('SPINE_CONFORMANCE_FPS'));
+        if (fpsEnv != null && fpsEnv > 0) {
+            DT = 1.0 / fpsEnv;
+        }
+
         var only:Array<String> = null;
         var onlyEnv = Platform.getEnv('SPINE_CONFORMANCE_ONLY');
         if (onlyEnv != null && onlyEnv.trim() != '') {
             only = [for (name in onlyEnv.split(',')) name.trim()];
         }
 
+        var exclude:Array<String> = [];
+        var excludeEnv = Platform.getEnv('SPINE_CONFORMANCE_EXCLUDE');
+        if (excludeEnv != null && excludeEnv.trim() != '') {
+            exclude = [for (name in excludeEnv.split(',')) name.trim()];
+        }
+
         for (dir in ceramic.Assets.allDirs) {
             if (dir.endsWith('.spine')) {
                 var name = dir.substr(0, dir.length - '.spine'.length);
-                if (only == null || only.indexOf(name) != -1) {
+                if ((only == null || only.indexOf(name) != -1) && exclude.indexOf(name) == -1) {
                     skeletons.push(name);
                 }
             }
@@ -76,6 +94,14 @@ class ConformanceScene extends Scene {
         for (name in skeletons) {
             assets.addSpine(name);
         }
+
+        // Never stay alive when an asset fails to load
+        assets.onceComplete(this, success -> {
+            if (!success) {
+                log.error('Spine conformance: failed to load assets');
+                Sys.exit(1);
+            }
+        });
 
     }
 

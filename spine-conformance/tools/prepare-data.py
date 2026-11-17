@@ -37,12 +37,23 @@ def main():
         if not os.path.isdir(export):
             continue
         files = os.listdir(export)
-        jsons = sorted(f for f in files if f.endswith('.json'))
-        # Prefer the Pro export, which uses more features
-        pro = [f for f in jsons if f.endswith('-pro.json')]
-        ess = [f for f in jsons if f.endswith('-ess.json')]
-        json_files = pro if pro else ess
+        # Group the JSON exports by skeleton (name without the -pro / -ess marker),
+        # and prefer the Pro export, which uses more features
+        groups = {}
+        for f in sorted(files):
+            if not f.endswith('.json'):
+                continue
+            base = f[:-len('.json')]
+            key = base.replace('-pro', '').replace('-ess', '')
+            rank = 0 if '-pro' in base else (1 if '-ess' in base else 2)
+            if key not in groups or rank < groups[key][0]:
+                groups[key] = (rank, f)
+        json_files = [groups[k][1] for k in sorted(groups)]
+        # Prefer the straight alpha atlas named after the example
         atlases = sorted(f for f in files if f.endswith('.atlas') and '-pma' not in f)
+        if name + '.atlas' in atlases:
+            atlases.remove(name + '.atlas')
+            atlases.insert(0, name + '.atlas')
         if not json_files or not atlases:
             print('Skip ' + name + ' (no json or no straight alpha atlas)')
             continue

@@ -1,6 +1,8 @@
 // Runs a command and makes sure it never shows anything on screen:
 // no on screen window, no Dock icon (regular activation policy), no focus change.
 // On any violation the command is killed and the guard exits with code 90.
+// The command is also killed after WINDOW_GUARD_TIMEOUT seconds (default 900),
+// and the guard then exits with code 92.
 //
 // Usage: window-guard <command> [args...]
 
@@ -42,6 +44,8 @@ do {
 }
 
 let pid = process.processIdentifier
+let timeout = Double(ProcessInfo.processInfo.environment["WINDOW_GUARD_TIMEOUT"] ?? "") ?? 900
+let start = Date()
 
 while process.isRunning {
     if let list = CGWindowListCopyWindowInfo([.optionOnScreenOnly], kCGNullWindowID) as? [[String: Any]] {
@@ -57,6 +61,13 @@ while process.isRunning {
     }
     if let front = NSWorkspace.shared.frontmostApplication?.processIdentifier, front == pid, front != frontmostBefore {
         fail("the process took the focus", process)
+    }
+    if Date().timeIntervalSince(start) > timeout {
+        FileHandle.standardError.write("window-guard: timeout after \(Int(timeout)) s\n".data(using: .utf8)!)
+        process.terminate()
+        usleep(200_000)
+        if process.isRunning { kill(pid, SIGKILL) }
+        exit(92)
     }
     usleep(50_000)
 }

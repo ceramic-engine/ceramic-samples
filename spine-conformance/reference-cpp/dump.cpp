@@ -1,18 +1,21 @@
 // Reference dump of what a renderer should draw, computed with the official
 // spine-cpp runtime (an implementation independent from spine-haxe).
 //
-// Usage: spine-reference-dump <skeleton.json|.skel> <atlas> <animation> <output.json>
+// Usage: spine-reference-dump <skeleton.json|.skel> <atlas> <animation> <output.json> [fps]
 //
 // The skeleton is updated the same way as the Ceramic spine plugin does with the
 // spine-haxe runtime: a first update without elapsed time (physics posed), then
-// fixed 1/30 s steps. At steps 1, 7, 15 and 30, every slot of the applied draw order
+// fixed steps (1/30 s by default, 1/fps when given). At steps 1, 7, 15 and 30, every slot of the applied draw order
 // with a region or mesh attachment is written: world vertices (x, y), uvs, triangles,
 // final color (skeleton * slot * attachment), dark color, blend mode and atlas page.
 // Clipping attachments are applied in software, as official renderers do.
+// Region vertices are written in spine-cpp order (starting at the bottom right
+// corner), spine-haxe starts at the bottom left corner: the comparison handles it.
 
 #include <spine/spine.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include <locale.h>
 #include <string>
 
@@ -34,7 +37,7 @@ public:
 };
 
 static const int STEPS = 30;
-static const float DT = 1.0f / 30.0f;
+static float DT = 1.0f / 30.0f;
 static const int DUMP_STEPS[] = {1, 7, 15, 30};
 
 static bool endsWith(const std::string &value, const std::string &suffix) {
@@ -92,7 +95,18 @@ static void dumpFrame(FILE *out, Skeleton &skeleton, SkeletonClipping &clipper, 
         }
 
         if (attachment->getRTTI().isExactly(ClippingAttachment::rtti)) {
-            clipper.clipStart(skeleton, *slot, static_cast<ClippingAttachment *>(attachment));
+            ClippingAttachment *clip = static_cast<ClippingAttachment *>(attachment);
+            clipper.clipStart(skeleton, *slot, clip);
+            if (getenv("SPINE_REFERENCE_DEBUG_CLIP") != NULL) {
+                size_t n = clip->getWorldVerticesLength();
+                Array<float> polygon;
+                polygon.setSize(n, 0);
+                clip->computeWorldVertices(skeleton, *slot, 0, n, polygon.buffer(), 0, 2);
+                fprintf(stderr, "step %d clip %s:", step, slot->getData().getName().buffer());
+                for (size_t k = 0; k < n; k++) fprintf(stderr, " %.0f", polygon[k]);
+                BonePose &bone = slot->getBone().getAppliedPose();
+                fprintf(stderr, " | bone %s a=%.3f b=%.3f c=%.3f d=%.3f x=%.1f y=%.1f\n", slot->getBone().getData().getName().buffer(), bone.getA(), bone.getB(), bone.getC(), bone.getD(), bone.getWorldX(), bone.getWorldY());
+            }
             continue;
         }
 
@@ -142,14 +156,16 @@ static void dumpFrame(FILE *out, Skeleton &skeleton, SkeletonClipping &clipper, 
         float *uvsBuffer = uvs->buffer();
         bool clipped = false;
         if (clipper.isClipping()) {
-            if (clipper.clipTriangles(vertices, triangles, trianglesCount, uvsBuffer, 2)) {
-                clipped = true;
-                vertices = clipper.getClippedVertices().buffer();
-                verticesCount = clipper.getClippedVertices().size();
-                uvsBuffer = clipper.getClippedUVs().buffer();
-                triangles = clipper.getClippedTriangles().buffer();
-                trianglesCount = clipper.getClippedTriangles().size();
-            }
+            // Like the spine-cpp SkeletonRenderer: the clipped output is always used while
+            // clipping (the return value of clipTriangles is false when every triangle is
+            // outside, the output is then empty)
+            clipper.clipTriangles(vertices, triangles, trianglesCount, uvsBuffer, 2);
+            clipped = true;
+            vertices = clipper.getClippedVertices().buffer();
+            verticesCount = clipper.getClippedVertices().size();
+            uvsBuffer = clipper.getClippedUVs().buffer();
+            triangles = clipper.getClippedTriangles().buffer();
+            trianglesCount = clipper.getClippedTriangles().size();
         }
 
         Color &slotColor = pose.getColor();
@@ -194,14 +210,18 @@ static void dumpFrame(FILE *out, Skeleton &skeleton, SkeletonClipping &clipper, 
 int main(int argc, char *argv[]) {
     setlocale(LC_ALL, "C");
 
-    if (argc != 5) {
-        fprintf(stderr, "Usage: spine-reference-dump <skeleton.json|.skel> <atlas> <animation> <output.json>\n");
+    if (argc != 5 && argc != 6) {
+        fprintf(stderr, "Usage: spine-reference-dump <skeleton.json|.skel> <atlas> <animation> <output.json> [fps]\n");
         return 1;
     }
+    if (argc == 6) DT = 1.0f / (float) atoi(argv[5]);
     std::string skeletonPath = argv[1];
     const char *atlasPath = argv[2];
     const char *animationName = argv[3];
     const char *outputPath = argv[4];
+
+    // Spine's own coordinate system (y up), which the Ceramic plugin keeps (spine-cpp defaults to y down)
+    Bone::setYDown(false);
 
     ReferenceTextureLoader textureLoader;
     Atlas atlas(atlasPath, &textureLoader);
@@ -237,7 +257,7 @@ int main(int argc, char *argv[]) {
     SkeletonClipping clipper;
 
     skeleton.setupPose();
-    state.setAnimation(0, animation, true);
+    state.setAnimation(0, *animation, true);
 
     // First update without elapsed time
     state.update(0);
