@@ -2,7 +2,9 @@
 """
 Summarize spine-bench results.
 
-Usage: report.py <label,label,...> <output.md>
+Usage: report.py <label,label,...> <output.md> [runs]
+
+Only the last `runs` runs of each log are used (default 5): logs are appended to.
 
 For each scenario and build label (results/<label>/<scenario>.log), takes the mean
 time of each phase in every run, and reports the median over runs with the min/max
@@ -61,11 +63,12 @@ def fmt(values):
 
 
 def main():
-    if len(sys.argv) != 3:
+    if len(sys.argv) not in (3, 4):
         print(__doc__.strip())
         sys.exit(2)
     labels = sys.argv[1].split(',')
     out = sys.argv[2]
+    keep = int(sys.argv[3]) if len(sys.argv) > 3 else 5
     scenarios = set()
     for label in labels:
         d = os.path.join(HERE, 'results', label)
@@ -83,8 +86,8 @@ def main():
         lines.append('| build | runs | anim | world | render | total | total p99 | alloc B/frame |')
         lines.append('|---|---|---|---|---|---|---|---|')
         for label in labels:
-            runs = parse(os.path.join(HERE, 'results', label, scenario + '.log'))
-            control = parse(os.path.join(HERE, 'results', label, scenario + '-control.log'))
+            runs = parse(os.path.join(HERE, 'results', label, scenario + '.log'))[-keep:]
+            control = parse(os.path.join(HERE, 'results', label, scenario + '-control.log'))[-1:]
             if not runs:
                 continue
             if runs and 'defines' in runs[0]:
