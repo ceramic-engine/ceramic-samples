@@ -35,8 +35,8 @@ and events of the spine visual are dumped at frames 0, 1, 7, 15 and 30.
   slots, visuals bound with `SpineBindVisual`, slot callbacks with custom transforms and
   `drawDefault`, hidden and disabled slots, color and alpha, forced tint black, hit test
   with a slot mesh, slot colors);
-- `_bbox`: bounding box rendering and hit test. `SPINE_CONFORMANCE_SKIP_BBOX=1` skips it:
-  the legacy plugin crashed on visible bounding boxes before it was fixed.
+- `_bbox`: bounding box rendering and hit test. `SPINE_CONFORMANCE_SKIP_BBOX=1` skips it
+  (the legacy plugin crashed on visible bounding boxes before it was fixed).
 
 ## Legacy golden files
 
@@ -44,6 +44,6 @@ and events of the spine visual are dumped at frames 0, 1, 7, 15 and 30.
 spine plugin was changed. The legacy output must stay byte identical:
 
 ```
-SPINE_CONFORMANCE_SKIP_BBOX=1 ./run.sh legacy results/legacy-check
+./run.sh legacy results/legacy-check
 (cd results/legacy-check && shasum -a 256 -c ../../goldens/legacy-40.sha256)
 ```
