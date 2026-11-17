@@ -2,6 +2,7 @@
 // spine-cpp runtime (an implementation independent from spine-haxe).
 //
 // Usage: spine-reference-dump <skeleton.json|.skel> <atlas> <animation> <output.json> [fps]
+//        spine-reference-dump --animations <skeleton.json|.skel> <atlas>   (prints animation names)
 //
 // The skeleton is updated the same way as the Ceramic spine plugin does with the
 // spine-haxe runtime: a first update without elapsed time (physics posed), then
@@ -89,6 +90,9 @@ static void dumpFrame(FILE *out, Skeleton &skeleton, SkeletonClipping &clipper, 
         }
         SlotPose &pose = slot->getAppliedPose();
         Attachment *attachment = pose.getAttachment();
+        if (getenv("SPINE_REFERENCE_DEBUG_SEQUENCE") != NULL && attachment != NULL) {
+            fprintf(stderr, "step %d %s attachment=%s sequenceIndex=%d\n", step, slot->getData().getName().buffer(), attachment->getName().buffer(), pose.getSequenceIndex());
+        }
         if (attachment == NULL) {
             clipper.clipEnd(*slot);
             continue;
@@ -210,6 +214,11 @@ static void dumpFrame(FILE *out, Skeleton &skeleton, SkeletonClipping &clipper, 
 int main(int argc, char *argv[]) {
     setlocale(LC_ALL, "C");
 
+    bool listAnimations = argc == 4 && strcmp(argv[1], "--animations") == 0;
+    if (listAnimations) {
+        argv++;
+        argc = 5;
+    }
     if (argc != 5 && argc != 6) {
         fprintf(stderr, "Usage: spine-reference-dump <skeleton.json|.skel> <atlas> <animation> <output.json> [fps]\n");
         return 1;
@@ -243,6 +252,13 @@ int main(int argc, char *argv[]) {
             fprintf(stderr, "Failed to read %s: %s\n", skeletonPath.c_str(), json.getError().buffer());
             return 1;
         }
+    }
+
+    if (listAnimations) {
+        Array<Animation *> &animations = skeletonData->getAnimations();
+        for (size_t i = 0; i < animations.size(); i++) printf("%s\n", animations[i]->getName().buffer());
+        delete skeletonData;
+        return 0;
     }
 
     Animation *animation = skeletonData->findAnimation(animationName);

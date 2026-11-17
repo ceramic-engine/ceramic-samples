@@ -25,9 +25,13 @@ mkdir -p "$OUT"
 for folder in "$DATA"/*.spine; do
     skeleton="$(basename "$folder" .spine)"
     json="$folder/$skeleton.json"
+    if [ ! -f "$json" ]; then
+        # Binary export
+        json="$folder/$skeleton.skel"
+    fi
     atlas="$(ls "$folder"/*.atlas | head -1)"
     mkdir -p "$OUT/$skeleton"
-    python3 -I -c 'import json,sys; [print(n) for n in sorted(json.load(open(sys.argv[1]))["animations"].keys())]' "$json" | while IFS= read -r animation; do
+    "$DUMP" --animations "$json" "$atlas" | sort | while IFS= read -r animation; do
         safe="$(printf '%s' "$animation" | tr -c 'a-zA-Z0-9_-' '_')"
         "$DUMP" "$json" "$atlas" "$animation" "$OUT/$skeleton/$safe.json" "$FPS"
     done
