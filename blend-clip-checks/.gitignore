@@ -1,0 +1,7 @@
+.DS_Store
+.haxelib
+/out
+/gen
+/project
+/completion.hxml
+/.cache

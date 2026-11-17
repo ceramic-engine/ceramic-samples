@@ -28,6 +28,8 @@ COLOR_TOL = 1.5 / 255.0
 # Ceramic blending values (ceramic.Blending) and spine blend modes (spine-cpp BlendMode)
 CERAMIC_AUTO = 0
 CERAMIC_ADD = 2
+CERAMIC_MULTIPLY = 8
+CERAMIC_SCREEN = 9
 SPINE_NORMAL = 0
 SPINE_ADDITIVE = 1
 SPINE_MULTIPLY = 2
@@ -144,12 +146,12 @@ def compare_item(c, r, gaps):
         diffs.append(('texture', 'page %s != %s' % (c['page'], r['page'])))
 
     blend = r['blend']
-    expected_blending = CERAMIC_ADD if blend == SPINE_ADDITIVE else CERAMIC_AUTO
-    if blend in (SPINE_MULTIPLY, SPINE_SCREEN):
-        if 'blend-multiply-screen' not in gaps:
-            diffs.append(('blend', 'multiply/screen blend mode %d rendered as normal' % blend))
-    elif c['blending'] != expected_blending:
-        diffs.append(('blend', 'blending %d != expected %d' % (c['blending'], expected_blending)))
+    expected_blending = {SPINE_NORMAL: CERAMIC_AUTO, SPINE_ADDITIVE: CERAMIC_ADD, SPINE_MULTIPLY: CERAMIC_MULTIPLY, SPINE_SCREEN: CERAMIC_SCREEN}[blend]
+    if c['blending'] != expected_blending:
+        if blend in (SPINE_MULTIPLY, SPINE_SCREEN) and 'blend-multiply-screen' in gaps:
+            pass
+        else:
+            diffs.append(('blend', 'blending %d != expected %d' % (c['blending'], expected_blending)))
 
     if r['clipped']:
         # Same area, possibly cut into different triangles

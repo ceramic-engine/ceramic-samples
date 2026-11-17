@@ -1,0 +1,10 @@
+app:
+    package: ceramic-samples.blend-clip-checks
+    name: blend-clip-checks
+    displayName: Blend Clip Checks
+    author: Jeremy Faivre
+    version: '1.0'
+
+    defines:
+        # Never show a window: checks run while the machine is in use
+        - clay_sdl_headless

@@ -4,7 +4,9 @@ Copy the official Spine example exports into a Ceramic asset folder:
 one `<skeleton>.spine/` folder per example with its JSON, its non premultiplied
 atlas and the atlas pages.
 
-Usage: prepare-data.py <spine-runtimes>/examples <output-dir>
+Usage: prepare-data.py [--binary] <spine-runtimes>/examples <output-dir>
+
+With --binary, the binary export (.skel) is copied instead of the JSON export.
 """
 import os
 import shutil
@@ -22,11 +24,16 @@ def atlas_pages(atlas_path):
 
 
 def main():
-    if len(sys.argv) != 3:
+    args = sys.argv[1:]
+    binary = False
+    if args and args[0] == '--binary':
+        binary = True
+        args = args[1:]
+    if len(args) != 2:
         print(__doc__.strip())
         sys.exit(1)
-    examples = os.path.abspath(sys.argv[1])
-    output = os.path.abspath(sys.argv[2])
+    examples = os.path.abspath(args[0])
+    output = os.path.abspath(args[1])
     if not os.path.isdir(examples):
         sys.exit('Not a directory: ' + examples)
     os.makedirs(output, exist_ok=True)
@@ -63,7 +70,14 @@ def main():
             skeleton = json_file[:-len('.json')]
             target = os.path.join(output, skeleton + '.spine')
             os.makedirs(target, exist_ok=True)
-            shutil.copyfile(os.path.join(export, json_file), os.path.join(target, json_file))
+            if binary:
+                skel_file = skeleton + '.skel'
+                if not os.path.exists(os.path.join(export, skel_file)):
+                    print('Skip ' + skeleton + ' (no binary export)')
+                    continue
+                shutil.copyfile(os.path.join(export, skel_file), os.path.join(target, skel_file))
+            else:
+                shutil.copyfile(os.path.join(export, json_file), os.path.join(target, json_file))
             shutil.copyfile(os.path.join(export, atlas), os.path.join(target, atlas))
             for page in pages:
                 shutil.copyfile(os.path.join(export, page), os.path.join(target, page))

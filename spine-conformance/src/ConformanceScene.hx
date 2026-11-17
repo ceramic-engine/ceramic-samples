@@ -27,6 +27,8 @@ using StringTools;
  * - SPINE_CONFORMANCE_ONLY: optional comma separated list of skeleton names
  * - SPINE_CONFORMANCE_EXCLUDE: optional comma separated list of skeleton names to skip
  * - SPINE_CONFORMANCE_FPS: optional number of fixed steps per second (default 30)
+ * - SPINE_CONFORMANCE_CLIPPING: `stencil` to render clipping attachments with the stencil buffer
+ *   (default: the default clipping of the runtime)
  */
 class ConformanceScene extends Scene {
 
@@ -62,6 +64,10 @@ class ConformanceScene extends Scene {
         if (outDir == null || outDir.trim() == '') {
             log.error('SPINE_CONFORMANCE_OUT is not set');
             Sys.exit(1);
+        }
+
+        if (Platform.getEnv('SPINE_CONFORMANCE_CLIPPING') == 'stencil') {
+            Spine.defaultClipping = STENCIL;
         }
 
         var fpsEnv = Std.parseInt(Platform.getEnv('SPINE_CONFORMANCE_FPS'));

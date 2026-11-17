@@ -1,0 +1,678 @@
+Will build with configuration Build for target mac (Mac).
+Updated clay hxml at: /Users/jeremyfa/Developer/ceramic-samples/blend-clip-checks/out/clay/mac/project.hxml
+Update project assets
+Update project icons
+Run haxe compiler
+Transpile shaders to GLSL
+Compile C++ for arch arm64
+Creating /Users/jeremyfa/Developer/ceramic-samples/blend-clip-checks/out/clay/mac/cpp/obj/darwinarm64/__pch/haxe/hxcpp.h.pch...
+
+Compiling group: haxe
+xcrun --sdk macosx26.2 clang++ -Iinclude -I/Users/jeremyfa/Developer/ceramic/plugins/clay/runtime/src/backend/linc/ -I/Users/jeremyfa/Developer/ceramic/git/clay/src/clay/sdl/../../../../SDL/include -I/Users/jeremyfa/Developer/ceramic/git/clay/src/clay/sdl/linc/ -I/Users/jeremyfa/Developer/ceramic/git/clay/src/clay/simd/linc/ -I/Users/jeremyfa/Developer/ceramic/git/linc_opengl/linc/ -DLINC_OPENGL_ANGLE -I/Users/jeremyfa/Developer/ceramic/git/linc_opengl/../../bin/angle/angle-mac-universal/include/ -I/Users/jeremyfa/Developer/ceramic/git/linc_soloud/lib/soloud/include/ -I/Users/jeremyfa/Developer/ceramic/git/linc_soloud/linc/ -I/Users/jeremyfa/Developer/ceramic/git/linc_stb/lib/ -I/Users/jeremyfa/Developer/ceramic/git/linc_stb/linc/ -I/Users/jeremyfa/Developer/ceramic/git/linc_stb/lib/ -I/Users/jeremyfa/Developer/ceramic/git/linc_stb/linc/ -I/Users/jeremyfa/Developer/ceramic/git/linc_timestamp/linc/ -c -fvisibility=hidden -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk -O2 -I/Users/jeremyfa/Developer/ceramic/git/hxcpp/include -DHX_MACOS -arch arm64 -Wno-parentheses -Wno-null-dereference -Wno-unused-value -Wno-format-extra-args -Wno-overflow -Wno-bool-conversion -DHXCPP_ARM64 -DHXCPP_M64 -DHXCPP_VISIT_ALLOCS(haxe) -DHXCPP_CHECK_POINTER(haxe) -DHXCPP_IMMORTAL_STATICS(haxe) -DHXCPP_STACK_TRACE(haxe) -DHXCPP_STACK_LINE(haxe) -DHXCPP_GC_GENERATIONAL(haxe) -DHXCPP_GC_CONCURRENT(haxe) -DHX_SMART_STRINGS(haxe) -DHXCPP_API_LEVEL=430(haxe) -DHXCPP_GC_GENERATIONAL(haxe) ... tags=[haxe,static]
+ - src/clay/graphics/Color.cpp 
+ - src/ceramic/Logger.cpp 
+ - src/spec/Textures.cpp 
+ - src/ceramic/WaitCallbacks.cpp 
+ - src/sys/io/_Process/Stdout.cpp 
+ - src/sys/FileSystem.cpp 
+ - src/ceramic/TextInputDelegate.cpp 
+ - src/tracker/Serializable.cpp 
+ - src/ceramic/Shader.cpp 
+ - src/backend/VisualItem.cpp 
+ - src/shaders/Textured_Frag.cpp 
+ - src/opengl/_GL/IntRef_Impl_.cpp 
+ - src/ceramic/MenuItem.cpp 
+ - src/binpacking/RectSize.cpp 
+ - src/tracker/Events.cpp 
+ - /Users/jeremyfa/Developer/ceramic/git/clay/src/clay/simd/linc/linc_simd.cpp 
+ - src/ceramic/_SystemAppearance/SystemAppearance_Impl_.cpp 
+ - src/sys/io/FileOutput.cpp 
+ - src/tracker/ShareItem.cpp 
+ - src/clay/audio/_AudioEvent/AudioEvent_Impl_.cpp 
+ - src/clay/buffers/_ArrayBuffer/ArrayBufferImpl_Impl_.cpp 
+ - src/sys/thread/NextEventTime.cpp 
+ - src/ceramic/DatabaseAsset.cpp 
+ - src/ceramic/RuntimeAssets.cpp 
+ - src/ceramic/Group.cpp 
+ - src/ceramic/Renderable.cpp 
+ - src/backend/_Audio/AudioFilterProcessShim.cpp 
+ - src/ceramic/BackgroundQueue.cpp 
+ - /Users/jeremyfa/Developer/ceramic/plugins/clay/runtime/src/backend/linc/linc_NativeMac.mm 
+ - src/__boot__.cpp 
+ - src/ceramic/_ReadOnlyMap/ReadOnlyMap_Impl_.cpp 
+ - src/sys/thread/_Thread/HaxeThread.cpp 
+ - src/ceramic/_TextureAtlasParser/TextureAtlasReader.cpp 
+ - src/ceramic/_Color/Color_Impl_.cpp 
+ - src/clay/buffers/_Uint16Array/Uint16ArrayImpl_Impl_.cpp 
+ - src/sys/io/FileSeek.cpp 
+ - src/spec/Backend.cpp 
+ - src/spec/Screen.cpp 
+ - src/ceramic/BezierEasing.cpp 
+ - src/ceramic/AutoCollections.cpp 
+ - src/ceramic/AudioFilter.cpp 
+ - src/tracker/AutorunArray.cpp 
+ - src/haxe/io/Input.cpp 
+ - src/clay/buffers/_Float32Array/Float32ArrayImpl_Impl_.cpp 
+ - src/clay/Extensions.cpp 
+ - src/tracker/SerializeChangeset.cpp 
+ - src/ceramic/ReusableArray.cpp 
+ - src/ceramic/ConvertFont.cpp 
+ - src/ceramic/_Collection/Collection_Impl_.cpp 
+ - src/backend/ShaderImpl.cpp 
+ - src/ceramic/IntBoolMapIterator.cpp 
+ - src/ceramic/TimelineBoolTrack.cpp 
+ - src/ceramic/ConvertTexture.cpp 
+ - src/ceramic/AssetStatus.cpp 
+ - src/Project.cpp 
+ - src/tracker/Owner.cpp 
+ - src/ceramic/WatchDirectory.cpp 
+ - src/ceramic/ScreenScaling.cpp 
+ - src/binpacking/IOccupancy.cpp 
+ - src/binpacking/DisjointRectCollection.cpp 
+ - src/clay/graphics/Vector3.cpp 
+ - src/clay/buffers/_Float64Array/Float64ArrayImpl_Impl_.cpp 
+ - src/ceramic/Assets.cpp 
+ - src/haxe/ds/_List/ListNode.cpp 
+ - src/shade/_Mat2/Mat2_Impl_.cpp 
+ - src/ceramic/_ScanCode/ScanCode_Impl_.cpp 
+ - src/clay/buffers/_Int8Array/Int8ArrayImpl_Impl_.cpp 
+ - src/haxe/io/Path.cpp 
+ - src/sys/io/_Process/Stdin.cpp 
+ - src/ceramic/Text.cpp 
+ - src/clay/StorageNames.cpp 
+ - src/ceramic/_Tween/TweenEasingFunction.cpp 
+ - src/clay/soloud/SoloudAudio.cpp 
+ - src/clay/opengl/GLGraphicsDriver.cpp 
+ - src/clay/graphics/RenderTexture.cpp 
+ - src/ceramic/IntIntMap.cpp 
+ - src/ceramic/Preloadable.cpp 
+ - src/shade/Shader.cpp 
+ - src/backend/Audio.cpp 
+ - src/binpacking/Rect.cpp 
+./src/ceramic/IntIntMap.cpp:65:34: warning: shift count >= width of type [-Wshift-count-overflow]
+   65 | HXDLIN(  92)                    result = ((x | (x >> 32)) + 1);
+      |                                                   ^  ~~
+./src/ceramic/IntIntMap.cpp:591:34: warning: shift count >= width of type [-Wshift-count-overflow]
+  591 | HXLINE( 454)                    result = ((x | (x >> 32)) + 1);
+      |                                                   ^  ~~
+./src/ceramic/IntIntMap.cpp:610:34: warning: shift count >= width of type [-Wshift-count-overflow]
+  610 | HXDLIN( 465)                    result = ((x | (x >> 32)) + 1);
+      |                                                   ^  ~~
+3 warnings generated.
+ - src/haxe/xml/Parser.cpp 
+ - src/sys/io/FileInput.cpp 
+ - src/sys/io/Process.cpp 
+ - src/ceramic/Tween.cpp 
+ - src/ceramic/Csv.cpp 
+ - src/ceramic/IntIntMapKeyIterator.cpp 
+ - src/ceramic/ComputeFps.cpp 
+ - src/haxe/io/Encoding.cpp 
+ - src/ceramic/ConvertField.cpp 
+ - src/ceramic/_PreloadStatus/PreloadStatus_Impl_.cpp 
+ - src/shaders/Textured.cpp 
+ - src/ceramic/Mesh.cpp 
+ - src/clay/graphics/Texture.cpp 
+ - src/clay/audio/AudioDataOptions.cpp 
+ - src/ceramic/Runner.cpp 
+ - src/shade/_ParamType/ParamType_Impl_.cpp 
+ - src/opengl/_WebGL/GLShader_Impl_.cpp 
+ - src/ceramic/CollectionImpl.cpp 
+ - src/ceramic/BinaryAsset.cpp 
+ - src/clay/buffers/TAError.cpp 
+ - src/ceramic/macros/EnumAbstractMacro.cpp 
+ - src/ceramic/ConvertMap.cpp 
+ - src/ceramic/Layer.cpp 
+ - src/sys/thread/EventLoop.cpp 
+ - src/shaders/Textured_Vert.cpp 
+ - src/ceramic/Texture.cpp 
+ - src/ceramic/Errors.cpp 
+ - src/ceramic/AudioFilterWorklet.cpp 
+ - src/ceramic/Audio.cpp 
+ - src/clay/Log.cpp 
+ - src/haxe/MainEvent.cpp 
+ - src/spec/IO.cpp 
+ - src/clay/spec/GraphicsDriver.cpp 
+ - src/clay/buffers/ArrayBufferIO.cpp 
+ - src/ceramic/TextureAtlasRegion.cpp 
+ - src/shade/_Vec2/Vec2_Impl_.cpp 
+ - src/ceramic/Shortcuts.cpp 
+ - src/ceramic/ConvertFragmentData.cpp 
+ - src/ceramic/ShadePlugin.cpp 
+ - src/tracker/Autorun.cpp 
+ - src/ceramic/TextureAtlas.cpp 
+ - src/clay/buffers/_Uint32Array/Uint32ArrayImpl_Impl_.cpp 
+ - src/ceramic/TimelineFloatArrayTrack.cpp 
+ - src/tracker/Observable.cpp 
+ - src/ceramic/IntFloatMapKeyIterator.cpp 
+ - src/Xml.cpp 
+ - src/clay/sdl/_SDL/SDLEvent_Impl_.cpp 
+ - src/ceramic/IntMapKeyValueIterator.cpp 
+ - src/ceramic/TextAsset.cpp 
+ - src/ceramic/IntFloatMapKeyValueIterator.cpp 
+ - src/ceramic/AssetPathInfo.cpp 
+ - src/haxe/io/Output.cpp 
+ - src/soloud/_Soloud/SoloudErrors_Impl_.cpp 
+ - src/haxe/ds/StringMap.cpp 
+ - src/ceramic/ImageAsset.cpp 
+ - src/binpacking/MaxRectsPackerBestFitPosition.cpp 
+ - src/tracker/SaveModel.cpp 
+ - src/shaders/PixelArt_Frag.cpp 
+ - src/shade/Vert.cpp 
+ - src/clay/audio/AudioInstance.cpp 
+ - src/ceramic/_AssetsLoadMethod/AssetsLoadMethod_Impl_.cpp 
+ - src/spec/Input.cpp 
+ - src/clay/native/NativeIO.cpp 
+ - src/tracker/RecursiveMutex.cpp 
+ - src/haxe/iterators/MapKeyValueIterator.cpp 
+ - src/ceramic/Pixels.cpp 
+ - src/ceramic/TextureAtlasPage.cpp 
+ - src/sys/thread/Mutex.cpp 
+ - src/soloud/_AudioSource/AudioSourceInstanceFlags_Impl_.cpp 
+ - src/haxe/xml/Printer.cpp 
+ - src/ceramic/Json.cpp 
+ - src/tracker/ShareChangeset.cpp 
+ - src/opengl/_WebGL/GLFramebuffer_Impl_.cpp 
+ - src/clay/sdl/SDLConfig.cpp 
+ - src/_Xml/XmlType_Impl_.cpp 
+ - src/cpp/Int64Map.cpp 
+ - /Users/jeremyfa/Developer/ceramic/git/clay/src/clay/sdl/linc/linc_sdl_scroll_mac.mm 
+ - src/ceramic/Platform.cpp 
+ - src/clay/base/BaseAudio.cpp 
+ - src/backend/IO.cpp 
+ - src/haxe/xml/_Access/HasAttribAccess_Impl_.cpp 
+ - src/haxe/io/BytesBuffer.cpp 
+ - src/clay/buffers/_Uint8ClampedArray/Uint8ClampedArrayImpl_Impl_.cpp 
+ - src/ceramic/Touch.cpp 
+ - src/ceramic/ShaderAttribute.cpp 
+ - src/ceramic/Quad.cpp 
+ - src/shade/_Mat3/Mat3_Impl_.cpp 
+ - src/clay/graphics/Vector2.cpp 
+ - src/ceramic/IntMap.cpp 
+ - /Users/jeremyfa/Developer/ceramic/git/linc_soloud/linc/linc_soloud.cpp 
+ - src/shade/Shade.cpp 
+ - src/ceramic/HashedString.cpp 
+ - src/ceramic/Lazy.cpp 
+ - src/ceramic/Sound.cpp 
+ - src/ceramic/_SpinLock/SpinLock_Impl_.cpp 
+ - src/ceramic/IntIntMapIterator.cpp 
+ - src/ceramic/_KeyCode/KeyCode_Impl_.cpp 
+ - src/shade/Shader__shaders_PixelArt_Vert__shaders_PixelArt_Frag.cpp 
+ - src/shade/Frag.cpp 
+ - src/clay/_Config/OpenGLProfile_Impl_.cpp 
+ - src/shade/Shader__shaders_Msdf_Vert__shaders_Msdf_Frag.cpp 
+ - src/ceramic/PremultiplyAlpha.cpp 
+ - src/ceramic/ConvertArray.cpp 
+ - src/ceramic/_TextureTilePacker/PackedTextureTile.cpp 
+ - src/clay/FramePacer.cpp 
+ - src/backend/ElectronRunner.cpp 
+ - src/soloud/_AudioSource/AudioSourceFlags_Impl_.cpp 
+ - src/shaders/Msdf_Vert.cpp 
+ - src/haxe/xml/_Access/Access_Impl_.cpp 
+ - /Users/jeremyfa/Developer/ceramic/git/clay/src/clay/sdl/linc/linc_sdl_metal_layer.mm 
+ - src/haxe/rtti/Rtti.cpp 
+ - /Users/jeremyfa/Developer/ceramic/git/linc_opengl/linc/linc_opengl.cpp 
+ - src/clay/RenderConfigOpenGL.cpp 
+ - src/haxe/ds/IntMap.cpp 
+ - src/binpacking/MaxRectsPacker.cpp 
+ - src/clay/sdl/SDLIO.cpp 
+ - src/ceramic/_AssetId/AssetId_Impl_.cpp 
+ - src/soloud/_Soloud/SoloudFlags_Impl_.cpp 
+ - /Users/jeremyfa/Developer/ceramic/git/linc_stb/linc/linc_stb_image.cpp 
+ - src/ceramic/TextureAtlasParser.cpp 
+ - src/ChecksScene.cpp 
+ - src/ceramic/ArrayPool.cpp 
+ - src/ceramic/_GamepadAxis/GamepadAxis_Impl_.cpp 
+ - src/clay/spec/GraphicsBatcher.cpp 
+ - src/ceramic/ShaderAsset.cpp 
+ - src/spec/TextInput.cpp 
+ - src/ceramic/AtlasAsset.cpp 
+ - src/clay/_ScanCode/ScanCode_Impl_.cpp 
+ - src/shaders/PixelArt.cpp 
+ - src/clay/DrawableWaitGate.cpp 
+ - src/ceramic/DecomposedTransform.cpp 
+ - src/spec/Binaries.cpp 
+ - src/haxe/iterators/ArrayIterator.cpp 
+ - src/haxe/_Unserializer/DefaultResolver.cpp 
+ - src/spec/Draw.cpp 
+ - src/ceramic/IntBoolMapKeyValueIterator.cpp 
+ - src/ceramic/EntityData.cpp 
+ - src/clay/opengl/GLGraphicsDriver_GpuShader.cpp 
+ - src/Case.cpp 
+ - src/Type.cpp 
+ - src/ceramic/Input.cpp 
+ - src/ceramic/Filter.cpp 
+ - src/haxe/rtti/XmlParser.cpp 
+ - src/haxe/format/JsonPrinter.cpp 
+ - src/backend/Draw.cpp 
+ - src/haxe/rtti/Rights.cpp 
+ - src/ceramic/_SoundPlayer/SoundPlayer_Impl_.cpp 
+ - src/ceramic/TimelineFloatArrayKeyframe.cpp 
+ - src/shaders/Msdf_Frag.cpp 
+ - src/clay/audio/AudioSource.cpp 
+ - src/haxe/ValueException.cpp 
+ - src/haxe/StackItem.cpp 
+ - src/clay/opengl/GLGraphicsDriver_RenderTarget.cpp 
+ - src/ceramic/BrowserFiles.cpp 
+ - src/clay/audio/AudioData.cpp 
+ - src/clay/ModState.cpp 
+ - src/soloud/_Soloud/SoloudBackends_Impl_.cpp 
+ - src/ceramic/GeometryUtils.cpp 
+ - src/tracker/Equal.cpp 
+ - src/tracker/Utils.cpp 
+ - src/ceramic/TimelineKeyframe.cpp 
+ - src/ceramic/_TextureAtlasPacker/TextureAtlasPackerPage.cpp 
+ - src/ceramic/RenderTarget.cpp 
+ - src/ceramic/_Touches/Touches_Impl_.cpp 
+ - src/ceramic/TimelineTrack.cpp 
+ - src/clay/base/BaseRuntime.cpp 
+ - src/Std.cpp 
+ - src/ceramic/Path.cpp 
+ - src/spec/Clipboard.cpp 
+ - src/ceramic/SortVisualsByDepth.cpp 
+ - src/opengl/_WebGL/GLTexture_Impl_.cpp 
+ - src/haxe/NativeStackTrace.cpp 
+ - src/ceramic/TextureTile.cpp 
+ - /Users/jeremyfa/Developer/ceramic/git/linc_stb/linc/linc_stb_image_write.cpp 
+ - src/sys/thread/_EventLoop/RegularEvent.cpp 
+ - src/ValueType.cpp 
+ - src/clay/_Types/WindowEventType_Impl_.cpp 
+ - src/haxe/Exception.cpp 
+ - src/ceramic/Timeline.cpp 
+ - src/backend/Input.cpp 
+In file included from /Users/jeremyfa/Developer/ceramic/git/linc_stb/linc/linc_stb_image_write.cpp:7:
+/Users/jeremyfa/Developer/ceramic/git/linc_stb/linc/./../lib/stb_image_write.h:776:13: warning: 'sprintf' is deprecated: This function is provided for compatibility reasons only.  Due to security concerns inherent in the design of sprintf(3), it is highly recommended that you use snprintf(3) instead. [-Wdeprecated-declarations]
+  776 |       len = sprintf(buffer, "EXPOSURE=          1.0000000000000\n\n-Y %d +X %d\n", y, x);
+      |             ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/usr/include/_stdio.h:278:1: note: 'sprintf' has been explicitly marked deprecated here
+  278 | __deprecated_msg("This function is provided for compatibility reasons only.  Due to security concerns inherent in the design of sprintf(3), it is highly recommended that you use snprintf(3) instead.")
+      | ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/usr/include/sys/cdefs.h:227:48: note: expanded from macro '__deprecated_msg'
+  227 |         #define __deprecated_msg(_msg) __attribute__((__deprecated__(_msg)))
+      |                                                       ^
+1 warning generated.
+ - src/shade/_Vec3/Vec3_Impl_.cpp 
+ - src/opengl/_WebGL/GLBuffer_Impl_.cpp 
+ - /Users/jeremyfa/Developer/ceramic/git/clay/src/clay/sdl/linc/linc_sdl_window_mac.mm 
+ - src/clay/Clay.cpp 
+ - src/shaders/Msdf.cpp 
+ - src/ceramic/_IntBoolMap/IntBoolMap_Impl_.cpp 
+ - src/clay/base/BaseAssets.cpp 
+ - src/backend/Backend.cpp 
+ - src/Date.cpp 
+ - src/clay/sdl/SDLRuntime.cpp 
+ - src/ceramic/IntIntMapKeyValueIterator.cpp 
+ - src/ceramic/AppXUpdatesHandler.cpp 
+ - src/haxe/io/Eof.cpp 
+ - src/opengl/_WebGL/GLObject_Impl_.cpp 
+ - src/clay/opengl/GLGraphicsBatcher.cpp 
+ - src/tracker/Extensions.cpp 
+ - src/shaders/PixelArt_Vert.cpp 
+ - src/opengl/_WebGL/GLRenderbuffer_Impl_.cpp 
+ - src/clay/soloud/SoloudSound.cpp 
+ - src/ceramic/_Flags/Flags_Impl_.cpp 
+ - src/ceramic/ConvertColor.cpp 
+ - src/clay/WheelResampler.cpp 
+ - src/haxe/Unserializer.cpp 
+ - src/ceramic/IntMapKeyIterator.cpp 
+ - src/haxe/ds/List.cpp 
+ - src/haxe/rtti/TypeTree.cpp 
+ - src/ceramic/_ScrollPhase/ScrollPhase_Impl_.cpp 
+ - src/ceramic/Transform.cpp 
+ - src/haxe/rtti/Meta.cpp 
+ - src/clay/_Types/GamepadDeviceEventType_Impl_.cpp 
+ - src/binpacking/MaxRectsPackerRectScore.cpp 
+ - src/ceramic/_KeyModifiers/KeyModifiers_Impl_.cpp 
+ - src/ceramic/Pool.cpp 
+ - src/ceramic/Utils.cpp 
+ - src/ceramic/TextureAtlasPacker.cpp 
+ - src/backend/Screen.cpp 
+ - src/clay/graphics/TextureAndSlot.cpp 
+ - src/ceramic/Settings.cpp 
+ - src/tracker/Tracker.cpp 
+ - src/backend/_TextureId/TextureId_Impl_.cpp 
+ - src/tracker/_ShareItem/ShareItemAction_Impl_.cpp 
+ - src/clay/buffers/_Int32Array/Int32ArrayImpl_Impl_.cpp 
+ - src/ceramic/Easing.cpp 
+ - src/ceramic/_ReadOnlyArray/ReadOnlyArray_Impl_.cpp 
+ - src/ceramic/_GamepadButton/GamepadButton_Impl_.cpp 
+ - src/backend/ClayEvents.cpp 
+ - /Users/jeremyfa/Developer/ceramic/git/hxcpp/src/hx/NoFiles.cpp 
+ - src/tracker/Model.cpp 
+ - src/clay/Runner.cpp 
+ - src/clay/Input.cpp 
+ - src/ceramic/TouchesIterator.cpp 
+ - src/clay/PremultiplyAlpha.cpp 
+ - src/haxe/IMap.cpp 
+ - src/spec/Shaders.cpp 
+ - src/shade/_Mat4/Mat4_Impl_.cpp 
+ - src/sys/io/File.cpp 
+ - src/clay/audio/_AudioFormat/AudioFormat_Impl_.cpp 
+ - src/clay/RenderConfig.cpp 
+ - src/ceramic/BitmapFontCharacter.cpp 
+ - src/ceramic/Immediate.cpp 
+ - src/opengl/_WebGL/GLVertexArray_Impl_.cpp 
+ - /Users/jeremyfa/Developer/ceramic/git/clay/src/clay/sdl/linc/linc_sdl.cpp 
+ - src/ceramic/EasingUtils.cpp 
+ - src/ceramic/TimelineFloatKeyframe.cpp 
+ - src/ceramic/_GamepadLabels/GamepadLabels_Impl_.cpp 
+ - src/clay/sdl/SDL.cpp 
+ - src/ceramic/TrackerBackend.cpp 
+ - src/ceramic/Screen.cpp 
+ - src/backend/AudioFilterInfo.cpp 
+ - /Users/jeremyfa/Developer/ceramic/git/clay/src/clay/sdl/linc/linc_sdl_menu_mac.mm 
+ - src/clay/_KeyCode/KeyCode_Impl_.cpp 
+ - src/clay/buffers/_Int16Array/Int16ArrayImpl_Impl_.cpp 
+ - src/ceramic/Timelines.cpp 
+ - src/ceramic/_TextureAtlasPacker/TextureAtlasPackerRegion.cpp 
+ - src/ceramic/_AlphaColor/AlphaColor_Impl_.cpp 
+ - src/ceramic/Extensions.cpp 
+ - src/haxe/ds/ArraySort.cpp 
+ - src/haxe/io/Bytes.cpp 
+ - src/haxe/MainLoop.cpp 
+ - src/haxe/xml/_Access/NodeListAccess_Impl_.cpp 
+ - src/__resources__.cpp 
+ - src/ceramic/BitmapFontDistanceFieldData.cpp 
+ - src/tracker/Serialize.cpp 
+ - src/ceramic/Md5.cpp 
+ - src/haxe/io/Error.cpp 
+ - src/ceramic/Point.cpp 
+ - src/ceramic/Fragment.cpp 
+ - src/backend/Info.cpp 
+ - src/Sys.cpp 
+ - src/ceramic/Scene.cpp 
+ - src/clay/RetryBackoff.cpp 
+ - src/ceramic/FieldMeta.cpp 
+ - src/backend/_AudioFilterBuffer/AudioFilterBuffer_Impl_.cpp 
+ - src/clay/IdleThrottle.cpp 
+ - src/ceramic/TextInput.cpp 
+ - src/ceramic/IntFloatMapIterator.cpp 
+ - src/ceramic/DynamicData.cpp 
+ - src/ceramic/AudioFilters.cpp 
+ - src/ceramic/_TitleBarStyle/TitleBarStyle_Impl_.cpp 
+ - src/ceramic/TimelineColorKeyframe.cpp 
+ - src/backend/Clipboard.cpp 
+ - src/ceramic/SceneSystem.cpp 
+ - src/ceramic/GlyphQuad.cpp 
+ - src/hsluv/Hsluv.cpp 
+ - src/ceramic/TimelineColorTrack.cpp 
+ - src/ceramic/Value.cpp 
+ - src/spec/Texts.cpp 
+ - src/ceramic/RenderTexture.cpp 
+ - src/hsluv/Geometry.cpp 
+ - src/haxe/Serializer.cpp 
+ - src/ceramic/AudioMixer.cpp 
+ - src/tracker/ShareModel.cpp 
+ - src/ceramic/ConvertComponentMap.cpp 
+ - src/shade/_Vec4/Vec4_Impl_.cpp 
+ - src/backend/Main.cpp 
+ - src/clay/Resource.cpp 
+ - src/clay/base/BaseIO.cpp 
+ - src/ceramic/Key.cpp 
+ - src/ceramic/IntMapIterator.cpp 
+ - src/clay/ScreenMetrics.cpp 
+ - src/ceramic/BitmapFontParser.cpp 
+ - src/clay/_Types/AppEventType_Impl_.cpp 
+ - src/clay/Config.cpp 
+ - src/ceramic/Timer.cpp 
+ - src/clay/audio/_AudioState/AudioState_Impl_.cpp 
+ - src/tracker/SerializeModel.cpp 
+ - src/ceramic/TextureTilePacker.cpp 
+ - src/ceramic/Rect.cpp 
+ - src/haxe/format/JsonParser.cpp 
+ - src/clay/_Types/TextEventType_Impl_.cpp 
+ - src/ceramic/PersistentData.cpp 
+ - src/clay/sdl/_SDL/SDLSize_Impl_.cpp 
+ - src/shade/Shader__shaders_Textured_Vert__shaders_Textured_Frag.cpp 
+ - src/clay/native/NativeAssets.cpp 
+ - src/ceramic/Files.cpp 
+ - src/clay/Image.cpp 
+ - src/ceramic/ConvertIntBoolMap.cpp 
+ - src/ceramic/BitmapFontData.cpp 
+ - src/sys/thread/_Thread/Thread_Impl_.cpp 
+ - src/ceramic/macros/DefinesMacro.cpp 
+ - src/ceramic/_SceneStatus/SceneStatus_Impl_.cpp 
+ - src/backend/Texts.cpp 
+ - src/haxe/ds/ObjectMap.cpp 
+ - src/tracker/Assert.cpp 
+ - src/ceramic/_MouseCursor/MouseCursor_Impl_.cpp 
+ - src/haxe/xml/_Access/AttribAccess_Impl_.cpp 
+ - src/backend/TextInput.cpp 
+ - src/StringTools.cpp 
+ - src/ceramic/TimelineFloatTrack.cpp 
+ - src/Reflect.cpp 
+ - src/tracker/AutorunBindings.cpp 
+ - src/ceramic/TextureFilter.cpp 
+ - src/sys/thread/Deque.cpp 
+ - src/sys/thread/Lock.cpp 
+ - src/haxe/exceptions/NotImplementedException.cpp 
+ - src/assets/AllAssets.cpp 
+ - src/clay/graphics/Uniforms.cpp 
+ - src/ceramic/Systems.cpp 
+ - src/clay/buffers/_Uint8Array/Uint8ArrayImpl_Impl_.cpp 
+ - src/EReg.cpp 
+ - src/ceramic/IntBoolMapKeyIterator.cpp 
+ - src/backend/_AudioHandle/AudioHandle_Impl_.cpp 
+ - src/haxe/SysTools.cpp 
+ - /Users/jeremyfa/Developer/ceramic/git/linc_timestamp/linc/linc_timestamp.cpp 
+ - src/backend/Shaders.cpp 
+ - src/ceramic/SoundAsset.cpp 
+ - src/spec/Audio.cpp 
+ - src/clay/graphics/Vector4.cpp 
+ - src/clay/Immediate.cpp 
+ - src/clay/Events.cpp 
+ - src/opengl/_WebGL/GLProgram_Impl_.cpp 
+ - src/haxe/xml/XmlParserException.cpp 
+ - src/ceramic/TimelineBoolKeyframe.cpp 
+ - src/clay/Utils.cpp 
+ - src/ceramic/FieldInfo.cpp 
+ - src/ceramic/Asset.cpp 
+ - src/StringBuf.cpp 
+ - src/sys/thread/NoEventLoopException.cpp 
+ - src/haxe/exceptions/PosException.cpp 
+ - src/ceramic/System.cpp 
+ - src/ceramic/TimerCallback.cpp 
+ - src/ceramic/Component.cpp 
+ - src/clay/soloud/SoloudAudioData.cpp 
+ - src/ceramic/TextAlign.cpp 
+ - src/ceramic/CollectionEntry.cpp 
+ - src/ceramic/InitSettings.cpp 
+ - src/ceramic/CustomAssetKind.cpp 
+ - src/ceramic/BitmapFontDataPage.cpp 
+ - src/ceramic/FragmentsAsset.cpp 
+ - src/ceramic/Assert.cpp 
+ - src/haxe/rtti/CType.cpp 
+ - src/spec/Info.cpp 
+ - src/ceramic/BitmapFont.cpp 
+ - src/ceramic/IntFloatMap.cpp 
+ - src/ceramic/Entity.cpp 
+ - /Users/jeremyfa/Developer/ceramic/git/clay/src/clay/sdl/linc/linc_sdl_system_mac.mm 
+ - src/haxe/Log.cpp 
+ - src/haxe/EntryPoint.cpp 
+ - src/clay/soloud/SoloudAudioBackend.cpp 
+ - src/backend/Textures.cpp 
+ - src/clay/graphics/Shader.cpp 
+ - src/ceramic/Renderer.cpp 
+ - src/clay/BackgroundQueue.cpp 
+ - src/clay/sdl/_SDL/SDLPoint_Impl_.cpp 
+ - src/ceramic/SortVisuals.cpp 
+ - src/ceramic/App.cpp 
+ - src/haxe/xml/_Access/NodeAccess_Impl_.cpp 
+ - src/haxe/_CallStack/CallStack_Impl_.cpp 
+ - src/haxe/crypto/Md5.cpp 
+ - src/soloud/_Filter/FilterParamType_Impl_.cpp 
+ - src/clay/WindowConfig.cpp 
+ - src/ceramic/TimelineDegreesTrack.cpp 
+ - src/clay/soloud/SoloudBus.cpp 
+ - src/clay/sdl/_SDL/SDLRect_Impl_.cpp 
+ - src/clay/buffers/ArrayBufferViewImpl.cpp 
+ - src/ceramic/Visual.cpp 
+ - src/ceramic/TouchInfo.cpp 
+ - src/opengl/_WebGL/GLUniformLocation_Impl_.cpp 
+ - src/haxe/xml/_Access/HasNodeAccess_Impl_.cpp 
+ - src/clay/Macros.cpp 
+ - src/ceramic/FontAsset.cpp 
+ - src/backend/Binaries.cpp 
+ - src/ceramic/macros/PluginsMacro.cpp 
+
+Compiling group: __main__
+xcrun --sdk macosx26.2 clang++ -Iinclude -DHX_DECLARE_MAIN -c -fvisibility=hidden -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk -O2 -I/Users/jeremyfa/Developer/ceramic/git/hxcpp/include -DHX_MACOS -arch arm64 -Wno-parentheses -Wno-null-dereference -Wno-unused-value -Wno-format-extra-args -Wno-overflow -Wno-bool-conversion -DHXCPP_ARM64 -DHXCPP_M64 -DHXCPP_VISIT_ALLOCS(haxe) -DHXCPP_CHECK_POINTER(haxe) -DHXCPP_IMMORTAL_STATICS(haxe) -DHXCPP_STACK_TRACE(haxe) -DHXCPP_STACK_LINE(haxe) -DHXCPP_GC_GENERATIONAL(haxe) -DHXCPP_GC_CONCURRENT(haxe) -DHX_SMART_STRINGS(haxe) -DHXCPP_API_LEVEL=430(haxe) -DHXCPP_GC_GENERATIONAL(haxe) ... tags=[haxe,main,static]
+ - src/__main__.cpp 
+Creating /Users/jeremyfa/Developer/ceramic-samples/blend-clip-checks/out/clay/mac/cpp/obj/darwinarm64/__pch/runtime/hxcpp.h.pch...
+
+Compiling group: runtime
+xcrun --sdk macosx26.2 clang++ -DHX_UNDEFINE_H -c -fvisibility=hidden -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk -O2 -I/Users/jeremyfa/Developer/ceramic/git/hxcpp/include -DHX_MACOS -arch arm64 -Wno-parentheses -Wno-null-dereference -Wno-unused-value -Wno-format-extra-args -Wno-overflow -Wno-bool-conversion -DHXCPP_ARM64 -DHXCPP_M64 -DHXCPP_VISIT_ALLOCS(haxe) -DHXCPP_CHECK_POINTER(haxe) -DHXCPP_IMMORTAL_STATICS(haxe) -DHXCPP_STACK_TRACE(haxe) -DHXCPP_STACK_LINE(haxe) -DHXCPP_GC_GENERATIONAL(haxe) -DHXCPP_GC_CONCURRENT(haxe) -DHX_SMART_STRINGS(haxe) -DHXCPP_API_LEVEL=430(haxe) -DHXCPP_GC_GENERATIONAL(haxe) ... tags=[haxe]
+ - src/hx/Boot.cpp 
+ - src/Array.cpp 
+ - src/hx/thread/RecursiveMutex.cpp 
+ - src/hx/Date.cpp 
+ - src/hx/thread/ConditionVariable.cpp 
+ - src/hx/Object.cpp 
+ - src/hx/Anon.cpp 
+ - src/Enum.cpp 
+ - src/hx/thread/ThreadLocal.cpp 
+ - src/hx/thread/ThreadImpl.noop.cpp 
+ - src/hx/CFFI.cpp  [haxe,static,cffi]
+ - src/hx/Class.cpp 
+ - src/Dynamic.cpp 
+ - src/hx/gc/GcRegCapture.cpp  [haxe,gc]
+ - src/Math.cpp 
+ - src/hx/Hash.cpp 
+ - src/hx/Thread.cpp 
+ - src/hx/thread/CountingSemaphore.apple.cpp 
+ - src/hx/gc/Immix.cpp  [haxe,gc]
+ - src/hx/Lib.cpp  [haxe,static]
+ - src/hx/StdLibs.cpp  [haxe,static]
+ - src/hx/Debug.cpp 
+ - src/hx/thread/ThreadImpl.cpp 
+ - src/hx/thread/Scratch.cpp 
+ - src/hx/gc/GcCommon.cpp  [haxe,gc]
+ - src/String.cpp  [haxe,hxstring]
+ - src/cpp/encoding/Encodings.cpp 
+
+Compiling group: hxcpp_regexp
+xcrun --sdk macosx26.2 clang++ -I/Users/jeremyfa/Developer/ceramic/git/hxcpp/project/thirdparty/pcre2-10.42/src -c -fvisibility=hidden -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk -O2 -I/Users/jeremyfa/Developer/ceramic/git/hxcpp/include -DHX_MACOS -arch arm64 -Wno-parentheses -Wno-null-dereference -Wno-unused-value -Wno-format-extra-args -Wno-overflow -Wno-bool-conversion -DHXCPP_ARM64 -DHXCPP_M64 -DHXCPP_VISIT_ALLOCS(haxe) -DHXCPP_CHECK_POINTER(haxe) -DHXCPP_IMMORTAL_STATICS(haxe) -DHXCPP_STACK_TRACE(haxe) -DHXCPP_STACK_LINE(haxe) -DHXCPP_GC_GENERATIONAL(haxe) -DHXCPP_GC_CONCURRENT(haxe) -DHX_SMART_STRINGS(haxe) -DHXCPP_API_LEVEL=430(haxe) -DHXCPP_GC_GENERATIONAL(haxe) ... tags=[haxe,static]
+ - /Users/jeremyfa/Developer/ceramic/git/hxcpp/src/hx/libs/regexp/RegExp.cpp 
+
+Compiling group: pcre2-8
+xcrun --sdk macosx26.2 clang++ -DPCRE2_CODE_UNIT_WIDTH=8 -DSUPPORT_PCRE2_8 -DHAVE_CONFIG_H -DPCRE2_STATIC -DSUPPORT_UNICODE -I/Users/jeremyfa/Developer/ceramic/git/hxcpp/project/thirdparty/pcre2-10.42/src -std=c99 -c -fvisibility=hidden -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk -O2 -I/Users/jeremyfa/Developer/ceramic/git/hxcpp/include -DHX_MACOS -arch arm64 -Wno-parentheses -Wno-null-dereference -Wno-unused-value -Wno-format-extra-args -Wno-overflow -Wno-bool-conversion -DHXCPP_ARM64 -DHXCPP_M64 -DHXCPP_VISIT_ALLOCS(haxe) -DHXCPP_CHECK_POINTER(haxe) -DHXCPP_IMMORTAL_STATICS(haxe) -DHXCPP_STACK_TRACE(haxe) -DHXCPP_STACK_LINE(haxe) -DHXCPP_GC_GENERATIONAL(haxe) -DHXCPP_GC_CONCURRENT(haxe) -DHX_SMART_STRINGS(haxe) -DHXCPP_API_LEVEL=430(haxe) -DHXCPP_GC_GENERATIONAL(haxe) ... tags=[]
+ - /Users/jeremyfa/Developer/ceramic/git/hxcpp/project/thirdparty/pcre2-10.42/src/pcre2_error.c 
+ - /Users/jeremyfa/Developer/ceramic/git/hxcpp/project/thirdparty/pcre2-10.42/src/pcre2_convert.c 
+ - /Users/jeremyfa/Developer/ceramic/git/hxcpp/project/thirdparty/pcre2-10.42/src/pcre2_maketables.c 
+ - /Users/jeremyfa/Developer/ceramic/git/hxcpp/project/thirdparty/pcre2-10.42/src/pcre2_valid_utf.c 
+ - /Users/jeremyfa/Developer/ceramic/git/hxcpp/project/thirdparty/pcre2-10.42/src/pcre2_auto_possess.c 
+ - /Users/jeremyfa/Developer/ceramic/git/hxcpp/project/thirdparty/pcre2-10.42/src/pcre2_extuni.c 
+ - /Users/jeremyfa/Developer/ceramic/git/hxcpp/project/thirdparty/pcre2-10.42/src/pcre2_pattern_info.c 
+ - /Users/jeremyfa/Developer/ceramic/git/hxcpp/project/thirdparty/pcre2-10.42/src/pcre2_string_utils.c 
+ - /Users/jeremyfa/Developer/ceramic/git/hxcpp/project/thirdparty/pcre2-10.42/src/pcre2_compile.c 
+ - /Users/jeremyfa/Developer/ceramic/git/hxcpp/project/thirdparty/pcre2-10.42/src/pcre2_dfa_match.c 
+ - /Users/jeremyfa/Developer/ceramic/git/hxcpp/project/thirdparty/pcre2-10.42/src/pcre2_study.c 
+ - /Users/jeremyfa/Developer/ceramic/git/hxcpp/project/thirdparty/pcre2-10.42/src/pcre2_ord2utf.c 
+ - /Users/jeremyfa/Developer/ceramic/git/hxcpp/project/thirdparty/pcre2-10.42/src/pcre2_xclass.c 
+ - /Users/jeremyfa/Developer/ceramic/git/hxcpp/project/thirdparty/pcre2-10.42/src/pcre2_context.c 
+ - /Users/jeremyfa/Developer/ceramic/git/hxcpp/project/thirdparty/pcre2-10.42/src/pcre2_newline.c 
+ - /Users/jeremyfa/Developer/ceramic/git/hxcpp/project/thirdparty/pcre2-10.42/src/pcre2_serialize.c 
+ - /Users/jeremyfa/Developer/ceramic/git/hxcpp/project/thirdparty/pcre2-10.42/src/pcre2_substitute.c 
+ - /Users/jeremyfa/Developer/ceramic/git/hxcpp/project/thirdparty/pcre2-10.42/src/pcre2_match_data.c 
+ - /Users/jeremyfa/Developer/ceramic/git/hxcpp/project/thirdparty/pcre2-10.42/src/pcre2_ucd.c 
+ - /Users/jeremyfa/Developer/ceramic/git/hxcpp/project/thirdparty/pcre2-10.42/src/pcre2_chartables.c 
+ - /Users/jeremyfa/Developer/ceramic/git/hxcpp/project/thirdparty/pcre2-10.42/src/pcre2_jit_compile.c 
+ - /Users/jeremyfa/Developer/ceramic/git/hxcpp/project/thirdparty/pcre2-10.42/src/pcre2_match.c 
+ - /Users/jeremyfa/Developer/ceramic/git/hxcpp/project/thirdparty/pcre2-10.42/src/pcre2_script_run.c 
+ - /Users/jeremyfa/Developer/ceramic/git/hxcpp/project/thirdparty/pcre2-10.42/src/pcre2_config.c 
+ - /Users/jeremyfa/Developer/ceramic/git/hxcpp/project/thirdparty/pcre2-10.42/src/pcre2_find_bracket.c 
+ - /Users/jeremyfa/Developer/ceramic/git/hxcpp/project/thirdparty/pcre2-10.42/src/pcre2_substring.c 
+ - /Users/jeremyfa/Developer/ceramic/git/hxcpp/project/thirdparty/pcre2-10.42/src/pcre2_tables.c 
+
+Compiling group: pcre2-16
+xcrun --sdk macosx26.2 clang++ -DPCRE2_CODE_UNIT_WIDTH=16 -DSUPPORT_PCRE2_16 -DHAVE_CONFIG_H -DPCRE2_STATIC -DSUPPORT_UNICODE -I/Users/jeremyfa/Developer/ceramic/git/hxcpp/project/thirdparty/pcre2-10.42/src -std=c99 -c -fvisibility=hidden -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk -O2 -I/Users/jeremyfa/Developer/ceramic/git/hxcpp/include -DHX_MACOS -arch arm64 -Wno-parentheses -Wno-null-dereference -Wno-unused-value -Wno-format-extra-args -Wno-overflow -Wno-bool-conversion -DHXCPP_ARM64 -DHXCPP_M64 -DHXCPP_VISIT_ALLOCS(haxe) -DHXCPP_CHECK_POINTER(haxe) -DHXCPP_IMMORTAL_STATICS(haxe) -DHXCPP_STACK_TRACE(haxe) -DHXCPP_STACK_LINE(haxe) -DHXCPP_GC_GENERATIONAL(haxe) -DHXCPP_GC_CONCURRENT(haxe) -DHX_SMART_STRINGS(haxe) -DHXCPP_API_LEVEL=430(haxe) -DHXCPP_GC_GENERATIONAL(haxe) ... tags=[]
+ - /Users/jeremyfa/Developer/ceramic/git/hxcpp/project/thirdparty/pcre2-10.42/src/pcre2_valid_utf.c 
+ - /Users/jeremyfa/Developer/ceramic/git/hxcpp/project/thirdparty/pcre2-10.42/src/pcre2_error.c 
+ - /Users/jeremyfa/Developer/ceramic/git/hxcpp/project/thirdparty/pcre2-10.42/src/pcre2_convert.c 
+ - /Users/jeremyfa/Developer/ceramic/git/hxcpp/project/thirdparty/pcre2-10.42/src/pcre2_maketables.c 
+ - /Users/jeremyfa/Developer/ceramic/git/hxcpp/project/thirdparty/pcre2-10.42/src/pcre2_extuni.c 
+ - /Users/jeremyfa/Developer/ceramic/git/hxcpp/project/thirdparty/pcre2-10.42/src/pcre2_auto_possess.c 
+ - /Users/jeremyfa/Developer/ceramic/git/hxcpp/project/thirdparty/pcre2-10.42/src/pcre2_pattern_info.c 
+ - /Users/jeremyfa/Developer/ceramic/git/hxcpp/project/thirdparty/pcre2-10.42/src/pcre2_string_utils.c 
+ - /Users/jeremyfa/Developer/ceramic/git/hxcpp/project/thirdparty/pcre2-10.42/src/pcre2_compile.c 
+ - /Users/jeremyfa/Developer/ceramic/git/hxcpp/project/thirdparty/pcre2-10.42/src/pcre2_dfa_match.c 
+ - /Users/jeremyfa/Developer/ceramic/git/hxcpp/project/thirdparty/pcre2-10.42/src/pcre2_study.c 
+ - /Users/jeremyfa/Developer/ceramic/git/hxcpp/project/thirdparty/pcre2-10.42/src/pcre2_ord2utf.c 
+ - /Users/jeremyfa/Developer/ceramic/git/hxcpp/project/thirdparty/pcre2-10.42/src/pcre2_xclass.c 
+ - /Users/jeremyfa/Developer/ceramic/git/hxcpp/project/thirdparty/pcre2-10.42/src/pcre2_context.c 
+ - /Users/jeremyfa/Developer/ceramic/git/hxcpp/project/thirdparty/pcre2-10.42/src/pcre2_newline.c 
+ - /Users/jeremyfa/Developer/ceramic/git/hxcpp/project/thirdparty/pcre2-10.42/src/pcre2_serialize.c 
+ - /Users/jeremyfa/Developer/ceramic/git/hxcpp/project/thirdparty/pcre2-10.42/src/pcre2_substitute.c 
+ - /Users/jeremyfa/Developer/ceramic/git/hxcpp/project/thirdparty/pcre2-10.42/src/pcre2_match_data.c 
+ - /Users/jeremyfa/Developer/ceramic/git/hxcpp/project/thirdparty/pcre2-10.42/src/pcre2_ucd.c 
+ - /Users/jeremyfa/Developer/ceramic/git/hxcpp/project/thirdparty/pcre2-10.42/src/pcre2_chartables.c 
+ - /Users/jeremyfa/Developer/ceramic/git/hxcpp/project/thirdparty/pcre2-10.42/src/pcre2_jit_compile.c 
+ - /Users/jeremyfa/Developer/ceramic/git/hxcpp/project/thirdparty/pcre2-10.42/src/pcre2_match.c 
+ - /Users/jeremyfa/Developer/ceramic/git/hxcpp/project/thirdparty/pcre2-10.42/src/pcre2_script_run.c 
+ - /Users/jeremyfa/Developer/ceramic/git/hxcpp/project/thirdparty/pcre2-10.42/src/pcre2_config.c 
+ - /Users/jeremyfa/Developer/ceramic/git/hxcpp/project/thirdparty/pcre2-10.42/src/pcre2_find_bracket.c 
+ - /Users/jeremyfa/Developer/ceramic/git/hxcpp/project/thirdparty/pcre2-10.42/src/pcre2_substring.c 
+ - /Users/jeremyfa/Developer/ceramic/git/hxcpp/project/thirdparty/pcre2-10.42/src/pcre2_tables.c 
+
+Compiling group: hxcpp_std
+xcrun --sdk macosx26.2 clang++ -c -fvisibility=hidden -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk -O2 -I/Users/jeremyfa/Developer/ceramic/git/hxcpp/include -DHX_MACOS -arch arm64 -Wno-parentheses -Wno-null-dereference -Wno-unused-value -Wno-format-extra-args -Wno-overflow -Wno-bool-conversion -DHXCPP_ARM64 -DHXCPP_M64 -DHXCPP_VISIT_ALLOCS(haxe) -DHXCPP_CHECK_POINTER(haxe) -DHXCPP_IMMORTAL_STATICS(haxe) -DHXCPP_STACK_TRACE(haxe) -DHXCPP_STACK_LINE(haxe) -DHXCPP_GC_GENERATIONAL(haxe) -DHXCPP_GC_CONCURRENT(haxe) -DHX_SMART_STRINGS(haxe) -DHXCPP_API_LEVEL=430(haxe) -DHXCPP_GC_GENERATIONAL(haxe) ... tags=[haxe,static]
+ - Socket.cpp 
+ - Random.cpp 
+ - File.cpp 
+ - Process.cpp 
+ - Sys.cpp 
+
+Compiling group: soloud
+xcrun --sdk macosx26.2 clang++ -DWITH_MINIAUDIO=1 -I/Users/jeremyfa/Developer/ceramic/git/linc_soloud/lib/soloud/include/ -I/Users/jeremyfa/Developer/ceramic/git/linc_soloud/lib/soloud/src/audiosource/wav/ -c -fvisibility=hidden -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk -O2 -I/Users/jeremyfa/Developer/ceramic/git/hxcpp/include -DHX_MACOS -arch arm64 -Wno-parentheses -Wno-null-dereference -Wno-unused-value -Wno-format-extra-args -Wno-overflow -Wno-bool-conversion -DHXCPP_ARM64 -DHXCPP_M64 -DHXCPP_VISIT_ALLOCS(haxe) -DHXCPP_CHECK_POINTER(haxe) -DHXCPP_IMMORTAL_STATICS(haxe) -DHXCPP_STACK_TRACE(haxe) -DHXCPP_STACK_LINE(haxe) -DHXCPP_GC_GENERATIONAL(haxe) -DHXCPP_GC_CONCURRENT(haxe) -DHX_SMART_STRINGS(haxe) -DHXCPP_API_LEVEL=430(haxe) -DHXCPP_GC_GENERATIONAL(haxe) ... tags=[haxe,static]
+ - /Users/jeremyfa/Developer/ceramic/git/linc_soloud/lib/soloud/src/core/soloud_file.cpp 
+ - /Users/jeremyfa/Developer/ceramic/git/linc_soloud/lib/soloud/src/core/soloud_fft.cpp 
+ - /Users/jeremyfa/Developer/ceramic/git/linc_soloud/lib/soloud/src/core/soloud_filter.cpp 
+ - /Users/jeremyfa/Developer/ceramic/git/linc_soloud/lib/soloud/src/core/soloud_core_setters.cpp 
+ - /Users/jeremyfa/Developer/ceramic/git/linc_soloud/lib/soloud/src/core/soloud_thread.cpp 
+ - /Users/jeremyfa/Developer/ceramic/git/linc_soloud/lib/soloud/src/core/soloud_audiosource.cpp 
+ - /Users/jeremyfa/Developer/ceramic/git/linc_soloud/lib/soloud/src/core/soloud_fft_lut.cpp 
+ - /Users/jeremyfa/Developer/ceramic/git/linc_soloud/lib/soloud/src/core/soloud_misc.cpp 
+ - /Users/jeremyfa/Developer/ceramic/git/linc_soloud/lib/soloud/src/core/soloud.cpp 
+ - /Users/jeremyfa/Developer/ceramic/git/linc_soloud/lib/soloud-miniaudio/soloud_miniaudio.cpp 
+ - /Users/jeremyfa/Developer/ceramic/git/linc_soloud/lib/soloud/src/core/soloud_core_basicops.cpp 
+ - /Users/jeremyfa/Developer/ceramic/git/linc_soloud/lib/soloud/src/core/soloud_queue.cpp 
+ - /Users/jeremyfa/Developer/ceramic/git/linc_soloud/lib/soloud/src/audiosource/wav/stb_vorbis.c 
+ - /Users/jeremyfa/Developer/ceramic/git/linc_soloud/lib/soloud/src/core/soloud_core_filterops.cpp 
+ - /Users/jeremyfa/Developer/ceramic/git/linc_soloud/lib/soloud/src/audiosource/wav/soloud_wav.cpp 
+ - /Users/jeremyfa/Developer/ceramic/git/linc_soloud/lib/soloud/src/core/soloud_bus.cpp 
+ - /Users/jeremyfa/Developer/ceramic/git/linc_soloud/lib/soloud/src/core/soloud_core_faderops.cpp 
+ - /Users/jeremyfa/Developer/ceramic/git/linc_soloud/lib/soloud/src/audiosource/wav/soloud_wavstream.cpp 
+ - /Users/jeremyfa/Developer/ceramic/git/linc_soloud/lib/soloud/src/core/soloud_core_voiceops.cpp 
+ - /Users/jeremyfa/Developer/ceramic/git/linc_soloud/lib/soloud/src/core/soloud_core_voicegroup.cpp 
+ - /Users/jeremyfa/Developer/ceramic/git/linc_soloud/lib/soloud/src/core/soloud_core_getters.cpp 
+ - /Users/jeremyfa/Developer/ceramic/git/linc_soloud/lib/soloud/src/core/soloud_fader.cpp 
+ - /Users/jeremyfa/Developer/ceramic/git/linc_soloud/lib/soloud/src/core/soloud_core_3d.cpp 
+ - /Users/jeremyfa/Developer/ceramic/git/linc_soloud/lib/soloud/src/audiosource/wav/dr_impl.cpp 
+Link: Main
+Copy from Mac project template
+Perform replaces in names
+Perform replaces in contents
+clay/sdl/SDLRuntime.hx:404: [success] SDL / init success
+clay/sdl/SDLRuntime.hx:714: [success] SDL / GL init success
+clay/sdl/SDLRuntime.hx:511: [info] SDL / vsync enabled
+clay/sdl/SDLRuntime.hx:743: [info] SDL / GL / Vendor: Google Inc. (Apple)
+clay/sdl/SDLRuntime.hx:744: [info] SDL / GL / Renderer: ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Version 26.5.2 (Build 25F84))
+clay/sdl/SDLRuntime.hx:745: [info] SDL / GL / Version: OpenGL ES 3.0 (ANGLE 2.1.1 git hash: e8d1a2c13248)
+../../../../../ceramic/runtime/src/ceramic/ShaderAsset.hx:144: [info] Load shader textured (multi-texture)
+../../../../../ceramic/runtime/src/ceramic/ShaderAsset.hx:147: [info] Load shader msdf
+../../../../../ceramic/runtime/src/ceramic/ShaderAsset.hx:147: [info] Load shader pixelArt
+../../../../../ceramic/runtime/src/ceramic/FontAsset.hx:129: [info] Load font RobotoMedium.fnt
+../../../../../ceramic/runtime/src/ceramic/TextAsset.hx:88: [info] Load text RobotoMedium.fnt
+../../../../../ceramic/runtime/src/ceramic/ImageAsset.hx:221: [info] Load image RobotoMedium.png (density=1)
+../../../../../ceramic/runtime/src/ceramic/ImageAsset.hx:221: [info] Load image white.png (density=1)
+../../../../../ceramic/runtime/src/ceramic/App.hx:1036: [success] Default assets loaded.
+../../../src/ChecksScene.hx:153: CHECK OK   multiply opaque | x=32 got=[102,77,102,255] want=[102,77,102,255]
+../../../src/ChecksScene.hx:153: CHECK OK   multiply alpha 0.5 | x=32 got=[153,115,102,255] want=[153,115,102,255]
+../../../src/ChecksScene.hx:153: CHECK OK   screen opaque | x=32 got=[230,204,255,255] want=[230,204,255,255]
+../../../src/ChecksScene.hx:153: CHECK OK   screen alpha 0.5 | x=32 got=[217,179,178,255] want=[217,179,179,255]
+../../../src/ChecksScene.hx:153: CHECK OK   multiply on transparent | x=32 got=[0,0,0,0] want=[0,0,0,0]
+../../../src/ChecksScene.hx:153: CHECK OK   screen on transparent | x=32 got=[64,64,128,128] want=[64,64,128,128]
+../../../src/ChecksScene.hx:153: CHECK OK   clip rect | x=8 got=[0,255,0,255] want=[0,255,0,255] | x=56 got=[0,0,0,255] want=[0,0,0,255]
+../../../src/ChecksScene.hx:153: CHECK OK   clip rect inverted | x=8 got=[0,0,0,255] want=[0,0,0,255] | x=56 got=[0,255,0,255] want=[0,255,0,255]
+../../../src/ChecksScene.hx:153: CHECK OK   clip triangle | x=8 got=[0,255,0,255] want=[0,255,0,255] | x=56 got=[0,0,0,255] want=[0,0,0,255]
+../../../src/ChecksScene.hx:153: CHECK OK   clip triangle inverted | x=8 got=[0,0,0,255] want=[0,0,0,255] | x=56 got=[0,255,0,255] want=[0,255,0,255]
+../../../src/ChecksScene.hx:156: CHECKS PASSED
