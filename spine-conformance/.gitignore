@@ -1,0 +1,10 @@
+.DS_Store
+.haxelib
+/out
+/gen
+/project
+/completion.hxml
+/.cache
+/data-40
+/data-43
+/results

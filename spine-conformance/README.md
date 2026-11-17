@@ -1,0 +1,39 @@
+# Spine conformance
+
+Checks what the Ceramic spine plugin sends to the renderer, with both spine runtimes:
+
+- `legacy`: spine-hx (Spine 4.0), selected with the `spine_legacy` define, reads `data-40/`
+- `default`: official spine-haxe (Spine 4.3), reads `data-43/`
+
+Nothing is ever shown on screen: the app uses a hidden SDL window, is flagged as an
+agent app (no Dock icon) and runs under `tools/window-guard.swift`, which kills it if a
+window, a Dock icon or a focus change shows up.
+
+## Data
+
+The data sets are the official example exports of the spine-runtimes repository,
+copied with `tools/prepare-data.py` (not versioned):
+
+```
+python3 tools/prepare-data.py <spine-runtimes branch 4.0>/examples data-40
+python3 tools/prepare-data.py <spine-runtimes branch 4.3>/examples data-43
+```
+
+## Run
+
+```
+./run.sh legacy results/golden-legacy
+```
+
+Each skeleton animation is played with a fixed 1/30 s step. The meshes, clip shapes
+and events of the spine visual are dumped at frames 0, 1, 7, 15 and 30.
+
+## Legacy golden files
+
+`goldens/legacy-40.sha256` holds the hashes of the legacy dumps recorded before the
+spine plugin was changed. The legacy output must stay byte identical:
+
+```
+./run.sh legacy results/legacy-check
+(cd results/legacy-check && shasum -a 256 -c ../../goldens/legacy-40.sha256)
+```
