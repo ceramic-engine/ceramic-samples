@@ -28,12 +28,22 @@ python3 tools/prepare-data.py <spine-runtimes branch 4.3>/examples data-43
 Each skeleton animation is played with a fixed 1/30 s step. The meshes, clip shapes
 and events of the spine visual are dumped at frames 0, 1, 7, 15 and 30.
 
+## Scenarios
+
+- every animation of every skeleton, played alone;
+- `_bindings`: what the Ceramic layer adds on top of the runtime (child spines bound to
+  slots, visuals bound with `SpineBindVisual`, slot callbacks with custom transforms and
+  `drawDefault`, hidden and disabled slots, color and alpha, forced tint black, hit test
+  with a slot mesh, slot colors);
+- `_bbox`: bounding box rendering and hit test. `SPINE_CONFORMANCE_SKIP_BBOX=1` skips it:
+  the legacy plugin crashed on visible bounding boxes before it was fixed.
+
 ## Legacy golden files
 
 `goldens/legacy-40.sha256` holds the hashes of the legacy dumps recorded before the
 spine plugin was changed. The legacy output must stay byte identical:
 
 ```
-./run.sh legacy results/legacy-check
+SPINE_CONFORMANCE_SKIP_BBOX=1 ./run.sh legacy results/legacy-check
 (cd results/legacy-check && shasum -a 256 -c ../../goldens/legacy-40.sha256)
 ```

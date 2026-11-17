@@ -1,6 +1,8 @@
 package;
 
 import ceramic.Mesh;
+import ceramic.Quad;
+import ceramic.Visual;
 import ceramic.Platform;
 import ceramic.Scene;
 import ceramic.Shape;
@@ -42,6 +44,10 @@ class ConformanceScene extends Scene {
     var runs:Array<Run> = [];
 
     var step:Int = -1;
+
+    var bindings:BindingsScenario = null;
+
+    var boundingBox:BoundingBoxScenario = null;
 
     override function preload() {
 
@@ -111,6 +117,18 @@ class ConformanceScene extends Scene {
             });
         }
 
+        if (skeletons.indexOf('spineboy-pro') != -1) {
+            bindings = new BindingsScenario(assets.spine('spineboy-pro'));
+            add(bindings.root);
+            add(bindings.slotHitSpine);
+            add(bindings.colorsSpine);
+            // SPINE_CONFORMANCE_SKIP_BBOX=1: skip bounding boxes (they crashed the legacy plugin before it was fixed)
+            if (Platform.getEnv('SPINE_CONFORMANCE_SKIP_BBOX') != '1') {
+                boundingBox = new BoundingBoxScenario(assets.spine('spineboy-pro'));
+                add(boundingBox.spine);
+            }
+        }
+
         // Start every animation, then advance one fixed step per app frame, so that
         // deferred callbacks (immediate callbacks, scheduled renders) run between steps
         // the same way as in a regular app.
@@ -131,11 +149,23 @@ class ConformanceScene extends Scene {
             for (run in runs) {
                 run.spine.update(DT);
             }
+            if (bindings != null) {
+                bindings.update(DT);
+            }
+            if (boundingBox != null) {
+                boundingBox.update(DT);
+            }
         }
 
         if (DUMP_FRAMES.indexOf(step) != -1) {
             for (run in runs) {
                 run.frames.push(dumpSpine(run.spine, step));
+            }
+            if (bindings != null) {
+                bindings.frames.push(bindings.dump(step, step * DT));
+            }
+            if (boundingBox != null) {
+                boundingBox.frames.push(boundingBox.dump(step, step * DT));
             }
         }
 
@@ -151,16 +181,34 @@ class ConformanceScene extends Scene {
 
     function dumpSpine(spine:Spine, step:Int):Dynamic {
 
+        return {
+            step: step,
+            time: step * DT,
+            visuals: dumpChildren(spine)
+        };
+
+    }
+
+    /**
+     * Dump the children of a visual, recursively for child spines,
+     * with everything that affects how they are rendered.
+     */
+    public static function dumpChildren(parent:Visual):Array<Dynamic> {
+
         var visuals:Array<Dynamic> = [];
         var index = 0;
-        var children = spine.children != null ? spine.children.original : [];
+        var children = parent.children != null ? parent.children.original : [];
         for (child in children) {
+            var kind = Std.isOfType(child, Spine) ? 'spine' : Std.isOfType(child, Shape) ? 'shape' : Std.isOfType(child, Mesh) ? 'mesh' : Std.isOfType(child, Quad) ? 'quad' : Type.getClassName(Type.getClass(child));
             var item:Dynamic = {
                 index: index++,
-                kind: Std.isOfType(child, Shape) ? 'shape' : Std.isOfType(child, Mesh) ? 'mesh' : Type.getClassName(Type.getClass(child)),
+                kind: kind,
                 visible: child.visible,
+                active: child.active,
                 depth: child.depth,
+                depthRange: child.depthRange,
                 blending: (child.blending:Int),
+                alpha: child.alpha,
                 x: child.x,
                 y: child.y,
                 scaleX: child.scaleX,
@@ -180,20 +228,31 @@ class ConformanceScene extends Scene {
                 var mesh:Mesh = cast child;
                 item.colorMapping = Std.string(mesh.colorMapping);
                 item.customFloatAttributesSize = mesh.customFloatAttributesSize;
-                item.texture = mesh.texture == null ? null : mesh.texture.asset != null ? mesh.texture.asset.path : mesh.texture.id;
+                item.texture = textureName(mesh.texture);
                 item.vertices = mesh.vertices.copy();
-                item.uvs = mesh.uvs.copy();
-                item.indices = mesh.indices.copy();
-                item.colors = [for (color in mesh.colors) (color:Int)];
+                item.uvs = mesh.uvs != null ? mesh.uvs.copy() : null;
+                item.indices = mesh.indices != null ? mesh.indices.copy() : null;
+                item.colors = mesh.colors != null ? [for (color in mesh.colors) (color:Int)] : null;
+            }
+            else if (Std.isOfType(child, Quad)) {
+                var quad:Quad = cast child;
+                item.color = (quad.color:Int);
+                item.width = quad.width;
+                item.height = quad.height;
+                item.texture = textureName(quad.texture);
+            }
+            if (Std.isOfType(child, Spine)) {
+                item.children = dumpChildren(child);
             }
             visuals.push(item);
         }
+        return visuals;
 
-        return {
-            step: step,
-            time: step * DT,
-            visuals: visuals
-        };
+    }
+
+    static function textureName(texture:ceramic.Texture):String {
+
+        return texture == null ? null : texture.asset != null ? texture.asset.path : texture.id;
 
     }
 
@@ -211,6 +270,27 @@ class ConformanceScene extends Scene {
                 events: run.events
             }, null, ' ');
             File.saveContent(Path.join([dir, safeName(run.animation) + '.json']), content);
+        }
+
+        if (bindings != null) {
+            var dir = Path.join([outDir, '_bindings']);
+            if (!FileSystem.exists(dir))
+                FileSystem.createDirectory(dir);
+            File.saveContent(Path.join([dir, 'spineboy-pro.json']), haxe.Json.stringify({
+                dt: DT,
+                frames: bindings.frames,
+                events: bindings.events
+            }, null, ' '));
+        }
+
+        if (boundingBox != null) {
+            var dir = Path.join([outDir, '_bbox']);
+            if (!FileSystem.exists(dir))
+                FileSystem.createDirectory(dir);
+            File.saveContent(Path.join([dir, 'spineboy-pro.json']), haxe.Json.stringify({
+                dt: DT,
+                frames: boundingBox.frames
+            }, null, ' '));
         }
 
     }
