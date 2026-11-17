@@ -1,0 +1,49 @@
+// Level A reference: plays scenarios with the official spine-libgdx runtime (Java),
+// the reference implementation of every Spine runtime.
+plugins {
+    id 'application'
+}
+
+repositories {
+    mavenCentral()
+}
+
+def spineRuntimes = file(project.findProperty('spineRuntimes') ?: "${projectDir}/../../../ceramic/git/spine-runtimes")
+def libgdxVersion = '1.14.2'
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src', "${spineRuntimes}/spine-libgdx/spine-libgdx/src"]
+        }
+    }
+}
+
+dependencies {
+    implementation "com.badlogicgames.gdx:gdx:$libgdxVersion"
+    implementation "com.badlogicgames.gdx:gdx-backend-headless:$libgdxVersion"
+    implementation "com.badlogicgames.gdx:gdx-platform:$libgdxVersion:natives-desktop"
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.compilerArgs += ['-Xlint:none', '-nowarn']
+}
+
+application {
+    mainClass = 'ScenarioRunner'
+}
+
+tasks.register('runnerJar', Jar) {
+    archiveFileName = 'scenario-runner.jar'
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    manifest { attributes 'Main-Class': 'ScenarioRunner' }
+    from sourceSets.main.output
+    from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+}

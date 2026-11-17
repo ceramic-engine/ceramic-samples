@@ -27,6 +27,9 @@ using StringTools;
  * - SPINE_CONFORMANCE_ONLY: optional comma separated list of skeleton names
  * - SPINE_CONFORMANCE_EXCLUDE: optional comma separated list of skeleton names to skip
  * - SPINE_CONFORMANCE_FPS: optional number of fixed steps per second (default 30)
+ * - SPINE_CONFORMANCE_LEVEL_A: directory of level A scenarios (tools/make-scenarios.py):
+ *   plays them with the spine runtime only (spine-haxe), writes the results to
+ *   SPINE_CONFORMANCE_OUT and exits
  * - SPINE_CONFORMANCE_CLIPPING: `stencil` to render clipping attachments with the stencil buffer
  *   (default: the default clipping of the runtime)
  */
@@ -112,6 +115,15 @@ class ConformanceScene extends Scene {
     }
 
     override function create() {
+
+        #if !spine_legacy
+        var levelA = Platform.getEnv('SPINE_CONFORMANCE_LEVEL_A');
+        if (levelA != null && levelA.trim() != '') {
+            var count = LevelAScenarios.run(levelA, outDir, name -> skeletons.indexOf(name) != -1 ? assets.spine(name) : null);
+            log.success('Spine conformance level A: $count scenario(s) written to $outDir');
+            Sys.exit(0);
+        }
+        #end
 
         for (name in skeletons) {
             var spineData = assets.spine(name);

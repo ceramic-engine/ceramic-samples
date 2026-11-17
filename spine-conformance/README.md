@@ -38,6 +38,18 @@ and events of the spine visual are dumped at frames 0, 1, 7, 15 and 30.
 - `_bbox`: bounding box rendering and hit test. `SPINE_CONFORMANCE_SKIP_BBOX=1` skips it
   (the legacy plugin crashed on visible bounding boxes before it was fixed).
 
+## Levels
+
+- **Level A** (`./run-level-a.sh`): spine-haxe, built with the flags of a Ceramic app, against
+  the official reference runtime (spine-libgdx, `reference-java/`), on generated scenarios
+  (`tools/make-scenarios.py`: single animations, crossfades, additive tracks, queued
+  animations, skins). Compares bone poses, slot attachments, sequence indices, colors,
+  deforms and draw order.
+- **Level B** (`reference-cpp/run-reference.sh` then `compare/compare_geometry.py`): what
+  Ceramic sends to the renderer (meshes) against the official spine-cpp runtime.
+- **Ceramic layer** (`compare/compare_bindings.py`): bindings and bounding box scenarios of
+  the two runtimes.
+
 ## Legacy golden files
 
 `goldens/legacy-40.sha256` holds the hashes of the legacy dumps recorded before the
