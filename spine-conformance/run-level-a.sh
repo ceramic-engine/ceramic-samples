@@ -30,6 +30,11 @@ mkdir -p "$JAVA_OUT"
 "$GUARD" "$(command -v java)" -Djava.awt.headless=true -jar "$RESULTS/reference-java-build/libs/scenario-runner.jar" "$DATA_ABS" "$SCENARIOS" "$JAVA_OUT"
 
 # spine-haxe, inside the Ceramic app
-SPINE_CONFORMANCE_LEVEL_A="$SCENARIOS" ./run.sh default "$HAXE_OUT"
+# The app loads the binary data set when built with spine_skel
+BUILD_ARGS=()
+case "$DATA" in
+    *-skel|*-skel/) BUILD_ARGS=(-D spine_skel) ;;
+esac
+SPINE_CONFORMANCE_LEVEL_A="$SCENARIOS" ./run.sh default "$HAXE_OUT" "${BUILD_ARGS[@]+"${BUILD_ARGS[@]}"}"
 
 SPINE_CONFORMANCE_DATA="$DATA_ABS" python3 -I compare/compare_level_a.py "$HAXE_OUT" "$JAVA_OUT" "$RESULTS/level-a-report.md"

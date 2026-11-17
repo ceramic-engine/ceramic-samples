@@ -57,6 +57,17 @@ class BenchScene extends Scene {
     var tWorld:Float = 0;
     var tRender:Float = 0;
 
+    // Allocation counter at the same points as the timings above. The hxcpp counter moves by
+    // whole blocks, so a single frame cannot be attributed, but over many frames the share of
+    // each phase is proportional to what it allocates.
+    var aSkeleton:Float = 0;
+    var aWorld:Float = 0;
+    var aRender:Float = 0;
+    var allocAnim:Float = 0;
+    var allocWorld:Float = 0;
+    var allocRender:Float = 0;
+    var allocOther:Float = 0;
+
     var animTimes:Array<Float> = [];
     var worldTimes:Array<Float> = [];
     var renderTimes:Array<Float> = [];
@@ -100,9 +111,9 @@ class BenchScene extends Scene {
             spine.autoUpdate = false;
             spine.autoFreeze = false;
             spine.renderWhenInvisible = true;
-            spine.onUpdateSkeleton(this, () -> tSkeleton = Timer.stamp());
-            spine.onUpdateWorldTransform(this, () -> tWorld = Timer.stamp());
-            spine.onBeginRender(this, () -> tRender = Timer.stamp());
+            spine.onUpdateSkeleton(this, () -> { aSkeleton = allocationVolume(); tSkeleton = Timer.stamp(); });
+            spine.onUpdateWorldTransform(this, () -> { aWorld = allocationVolume(); tWorld = Timer.stamp(); });
+            spine.onBeginRender(this, () -> { aRender = allocationVolume(); tRender = Timer.stamp(); });
         }
 
         #if cpp
@@ -259,9 +270,17 @@ class BenchScene extends Scene {
 
         if (!control) for (i in 0...spines.length) {
             var spine = spines[i];
+            var aStart = allocationVolume();
             var start = Timer.stamp();
             spine.update(DT);
             var end = Timer.stamp();
+            var aEnd = allocationVolume();
+            if (measuring) {
+                allocAnim += aWorld - aSkeleton;
+                allocWorld += aRender - aWorld;
+                allocRender += aEnd - aRender;
+                allocOther += aSkeleton - aStart;
+            }
             anim += tWorld - tSkeleton;
             world += tRender - tWorld;
             render += end - tRender;
@@ -301,6 +320,7 @@ class BenchScene extends Scene {
         #end
         #if cpp
         trace('BENCH alloc whole frame: ' + Std.int((allocationVolume() - allocStart) / n) + ' bytes/frame (compare with a control run)');
+        trace('BENCH alloc phases bytes/frame: anim=' + Std.int(allocAnim / n) + ' world=' + Std.int(allocWorld / n) + ' render=' + Std.int(allocRender / n) + ' before=' + Std.int(allocOther / n));
         trace('BENCH gc: concurrentCycles=' + Std.int(gcInfo(100) - gcCyclesStart) + ' minorPauses=' + Std.int(gcInfo(107) - minorPausesStart)
             + ' usage=' + Std.int(gcInfo(0) / 1024 / 1024) + 'MB');
         #end
