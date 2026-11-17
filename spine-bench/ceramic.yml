@@ -1,0 +1,21 @@
+app:
+    package: ceramic-samples.spine-bench
+    name: spine-bench
+    displayName: Spine Bench
+    author: Jeremy Faivre
+    version: '1.0'
+
+    plugins:
+        - spine
+
+    defines:
+        # Never show a window: benchmarks run while the machine is in use
+        - clay_sdl_headless
+
+    # Spine data sets shared with spine-conformance (see its tools/prepare-data.py)
+    if spine_legacy:
+        +assets:
+            - ../spine-conformance/data-40
+    if !spine_legacy:
+        +assets:
+            - ../spine-conformance/data-43
