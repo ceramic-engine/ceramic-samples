@@ -68,6 +68,13 @@ class BenchScene extends Scene {
     var allocRender:Float = 0;
     var allocOther:Float = 0;
 
+    // Allocations between the events of the app frame (SPINE_BENCH_FRAME_ALLOC=1)
+    static final FRAME_POINTS = ['preUpdate', 'postUpdate', 'beginSort', 'finishSort', 'beginDraw', 'beginRenderVisuals', 'endRenderVisuals', 'finishDraw'];
+    var framePoint:Int = -1;
+    var frameAlloc:Float = 0;
+    var frameSegments:Array<Float> = [for (i in 0...FRAME_POINTS.length) 0];
+    var measuringFrame:Bool = false;
+
     var animTimes:Array<Float> = [];
     var worldTimes:Array<Float> = [];
     var renderTimes:Array<Float> = [];
@@ -114,6 +121,24 @@ class BenchScene extends Scene {
             spine.onUpdateSkeleton(this, () -> { aSkeleton = allocationVolume(); tSkeleton = Timer.stamp(); });
             spine.onUpdateWorldTransform(this, () -> { aWorld = allocationVolume(); tWorld = Timer.stamp(); });
             spine.onBeginRender(this, () -> { aRender = allocationVolume(); tRender = Timer.stamp(); });
+        }
+
+        if (envInt('SPINE_BENCH_FRAME_ALLOC', 0) == 1) {
+            inline function point(index:Int) {
+                var a = allocationVolume();
+                if (measuringFrame && framePoint >= 0)
+                    frameSegments[framePoint] += a - frameAlloc;
+                framePoint = index;
+                frameAlloc = a;
+            }
+            app.onPreUpdate(this, _ -> point(0));
+            app.onPostUpdate(this, _ -> point(1));
+            app.onBeginSortVisuals(this, () -> point(2));
+            app.onFinishSortVisuals(this, () -> point(3));
+            app.onBeginDraw(this, () -> point(4));
+            app.onBeginRenderVisuals(this, () -> point(5));
+            app.onEndRenderVisuals(this, () -> point(6));
+            app.onFinishDraw(this, () -> point(7));
         }
 
         #if cpp
@@ -255,6 +280,7 @@ class BenchScene extends Scene {
             drive(step);
 
         var measuring = step >= WARMUP_FRAMES;
+        measuringFrame = measuring;
 
         if (step == WARMUP_FRAMES) {
             allocStart = allocationVolume();
@@ -306,6 +332,8 @@ class BenchScene extends Scene {
 
     function report():Void {
 
+        // Read first: the report itself allocates (sorted copies, strings)
+        var allocEnd = allocationVolume();
         var cpu = Sys.cpuTime() - cpuStart;
         var n = totalTimes.length;
 
@@ -319,7 +347,14 @@ class BenchScene extends Scene {
         trace('BENCH draw calls: ' + @:privateAccess app.backend.draw.renderer.drawCalls);
         #end
         #if cpp
-        trace('BENCH alloc whole frame: ' + Std.int((allocationVolume() - allocStart) / n) + ' bytes/frame (compare with a control run)');
+        trace('BENCH alloc whole frame: ' + Std.int((allocEnd - allocStart) / n) + ' bytes/frame (compare with a control run)');
+        if (envInt('SPINE_BENCH_FRAME_ALLOC', 0) == 1) {
+            var parts = [];
+            var count = FRAME_POINTS.length;
+            for (i in 0...count)
+                parts.push(FRAME_POINTS[i] + '->' + FRAME_POINTS[(i + 1) % count] + '=' + Std.int(frameSegments[i] / n));
+            trace('BENCH alloc frame segments bytes/frame: ' + parts.join(' '));
+        }
         trace('BENCH alloc phases bytes/frame: anim=' + Std.int(allocAnim / n) + ' world=' + Std.int(allocWorld / n) + ' render=' + Std.int(allocRender / n) + ' before=' + Std.int(allocOther / n));
         trace('BENCH gc: concurrentCycles=' + Std.int(gcInfo(100) - gcCyclesStart) + ' minorPauses=' + Std.int(gcInfo(107) - minorPausesStart)
             + ' usage=' + Std.int(gcInfo(0) / 1024 / 1024) + 'MB');
