@@ -28,6 +28,20 @@ python3 tools/prepare-data.py <spine-runtimes branch 4.3>/examples data-43
 Each skeleton animation is played with a fixed 1/30 s step. The meshes, clip shapes
 and events of the spine visual are dumped at frames 0, 1, 7, 15 and 30.
 
+## Web
+
+The same dump runs in a browser:
+
+```
+ceramic clay build web --setup --assets
+```
+
+Then serve `project/web` and open `index.html`. The settings are read from the page URL
+(`index.html?SPINE_CONFORMANCE_ONLY=spineboy-pro`), the files are kept in memory and
+exposed as `window.spineConformance.files` (path -> content) when the run ends, and the
+app stays open at the last step. Level A needs a directory of scenarios: it is not
+available on web.
+
 ## Scenarios
 
 - every animation of every skeleton, played alone;

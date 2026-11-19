@@ -1,6 +1,7 @@
 package;
 
-#if !spine_legacy
+// Reads its scenarios from a directory: system targets only
+#if (sys && !spine_legacy)
 
 import ceramic.SpineData;
 import haxe.Json;

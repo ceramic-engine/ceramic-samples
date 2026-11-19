@@ -3,13 +3,10 @@ package;
 import ceramic.Mesh;
 import ceramic.Quad;
 import ceramic.Visual;
-import ceramic.Platform;
 import ceramic.Scene;
 import ceramic.Shape;
 import ceramic.Spine;
 import haxe.io.Path;
-import sys.FileSystem;
-import sys.io.File;
 
 using ceramic.SpinePlugin;
 using StringTools;
@@ -22,8 +19,11 @@ using StringTools;
  * The output is meant to be compared byte for byte between two builds (legacy
  * golden files), or converted and compared with an official reference runtime.
  *
+ * On web, the settings below are read from the page URL (`?NAME=value`), the output is
+ * kept in memory (see Host) and the app stays open at the last step.
+ *
  * Environment:
- * - SPINE_CONFORMANCE_OUT: output directory (required)
+ * - SPINE_CONFORMANCE_OUT: output directory (required, `out` by default on web)
  * - SPINE_CONFORMANCE_ONLY: optional comma separated list of skeleton names
  * - SPINE_CONFORMANCE_EXCLUDE: optional comma separated list of skeleton names to skip
  * - SPINE_CONFORMANCE_FPS: optional number of fixed steps per second (default 30)
@@ -63,29 +63,34 @@ class ConformanceScene extends Scene {
 
     override function preload() {
 
-        outDir = Platform.getEnv('SPINE_CONFORMANCE_OUT');
+        outDir = Host.env('SPINE_CONFORMANCE_OUT');
+        #if !sys
+        if (outDir == null || outDir.trim() == '')
+            outDir = 'out';
+        #end
         if (outDir == null || outDir.trim() == '') {
             log.error('SPINE_CONFORMANCE_OUT is not set');
-            Sys.exit(1);
+            Host.exit(1);
+            return;
         }
 
-        if (Platform.getEnv('SPINE_CONFORMANCE_CLIPPING') == 'stencil') {
+        if (Host.env('SPINE_CONFORMANCE_CLIPPING') == 'stencil') {
             Spine.defaultClipping = STENCIL;
         }
 
-        var fpsEnv = Std.parseInt(Platform.getEnv('SPINE_CONFORMANCE_FPS'));
+        var fpsEnv = Std.parseInt(Host.env('SPINE_CONFORMANCE_FPS'));
         if (fpsEnv != null && fpsEnv > 0) {
             DT = 1.0 / fpsEnv;
         }
 
         var only:Array<String> = null;
-        var onlyEnv = Platform.getEnv('SPINE_CONFORMANCE_ONLY');
+        var onlyEnv = Host.env('SPINE_CONFORMANCE_ONLY');
         if (onlyEnv != null && onlyEnv.trim() != '') {
             only = [for (name in onlyEnv.split(',')) name.trim()];
         }
 
         var exclude:Array<String> = [];
-        var excludeEnv = Platform.getEnv('SPINE_CONFORMANCE_EXCLUDE');
+        var excludeEnv = Host.env('SPINE_CONFORMANCE_EXCLUDE');
         if (excludeEnv != null && excludeEnv.trim() != '') {
             exclude = [for (name in excludeEnv.split(',')) name.trim()];
         }
@@ -108,7 +113,7 @@ class ConformanceScene extends Scene {
         assets.onceComplete(this, success -> {
             if (!success) {
                 log.error('Spine conformance: failed to load assets');
-                Sys.exit(1);
+                Host.exit(1);
             }
         });
 
@@ -116,12 +121,17 @@ class ConformanceScene extends Scene {
 
     override function create() {
 
-        #if !spine_legacy
-        var levelA = Platform.getEnv('SPINE_CONFORMANCE_LEVEL_A');
+        if (Host.finished)
+            return;
+
+        // Level A reads its scenarios from a directory: not on web
+        #if (sys && !spine_legacy)
+        var levelA = Host.env('SPINE_CONFORMANCE_LEVEL_A');
         if (levelA != null && levelA.trim() != '') {
             var count = LevelAScenarios.run(levelA, outDir, name -> skeletons.indexOf(name) != -1 ? assets.spine(name) : null);
             log.success('Spine conformance level A: $count scenario(s) written to $outDir');
-            Sys.exit(0);
+            Host.exit(0);
+            return;
         }
         #end
 
@@ -129,7 +139,8 @@ class ConformanceScene extends Scene {
             var spineData = assets.spine(name);
             if (spineData == null) {
                 log.error('Failed to load spine data: $name');
-                Sys.exit(1);
+                Host.exit(1);
+                return;
             }
             var animationNames = [for (animation in spineData.skeletonData.animations) animation.name];
             animationNames.sort(Reflect.compare);
@@ -167,7 +178,7 @@ class ConformanceScene extends Scene {
             add(bindings.slotHitSpine);
             add(bindings.colorsSpine);
             // SPINE_CONFORMANCE_SKIP_BBOX=1: skip bounding boxes (they crashed the legacy plugin before it was fixed)
-            if (Platform.getEnv('SPINE_CONFORMANCE_SKIP_BBOX') != '1') {
+            if (Host.env('SPINE_CONFORMANCE_SKIP_BBOX') != '1') {
                 boundingBox = new BoundingBoxScenario(assets.spine('spineboy-pro'));
                 add(boundingBox.spine);
             }
@@ -186,7 +197,7 @@ class ConformanceScene extends Scene {
 
     override function update(delta:Float) {
 
-        if (step < 0)
+        if (step < 0 || Host.finished)
             return;
 
         if (step > 0) {
@@ -216,7 +227,8 @@ class ConformanceScene extends Scene {
         if (step >= STEPS) {
             writeResults();
             log.success('Spine conformance dump written to $outDir');
-            Sys.exit(0);
+            Host.exit(0);
+            return;
         }
 
         step++;
@@ -304,8 +316,6 @@ class ConformanceScene extends Scene {
 
         for (run in runs) {
             var dir = Path.join([outDir, run.skeleton]);
-            if (!FileSystem.exists(dir))
-                FileSystem.createDirectory(dir);
             var content = haxe.Json.stringify({
                 skeleton: run.skeleton,
                 animation: run.animation,
@@ -313,14 +323,12 @@ class ConformanceScene extends Scene {
                 frames: run.frames,
                 events: run.events
             }, null, ' ');
-            File.saveContent(Path.join([dir, safeName(run.animation) + '.json']), content);
+            Host.save(dir, safeName(run.animation) + '.json', content);
         }
 
         if (bindings != null) {
             var dir = Path.join([outDir, '_bindings']);
-            if (!FileSystem.exists(dir))
-                FileSystem.createDirectory(dir);
-            File.saveContent(Path.join([dir, 'spineboy-pro.json']), haxe.Json.stringify({
+            Host.save(dir, 'spineboy-pro.json', haxe.Json.stringify({
                 dt: DT,
                 frames: bindings.frames,
                 events: bindings.events
@@ -329,9 +337,7 @@ class ConformanceScene extends Scene {
 
         if (boundingBox != null) {
             var dir = Path.join([outDir, '_bbox']);
-            if (!FileSystem.exists(dir))
-                FileSystem.createDirectory(dir);
-            File.saveContent(Path.join([dir, 'spineboy-pro.json']), haxe.Json.stringify({
+            Host.save(dir, 'spineboy-pro.json', haxe.Json.stringify({
                 dt: DT,
                 frames: boundingBox.frames
             }, null, ' '));
