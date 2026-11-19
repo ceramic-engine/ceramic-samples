@@ -41,7 +41,8 @@ class MainScene extends Scene {
 
         var marker = new Quad();
         marker.size(10, 10);
-        SpineBindVisual.bindVisual(spineboy, 'head', marker);
+        // A bound visual replaces what its slot draws, unless drawDefault is set: keep the head
+        SpineBindVisual.bindVisual(spineboy, 'head', marker).drawDefault = true;
 
         var tank = createSpine('tank-pro', 'drive', 600, 650, 0.2);
         #if !spine_legacy
