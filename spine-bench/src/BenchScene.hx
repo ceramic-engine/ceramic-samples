@@ -252,7 +252,7 @@ class BenchScene extends Scene {
 
             default:
                 log.error('Unknown scenario: $scenario');
-                Sys.exit(1);
+                exit(1);
         }
 
     }
@@ -276,6 +276,13 @@ class BenchScene extends Scene {
         if (spines.length == 0)
             return;
 
+        // Web: the report is done, keep the scene animated
+        if (finished) {
+            for (i in 0...spines.length)
+                spines[i].update(DT);
+            return;
+        }
+
         if (drive != null && !control)
             drive(step);
 
@@ -284,7 +291,7 @@ class BenchScene extends Scene {
 
         if (step == WARMUP_FRAMES) {
             allocStart = allocationVolume();
-            cpuStart = Sys.cpuTime();
+            cpuStart = cpuTime();
             gcCyclesStart = gcInfo(100);
             minorPausesStart = gcInfo(107);
         }
@@ -325,7 +332,7 @@ class BenchScene extends Scene {
 
         if (step >= WARMUP_FRAMES + benchFrames) {
             report();
-            Sys.exit(0);
+            exit(0);
         }
 
     }
@@ -334,14 +341,15 @@ class BenchScene extends Scene {
 
         // Read first: the report itself allocates (sorted copies, strings)
         var allocEnd = allocationVolume();
-        var cpu = Sys.cpuTime() - cpuStart;
+        var cpu = cpuTime() - cpuStart;
         var n = totalTimes.length;
 
         trace('BENCH anim ms: ' + stats(animTimes));
         trace('BENCH world ms: ' + stats(worldTimes));
         trace('BENCH render ms: ' + stats(renderTimes));
         trace('BENCH total ms: ' + stats(totalTimes));
-        trace('BENCH process cpu ms/frame: ' + r3(cpu * 1000 / n));
+        // Without process CPU time (web), this is the wall clock time of a frame
+        trace('BENCH ' + #if sys 'process cpu' #else 'wall clock' #end + ' ms/frame: ' + r3(cpu * 1000 / n));
         #if clay
         // Draw calls of the last rendered frame (the counter is reset at the start of each render)
         trace('BENCH draw calls: ' + @:privateAccess app.backend.draw.renderer.drawCalls);
@@ -398,9 +406,47 @@ class BenchScene extends Scene {
 
     }
 
+    /** `true` once the benchmark ended on a host that cannot exit (web) */
+    var finished:Bool = false;
+
+    /** Ends the run: the process exits, or the app stays open on web. */
+    function exit(code:Int):Void {
+
+        #if sys
+        Sys.exit(code);
+        #else
+        finished = true;
+        #if js
+        // For a script driving the page
+        js.Syntax.code('window.spineBench = { code: {0} }', code);
+        #end
+        #end
+
+    }
+
+    /** CPU time of the process, or wall clock time where there is none (web). */
+    static function cpuTime():Float {
+
+        #if sys
+        return Sys.cpuTime();
+        #else
+        return Timer.stamp();
+        #end
+
+    }
+
+    /**
+     * A setting: an environment variable, or a parameter of the page URL on web
+     * (`index.html?SPINE_BENCH_SCENARIO=raptor`).
+     */
     static function envString(name:String, defaultValue:String):String {
 
         var value = Platform.getEnv(name);
+        #if (web && !ceramic_use_electron)
+        if (value == null) {
+            value = new js.html.URLSearchParams(js.Browser.location.search).get(name);
+        }
+        #end
         return value != null && value.trim() != '' ? value.trim() : defaultValue;
 
     }
